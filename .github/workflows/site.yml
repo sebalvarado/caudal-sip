@@ -4,8 +4,9 @@ on:
   push:
     branches: [main]
     paths: ['site/**', '.github/workflows/site.yml']
+  # No path filter here: `build` is a required check on main, so it has to
+  # report on every pull request, including docs-only ones.
   pull_request:
-    paths: ['site/**', '.github/workflows/site.yml']
   workflow_dispatch:
 
 jobs:
