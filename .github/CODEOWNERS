@@ -1,0 +1,9 @@
+# Default owner for everything in the repo.
+* @sebalvarado
+
+# Decisions of record and scheme behavior always need maintainer review.
+/docs/architecture/adr/ @sebalvarado
+/docs/rfcs/ @sebalvarado
+/GOVERNANCE.md @sebalvarado
+/LICENSE @sebalvarado
+/SECURITY.md @sebalvarado

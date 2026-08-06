@@ -1,0 +1,96 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../config';
+---
+
+<Base>
+  <section class="hero container">
+    <p class="hero__kicker">{SITE.fullName} · open source · Apache-2.0</p>
+    <h1>La plata debe llegar en segundos. A cualquier cuenta. Gratis.</h1>
+    <p class="hero__sub">
+      Estamos construyendo, en abierto, la infraestructura de pagos instantáneos e
+      interoperables del Ecuador — el software que la norma nacional exige y que
+      todavía no existe.
+    </p>
+    <div class="hero__actions">
+      <a href="/manifiesto/" class="btn btn--primary">Lee el manifiesto</a>
+      <a href={SITE.github} class="btn btn--ghost" rel="noopener">Ver el código</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container section__grid">
+      <div class="section__label"><em>01</em> El momento</div>
+      <div>
+        <h2>Ecuador ya decidió. Falta construirlo.</h2>
+        <p class="lead">
+          La norma existe: pagos en tiempo real, interoperables entre todos los bancos,
+          cooperativas y fintechs del país, con fecha límite en noviembre de 2026. Lo que
+          no existe es el software para que cientos de instituciones puedan cumplirla sin
+          gastar fortunas.
+        </p>
+        <p>
+          Brasil lo hizo con Pix. Colombia lo hizo con Bre-B. India lo hizo con UPI. No
+          son países más capaces que el nuestro: son países que ejecutaron.
+        </p>
+        <div class="stats">
+          <div class="stat">
+            <div class="stat__value">170M+</div>
+            <div class="stat__label">de personas usan Pix en Brasil — más del 80% de la población</div>
+          </div>
+          <div class="stat">
+            <div class="stat__value">4 meses</div>
+            <div class="stat__label">le tomó a Bre-B (Colombia) procesar sus primeros 370 millones de transacciones</div>
+          </div>
+          <div class="stat">
+            <div class="stat__value">~400</div>
+            <div class="stat__label">instituciones ecuatorianas deben implementar el estándar nacional</div>
+          </div>
+          <div class="stat">
+            <div class="stat__value">$0</div>
+            <div class="stat__label">lo que debería costarle a una persona enviar su propio dinero</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container section__grid">
+      <div class="section__label"><em>02</em> Qué construimos</div>
+      <div>
+        <h2>Una obra, cuatro usuarios.</h2>
+        <p>
+          <strong>Librerías y un gateway de conexión</strong> para que cualquier institución
+          hable el estándar nacional en semanas. <strong>Un simulador del sistema de pagos
+          completo del país</strong> que se levanta con un solo comando. <strong>Pruebas de
+          certificación abiertas</strong> para llegar preparado ante el regulador.
+          <strong>Documentación en español</strong>, porque hoy casi no existe.
+        </p>
+        <p>
+          Los bancos grandes lo instalan y lo administran ellos mismos. Las cooperativas
+          pequeñas lo usan en modo compartido, operado por su federación, su proveedor o
+          como servicio administrado — sin candados, con la libertad de llevárselo a casa
+          cuando quieran.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container section__grid">
+      <div class="section__label"><em>03</em> Cómo trabajamos</div>
+      <div>
+        <h2>En público. Commit a commit.</h2>
+        <p>
+          Cada línea de código, cada decisión de diseño y cada prueba es pública y
+          auditable. La infraestructura crítica de un país no debe pedir confianza ciega:
+          debe poder demostrar que la merece, a cualquiera que quiera mirar.
+        </p>
+        <p>
+          <a href="/blog/">Sigue el avance en el blog →</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>

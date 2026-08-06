@@ -1,0 +1,24 @@
+---
+import Base from './Base.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  meta?: string;
+  jsonLd?: Record<string, unknown>;
+  frontmatter?: { title?: string; description?: string; meta?: string };
+}
+
+const fm = Astro.props.frontmatter ?? {};
+const title = Astro.props.title ?? fm.title;
+const description = Astro.props.description ?? fm.description;
+const meta = Astro.props.meta ?? fm.meta;
+---
+
+<Base title={title} description={description} jsonLd={Astro.props.jsonLd}>
+  <article class="container container--narrow prose">
+    {title && <h1>{title}</h1>}
+    {meta && <p class="prose__meta">{meta}</p>}
+    <slot />
+  </article>
+</Base>

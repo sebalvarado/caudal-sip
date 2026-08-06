@@ -1,0 +1,85 @@
+---
+import { SITE } from '../config';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** JSON-LD object to inject (Article pages pass their own) */
+  jsonLd?: Record<string, unknown>;
+}
+
+const { title, description = SITE.description, jsonLd } = Astro.props;
+const pageTitle = title ? `${title} — ${SITE.fullName}` : `${SITE.fullName} — ${SITE.tagline}`;
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+
+const orgJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: SITE.fullName,
+  url: SITE.url,
+  description: SITE.description,
+  sameAs: [SITE.github],
+};
+---
+
+<!doctype html>
+<html lang={SITE.locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title={SITE.fullName} href="/rss.xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.fullName} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="es_EC" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd ?? orgJsonLd)} />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a href="/" class="wordmark">
+          <span class="wordmark__peak">≈</span>
+          <span>{SITE.name}</span>
+        </a>
+        <nav class="site-nav">
+          <a href="/manifiesto/">Manifiesto</a>
+          <a href="/blog/">Blog</a>
+          <a href={SITE.github} rel="noopener">GitHub</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div>© {new Date().getFullYear()} {SITE.fullName} · Apache-2.0 · <a href="/rss.xml">RSS</a></div>
+        <p class="site-footer__disclaimer">
+          {SITE.fullName} es un proyecto open source independiente. No está afiliado al Banco
+          Central del Ecuador. "RPI" y "SIP" se refieren a las infraestructuras y estándares
+          públicos definidos en la normativa ecuatoriana vigente, que este proyecto implementa.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

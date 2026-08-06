@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Pregunta abierta o idea / Open question or idea
+    url: https://github.com/sebalvarado/caudal-sip/discussions
+    about: Para conversar antes de proponer un cambio formal.
+  - name: Reportar una vulnerabilidad / Report a vulnerability
+    url: https://github.com/sebalvarado/caudal-sip/security/advisories/new
+    about: En privado, nunca en un issue público. Ver SECURITY.md.
+  - name: Proponer un cambio al esquema / Propose a scheme change
+    url: https://github.com/sebalvarado/caudal-sip/blob/main/docs/rfcs/README.md
+    about: Cambios de comportamiento del esquema pasan por el proceso de RFC.

@@ -1,0 +1,44 @@
+name: Bug report
+description: Algo no funciona como debería / Something behaves incorrectly
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Escribe en español o inglés. **Nunca incluyas credenciales, certificados ni datos reales de cuentas.**
+        Si esto es una vulnerabilidad de seguridad, no abras un issue: usa el reporte privado (ver `SECURITY.md`).
+  - type: input
+    id: component
+    attributes:
+      label: Component
+      description: e.g. site, docs, iso20022, gateway
+      placeholder: site
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected to happen
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What actually happened
+      description: Include error output or logs, with any identifying data removed.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. …
+        2. …
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      placeholder: main @ abc1234

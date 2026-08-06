@@ -1,0 +1,32 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const fmt = new Intl.DateTimeFormat('es-EC', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<Base title="Blog" description="Bitácora pública del proyecto: pagos instantáneos, interoperabilidad y software abierto para el Ecuador.">
+  <div class="container prose" style="padding-bottom: 1rem;">
+    <h1>Blog</h1>
+    <p class="prose__meta">La bitácora pública del proyecto.</p>
+  </div>
+  <div class="container">
+    <ul class="post-list">
+      {posts.map((post) => (
+        <li class="post-list__item">
+          <div class="post-list__date">{fmt.format(post.data.pubDate)}</div>
+          <div>
+            <h2 class="post-list__title">
+              <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+            </h2>
+            <p class="post-list__excerpt">{post.data.description}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Base>

@@ -1,0 +1,38 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { SITE } from '../../config';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const fmt = new Intl.DateTimeFormat('es-EC', { year: 'numeric', month: 'long', day: 'numeric' });
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.pubDate.toISOString(),
+  inLanguage: post.data.lang,
+  author: { '@type': 'Organization', name: post.data.author, url: SITE.url },
+  publisher: { '@type': 'Organization', name: SITE.fullName, url: SITE.url },
+  mainEntityOfPage: new URL(`/blog/${post.id}/`, SITE.url).href,
+};
+---
+
+<Base title={post.data.title} description={post.data.description} jsonLd={jsonLd}>
+  <article class="container container--narrow prose">
+    <h1>{post.data.title}</h1>
+    <p class="prose__meta">{fmt.format(post.data.pubDate)} · {post.data.author}</p>
+    <Content />
+  </article>
+</Base>

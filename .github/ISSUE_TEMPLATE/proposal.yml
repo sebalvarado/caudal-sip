@@ -1,0 +1,39 @@
+name: Proposal / Propuesta
+description: Propón una funcionalidad, documento o mejora / Propose a feature, document, or improvement
+labels: [proposal]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Para cambios en el comportamiento del esquema (mensajes, llaves, liquidación), esto es el paso previo
+        a un [RFC](https://github.com/sebalvarado/caudal-sip/blob/main/docs/rfcs/README.md).
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: Who is blocked, and by what? Describe the situation, not the solution.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you propose
+    validations:
+      required: true
+  - type: textarea
+    id: regulation
+    attributes:
+      label: Regulatory basis, if any
+      description: Cite the resolution and article (JPRM-2024-018-M, BCE-GG-007-2026, …). Mark unpublished details as [assumption].
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Scope
+      options:
+        - Documentation
+        - Website
+        - Scheme behavior (likely needs an RFC)
+        - Implementation / tooling
+        - Other
+    validations:
+      required: true

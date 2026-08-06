@@ -1,0 +1,28 @@
+# Dependencies and build output
+node_modules/
+dist/
+.astro/
+.output/
+.vercel/
+.wrangler/
+
+# Go (once components land)
+bin/
+*.test
+coverage.out
+
+# Local tooling noise
+logs/
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
+
+# Third-party papers are linked, not redistributed (see research/README.md)
+research/*.pdf
+
+# Vendored agent skills belong to their upstream authors; skills-lock.json
+# pins them and `npx skills experimental_install` restores them.
+.agents/skills/
+.claude/skills
