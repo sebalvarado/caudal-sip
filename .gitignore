@@ -6,7 +6,7 @@ dist/
 .vercel/
 .wrangler/
 
-# Go (once components land)
+# Go
 bin/
 *.test
 coverage.out

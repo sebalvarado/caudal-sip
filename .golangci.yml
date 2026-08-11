@@ -1,0 +1,47 @@
+version: "2"
+
+linters:
+  default: standard
+  enable:
+    # Correctness in a system that moves money.
+    - errorlint # errors compared without errors.Is/As
+    - nilerr # returning nil when err is non-nil
+    - durationcheck # multiplying durations by durations
+    - makezero # append to a slice created with non-zero length
+    - unconvert
+    - bodyclose
+    - rowserrcheck # rows.Err() unchecked after a query
+    - sqlclosecheck # rows/stmt left unclosed
+    - gosec
+    - gocritic
+    - revive
+    - misspell
+
+  settings:
+    gosec:
+      excludes:
+        - G115 # integer conversion overflow; too noisy, and amounts are int64 cents
+    misspell:
+      # No locale: this project's English is full of Spanish domain terms
+      # (llave, integrante, malla, catálogo) and locale rules false-positive on
+      # them. Unambiguous typos are still caught.
+      ignore-rules:
+        - Operacional
+    revive:
+      rules:
+        - name: exported
+          # Package doc comments are required; this is documentation people read.
+          arguments: [checkPrivateReceivers]
+
+  exclusions:
+    presets:
+      - comments
+      - std-error-handling
+    rules:
+      - path: _test\.go$
+        linters: [gosec, errcheck]
+
+formatters:
+  enable:
+    - gofmt
+    - goimports

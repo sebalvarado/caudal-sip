@@ -91,48 +91,47 @@ Mirrors Ecuador's regulated topology (redes de pagos + SIP + RPI) so every compo
 
 This repository is the **single source of truth**: code, specs, docs, research, manifesto, and community artifacts all live here. No satellite repos until scale forces it.
 
+Directories are created when the work reaches them, in the order given by [`../plan/core-build-order.md`](../plan/core-build-order.md). Empty placeholder packages are clutter, so ✅ marks what exists today and the rest is intent.
+
 ```
-rpi-ec/
-├── MANIFIESTO.md      The public manifesto (Spanish; EN translation in docs/)
-├── docs/
-│   ├── research/      Landscape, regulatory analysis, references
-│   ├── architecture/  This blueprint, scheme-design.md, ADRs
-│   ├── plan/          Action plan, outreach strategy
-│   └── rfcs/          Numbered RFCs for scheme rules and protocol proposals
-├── spec/              Machine-readable contracts: OpenAPI (North API),
-│                      XSD/profile definitions (South API), QR payload spec.
-│                      Versioned releases, Pix-style. The spec IS a product.
-├── iso20022/          Go structs + XML/JSON codecs + validation for the BCE
-│                      profile: pacs.008, pacs.002, acmt.* (llave lookup).
-│                      Codegen from XSD; golden-file tests; fuzzing.
-├── llaves/            Directory service: key registration, uniqueness,
-│                      resolution, portability, block/unblock. DICT/DICE-inspired.
-│                      Pluggable storage (Postgres first).
-├── switch/            Stateless router/validator (UPI-inspired): schema +
-│                      signature validation, BIC routing, timeouts ("time out"
-│                      per BCE norm), idempotency, metadata-only logging.
-├── settlement/        RTGS simulator: participant accounts, gross real-time
-│                      debit/credit, no overdraft, irrevocability events
-│                      (pacs.002 emission). Double-entry ledger core.
-├── gateway/           THE PRODUCT for participants. Sits between a core
-│                      banking system and a red de pagos: exposes a simple
-│                      REST/gRPC + webhook API internally, speaks signed
-│                      ISO 20022 over mTLS externally. Includes llave
-│                      management, QR generation/parsing, reconciliation.
-├── qr/                EMV QRCPS (merchant-presented) encoder/decoder carrying
-│                      llaves, per the upcoming BCE QR standard.
-├── sandbox/           "Ecuador payments network in a box": docker compose
-│                      spinning up 2 redes + N mock banks + integrator +
-│                      settlement + directory, seeded with test identities.
-│                      One command → end-to-end payment demo.
-├── tck/               Test & certification kit (Mojaloop TTK analog):
-│                      scenario runner + conformance reports against the
-│                      catálogo técnico/operacional. Target: become the de
-│                      facto pre-certification tool for BCE qualification.
-├── console/           Web UI (later): observe flows, inspect messages,
-│                      manage sandbox participants. Great for demos/content.
-└── examples/          "Connect a cooperativa in 30 minutes" tutorials.
+caudal-sip/
+├── MANIFIESTO.md      The public manifesto (Spanish)
+├── docs/           ✅ Research, architecture, ADRs, RFCs, product, plan
+├── site/           ✅ The website: manifesto, blog, /estandar/
+│
+│  ── The central system (the SIP-equivalent core) ──
+├── ledger/         ✅ The scheme's obligation ledger. Accounts, balanced
+│   │                  entries, two-phase reservations, the no-overdraft
+│   │                  invariant. Two ledgers: obligations and headroom.
+│   ├── postgres/   ✅ Default backend (ADR-0007)
+│   └── tigerbeetle/   Second backend; differential-tested against Postgres
+├── tariff/         ✅ Effective-dated fee schedules; quote-then-commit
+├── risk/           ✅ Funding service for the liquidity ceiling
+├── clearing/       ✅ Mallas, netting, settlement instructions
+├── registry/          Integrantes, redes, BICs, empadronamiento
+├── llaves/            Central key system + distributed directory sync
+├── router/            Stateless payment router and validator (was `switch/`)
+├── reconciliation/    The `por conciliar` work queue and directory divergence
+│
+│  ── The participant side ──
+├── iso20022/          Go structs, codecs and validation for the BCE profile
+├── gateway/           What an institution deploys: simple API in, signed
+│                      ISO 20022 over mTLS out
+├── qr/                EMV QRCPS encoder/decoder carrying llaves
+│
+│  ── Shared and supporting ──
+├── cmd/            ✅ Binaries (`sip` today)
+├── spec/              Machine-readable contracts: OpenAPI, XSD profiles, QR
+│                      payload. Versioned releases, Pix-style.
+├── sandbox/           "Payments network in a box": docker compose, 2 redes,
+│                      N mock banks, one command to an end-to-end payment
+├── tck/               Conformance runner and certification reports
+├── console/           Operations UI: flows, messages, reconciliation queue,
+│                      headroom monitoring, tariff administration
+└── examples/          "Connect a cooperativa in 30 minutes"
 ```
+
+Two departures from the original plan, both consequences of decisions taken later. `settlement/` was described as an RTGS simulator; it is now `ledger/` plus `clearing/`, because the ledger turned out to be the core of the system rather than a bookkeeping concern at the end of it ([ADR-0008](adr/0008-ledger-architecture.md)). And `tariff/` and `risk/` did not exist in the original component list at all — the first because the catálogo treats commissions as a real parameterized flow ([ADR-0010](adr/0010-commissions-as-postings.md)), the second because the liquidity ceiling needs funding rather than enforcement ([ADR-0009](adr/0009-risk-ceiling-as-funded-account.md)).
 
 Scheme-level design decisions (integration APIs, direct/indirect participation, llave rules, settlement model) are specified in [`scheme-design.md`](scheme-design.md).
 
