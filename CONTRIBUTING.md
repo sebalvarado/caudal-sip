@@ -5,9 +5,10 @@ Thank you for helping build open payments infrastructure for Ecuador. Contributi
 ## Ground rules
 
 - **License**: all contributions are accepted under [Apache-2.0](LICENSE). By submitting a pull request you certify the [Developer Certificate of Origin](https://developercertificate.org/) — sign your commits with `git commit -s`.
-- **Language policy**:
-  - Code, comments, commit messages, ADRs, and RFCs: **English** (so the global open-source community can participate).
-  - The manifesto, outreach material, tutorials, and the website: **Spanish first** (our users are Ecuadorian institutions and developers), written as native Spanish per [docs/spanish-style.md](docs/spanish-style.md) — never translated prose.
+- **Language policy** — full version in [docs/language-policy.md](docs/language-policy.md):
+  - **Spanish** for anything an Ecuadorian institution reads to do its job: the catálogo reference, conformance material, technical proposals, operator runbooks, console interfaces, tutorials, the manifesto and the website. Written as native Spanish per [docs/spanish-style.md](docs/spanish-style.md) — never translated prose.
+  - **English** for code, comments, identifiers, commit messages, ADRs, RFCs, and contributor documentation, so the global open-source community can participate.
+  - **One canonical language per document.** Never maintain a translated mirror; flagship Spanish documents may carry a short English abstract instead.
   - The [glossary](docs/glossary.md) is bilingual and is the vocabulary of record. Use its terms consistently — e.g. *llave* (not "alias key"), *integrante* (not "member bank").
 - **No real credentials, ever.** This repository must never contain production certificates, keys, account data, or institution-identifying test data. See [SECURITY.md](SECURITY.md).
 

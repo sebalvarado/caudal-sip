@@ -1,6 +1,6 @@
 # Spanish Writing Style
 
-Public-facing Spanish (manifesto, website, tutorials, outreach) must read as **native Spanish, never as translated English**. Every rule below comes from a real correction in this project.
+Spanish in this project (manifesto, website, tutorials, outreach, **and institution-facing technical documents** per [language-policy.md](language-policy.md)) must read as **native Spanish, never as translated English**. Every rule below comes from a real correction in this project.
 
 ## Banned patterns (calques and false friends)
 
@@ -22,7 +22,7 @@ Public-facing Spanish (manifesto, website, tutorials, outreach) must read as **n
 ## Register
 
 - Ecuadorian, warm, direct: "la plata", "toca esperar", "la señora del mercado", "el ciudadano de a pie" are good. Corporate/consultant Spanish is not.
-- Technical anglicisms are fine in engineering docs (English anyway), but in public copy prefer plain Spanish: "conector" over "gateway", "muchísimo más barato" over "órdenes de magnitud más barato".
+- Register shifts with audience. In outreach, prefer plain Spanish: "conector" over "gateway", "muchísimo más barato" over "órdenes de magnitud más barato". In **technical documents written in Spanish**, the standard's own vocabulary always wins — write *llave*, *malla*, *por conciliar*, *empadronamiento*, *irrevocabilidad*, and keep protocol identifiers untranslated (`pacs.008`, `ACSP`, `timeout` when quoting the catálogo, which uses it). Don't invent Spanish for terms the BCE left in English, and don't leave English where the BCE has a Spanish term.
 - Idioms welcome when natural: "buscarle la quinta pata al gato", "picos y palas".
 
 ## Verification

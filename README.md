@@ -17,8 +17,12 @@ Inspired by [Pix](https://github.com/bacen/pix-api) (Brazil), Bre-B (Colombia), 
 | [MANIFIESTO.md](MANIFIESTO.md) | The public manifesto (Spanish) |
 | [docs/README.md](docs/README.md) | **Start here** — documentation map and reading order |
 | [docs/research/landscape.md](docs/research/landscape.md) | Full research: Ecuador's 2024–2026 regulatory framework (SIP, RPI, deadlines), deep dives on Pix / Bre-B / UPI, open-source landscape, design principles |
+| [docs/product/](docs/product/north-star.md) | North star and trust ladder, stakeholders, product requirements, adoption strategy |
 | [docs/architecture/blueprint.md](docs/architecture/blueprint.md) | Positioning, architecture, Go monorepo shape, operator/deployment model |
 | [docs/architecture/scheme-design.md](docs/architecture/scheme-design.md) | Integration APIs (North/South), direct & indirect participants, llave rules and account mapping, settlement model |
+| [docs/architecture/data-model.md](docs/architecture/data-model.md) | Entities, payment and llave lifecycles, ledger and audit invariants |
+| [docs/architecture/technical-requirements.md](docs/architecture/technical-requirements.md) | Latency budget, availability, security, testing and observability bar |
+| [docs/development/local-stack.md](docs/development/local-stack.md) | The one-command local network we're committing to build |
 | [docs/architecture/adr/](docs/architecture/adr/README.md) | Architecture Decision Records — decisions made and why |
 | [docs/rfcs/](docs/rfcs/README.md) | RFC process for scheme-level proposals |
 | [docs/glossary.md](docs/glossary.md) | Bilingual (ES/EN) domain vocabulary of record |

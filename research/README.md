@@ -13,9 +13,19 @@ Primary documents live here **locally only** — third-party papers are copyrigh
 
 ## Ecuadorian regulation
 
-Resolutions JPRM-2024-018-M, JPRM-2024-029-M, BCE-GG-008-2025 and BCE-GG-007-2026, published by the Junta de Política y Regulación Financiera y Monetaria and the Banco Central del Ecuador. Citations with article numbers are in [`docs/research/landscape.md`](../docs/research/landscape.md).
+| Document | Source |
+|---|---|
+| **Catálogo Operacional para transferencias electrónicas de pago en tiempo real — SIP**, v1.0, March 2026 | [bce.fin.ec](https://www.bce.fin.ec/storage/BCE/resoluciones/Catalogo-Operacional.pdf) |
+| BCE-GG-007-2026 — messaging standard for real-time payments | [bce.fin.ec](https://www.bce.fin.ec/storage/BCE/resoluciones/BCE-GG-007-2026.pdf) · [Registro Oficial 2º Supl. 245](https://asobanca.org.ec/wp-content/uploads/2026/03/RO-Res.-BCE-GG-007-2026-Estandar-mensajeria-transferencias-electronicas-pago-tiempo-real.pdf) |
+| BCE-GG-008-2025 — SIP/RPI operating rules, qualification, clearing | [bce.fin.ec](https://www.bce.fin.ec/storage/BCE/resoluciones/BCE-GG-008-2025.pdf) |
+| JPRM-2024-029-M — reform defining SIP, RPI, llaves, deadlines | [bce.fin.ec](https://www.bce.fin.ec/storage/JPRM/resoluciones/JPRM-2024-029-M.pdf) |
+| JPRM-2024-018-M — original interoperability resolution | Registro Oficial |
 
-**Still missing**: the BCE *catálogo técnico* (concrete ISO 20022 message profiles and field-level rules). Anything in our docs that depends on it is marked **[assumption]**.
+Citations with article numbers are in [`docs/research/landscape.md`](../docs/research/landscape.md).
+
+**The Catálogo Operacional is public** (found 2026-08-05) and supersedes most of what we previously marked **[assumption]**: payment states, rejection codes, llave types and states, timing windows, the payment identifier format, mandatory ISO 20022 fields, netting and liquidity-risk rules.
+
+**Still missing**: the **catálogo técnico** — the field-by-field message profile and XSDs that accompany the operational catalog. Anything depending on it stays marked **[assumption]**.
 
 ## Adding a source
 

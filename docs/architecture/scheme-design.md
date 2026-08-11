@@ -2,6 +2,8 @@
 
 Answers to the core design questions, anchored in what the BCE regulations already mandate (BCE-GG-008-2025, BCE-GG-007-2026) and in Pix/Bre-B/UPI precedent where Ecuador's norm is silent. Where the norm is silent, our position is marked **[proposal]**.
 
+> **Partially superseded (2026-08-05).** The Catálogo Operacional turned out to be public, and it answers several questions this document treated as open — payment states, reason codes, llave types, timing, netting, and a liquidity-risk engine we had not modeled. Read [`../research/catalogo-operacional.md`](../research/catalogo-operacional.md) alongside this file; where they disagree, the catálogo wins. The sections below carry inline notes where that applies.
+
 ## 1. The integration API (what parties actually code against)
 
 Two API surfaces, deliberately asymmetric — this is the single most important product decision:
@@ -46,7 +48,7 @@ The BCE norm itself contemplates both: integrantes act "con su infraestructura t
 
 | Phase | Use case | Notes |
 |---|---|---|
-| 1 | **P2P by llave** | The adoption engine everywhere (Pix, Bre-B, UPI). Free to end users — advocate for this in the forums; it made Pix. |
+| 1 | **P2P by llave** | The adoption engine everywhere (Pix, Bre-B, UPI). Note the catálogo assumes **priced** transactions: commissions are parameterized in the SIP, disclosed to the payer with taxes before confirmation, and `ChrgBr` defaults to `DEBT`. Free P2P is therefore an argument against a specified default, and needs evidence rather than a slogan. |
 | 1 | **P2M via QR** | Static QR (merchant's llave) first; dynamic QR (per-transaction amount + reference) close behind. BCE QR standard is mandated. |
 | 2 | **B2B / payroll** | Same rail, business-initiated, batch-of-instant disbursements ("pagos masivos" — Bre-B's next frontier). |
 | 2 | **Request-to-pay / cobros** | Needs pain.013-style messaging; not yet in the BCE catalog — an RFC we can lead in the forums. |
@@ -61,7 +63,7 @@ Rules (mandated + proposed):
 1. **One llave → exactly one account.** Uniqueness is system-wide (same rule as Pix and Bre-B: an alias resolves to exactly one payment instrument). This is what makes "send to my number" unambiguous.
 2. **One user → many llaves.** A user can hold multiple keys of different types — phone, cédula, email, random/alphanumeric — each independently pointed at whichever account they choose, across different institutions. **[proposal]** Cap per account per institution (Pix uses 5 for individuals, 20 for businesses) to limit directory abuse.
 3. **Mapping back to the preferred account is the directory's whole job**: payer enters a llave → ordering institution sends an `acmt` query → directory (red's distributed directory intra-network; SIP for inter-network) returns the credencial de pago → payer confirms the displayed beneficiary name (crucial anti-error/anti-fraud UX from Pix/Bre-B) → `pacs.008` carries the credencial → **the beneficiary institution validates that the credencial matches its client and rejects on mismatch** (Art. 10, BCE-GG-007-2026). The account choice therefore lives with the *receiving* customer, set at key-registration time, changeable any time (re-point the llave, no coordination with payers needed).
-4. **Portability and claiming** **[proposal, from Pix]**: moving a phone-number key between institutions triggers a claim flow with confirmation via the losing institution — prevents key hijacking. Not yet specified by BCE; RFC candidate.
+4. **Portability and claiming** — **now a documented gap, not a guess.** The catálogo specifies only cancel-then-re-register (§11.1), with no claim window and no confirmation through the losing institution; the bulk migration process (§4) is a BCE-run administrative operation performed outside operating hours. Our Pix-style claim flow **[proposal]** is therefore the strongest RFC candidate we have, and it addresses a real key-hijacking exposure.
 5. **Privacy**: resolution responses expose minimum data (masked name for confirmation, not full identity). Directory queries are rate-limited and audited to prevent enumeration/scraping (a real Pix DICT lesson).
 
 ## 4. Settlement: how money actually moves
@@ -72,13 +74,18 @@ The layered answer, per the regulations:
 - **Intra-network** (payer and payee in the same red): the red clears in real time — validates, routes, obtains the beneficiary's accept (`pacs.002`), declares irrevocability — and the red's positions are settled at the BCE through the **Cámara de Compensación Especializada** per its specifications (Art. 9, BCE-GG-008-2025). Today that CCE cycle is periodic (BANRED settles once daily), meaning **deferred net settlement**: the end user experiences instant finality while institutions carry intraday bilateral exposure.
 - **Inter-network**: the red ordenante forwards to the **SIP**, which resolves, forwards to the red beneficiaria, "procesa y compensa" and **remits settlement information** to the BCE settlement systems. Irrevocability for inter-network payments is declared by the SIP via `pacs.002` (Art. 12, BCE-GG-007-2026).
 - **User-visible finality vs. interbank finality are different events.** The user sees irrevocable credit in seconds (the beneficiary institution credits immediately upon irrevocability); interbank positions settle at the BCE per the clearing cycle. Pix eliminated the gap entirely (pure RTGS on Contas PI, no overdraft); Bre-B's MOL likewise settles gross in real time. Ecuador's texts point to clearing-then-settlement instead.
-- **Our position [advocacy]**: deferred net settlement was exactly what the IMF's FSAP flagged in Colombia as credit/counterparty risk, pushing Banrep to build the MOL. Our `settlement/` module implements **gross real-time settlement with no-overdraft prefunded accounts (Pix-style)** as the reference, and can also simulate deferred-net cycles — so the sandbox can *demonstrate the risk difference quantitatively*. That comparison is a genuinely valuable contribution to the foros de interoperabilidad, made with running code instead of slide decks.
+- **Confirmed by the catálogo (§9, §10)**: settlement is deferred net on a **multilateral malla**, liquidated several times a day in the integrantes' BCE accounts, with the bilateral malla kept for reporting and out-of-hours payments settling the next business day. The BCE contains the resulting credit risk with a **liquidity-risk engine**: a weekly per-institution ceiling derived from its reserve requirement, a traffic-light dashboard, and automatic blocking of an institution's outgoing payments when it crosses the ceiling — re-enablement being manual.
+- **Our position [advocacy], revised**: the comparison worth publishing is no longer "gross versus net" in the abstract. It is a quantified study of *this* design: what happens to a segment-3 cooperativa with a 100% risk level on payday, how responsive a weekly recalculation is to an intraday spike, and what an institution should do operationally as it approaches red. Our `settlement/` module implements gross real-time settlement as the reference model and simulates the Ecuadorian deferred-net-plus-risk-ceiling design, so the difference can be measured rather than asserted.
 
 ## 5. Open questions to resolve in the forums (our RFC pipeline)
 
-1. Exact settlement cadence and guarantee scheme for intra/inter-network positions (collateral? prefunding? loss-sharing?).
-2. Key claiming/portability flows (unspecified).
-3. Request-to-pay and bulk-disbursement messaging (unspecified).
-4. Dispute/return flows — Pix has `pacs.004`-based returns and the MED (special return mechanism for fraud); BCE catalog scope unknown.
-5. Fee policy — free P2P is the single highest-leverage adoption policy; who advocates for it if not us?
-6. Uniform UX rules (max total seconds, confirmation-of-payee display, common brand like "Bre-B Zone") — absent so far in Ecuador's texts.
+Revised against the catálogo — the full list with detail is in [`../research/catalogo-operacional.md`](../research/catalogo-operacional.md) §12.
+
+1. **Answered**: settlement cadence (multilateral malla, several intraday liquidations) and the guarantee mechanism (reserve-derived risk ceiling with automatic blocking), §9–§10.
+2. Key claiming and portability — still only cancel-and-re-register. Our top RFC candidate.
+3. Request-to-pay and bulk-disbursement messaging — still absent.
+4. Dispute and return flows — no `pacs.004` analog or fraud-return mechanism appears anywhere in the catálogo.
+5. Fee policy — now an argument against a specified default (see the use-case table above).
+6. **Partly answered**: confirmation-of-payee display and the 60-second and 20-second windows are mandated (§5); a common consumer brand is still absent.
+7. **New**: the actual per-stage timeout values, which the catálogo leaves parameterized and unpublished.
+8. **New**: data minimization — full customer identity travels in every `pacs.008`.

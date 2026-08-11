@@ -8,16 +8,21 @@ Términos del ecosistema ecuatoriano de pagos, en ambos idiomas. Los términos r
 
 | Término (ES) | English | Definition |
 |---|---|---|
-| **Llave de pago** | payment key | Public, unique identifier (phone number, cédula, email, alphanumeric code) that a customer links to one account to send/receive payments. One llave → exactly one account. (BCE-GG-007-2026, def. 10) |
-| **Credencial de pago** | payment credential | The data a llave resolves to: beneficiary's cédula/RUC/passport + account number + account type + institution BIC. (BCE-GG-007-2026, def. 5) |
+| **Llave de pago** | payment key | Public, unique identifier that a customer links to one account to send/receive payments. Four types only: phone `0001`, identification number `0002` (cédula or RUC — **not passport**), email `0003`, alphanumeric `0004`. One llave → exactly one account. (BCE-GG-007-2026, def. 10; Catálogo Operacional §3) |
+| **Credencial de pago** | payment credential | The data a llave resolves to: beneficiary's identification number, name, account number, account status, account type, and institution BIC. (BCE-GG-007-2026, def. 5; Catálogo Operacional §11.1) |
+| **Sistema Central de Llaves** | central key registry | BCE-operated registry that guarantees llave uniqueness nationally and stays synchronized in real time with each red's Directorio Distribuido. (Catálogo Operacional §3) |
+| **Directorio Distribuido** | distributed directory | Per-red store of llaves and the associated customer credentials. Reconciled against the Sistema Central de Llaves. (Catálogo Operacional, glosario) |
 | **Integrante** | participant institution | A member of a red de pagos: private/public banks, cooperativas, mutualistas, cajas centrales, neobanks, SEDPEs, authorized processors, and the BCE itself. (BCE-GG-007-2026, def. 6) |
 | **Integrante ordenante / beneficiario** | ordering / beneficiary participant | The sender's institution / the receiver's institution in a payment. |
 | **Red de pagos** | payment network | Private technological infrastructure that routes real-time payments among its integrantes (e.g. BANRED). Runs a distributed llave directory for its members. |
 | **SIP — Sistema Integrador de Pagos** | payments integrator system | BCE-operated infrastructure that resolves llaves and clears **inter-network** payments, feeding settlement. |
 | **RPI — Red de Pagos Instantáneos** | instant payments network | The BCE's own payment network, participating alongside private redes. |
 | **Orden de pago intra-red / inter-redes** | intra-/inter-network payment order | Payment between integrantes of the same network / of different networks (the latter routed through the SIP). |
-| **Irrevocabilidad** | irrevocability | The point after which a payment is final, binding, and enforceable against third parties; declared via `pacs.002` by the red (intra) or the SIP (inter). (BCE-GG-007-2026, defs. 9, arts. 12–13) |
-| **Catálogo técnico / operacional** | technical / operational catalog | BCE documents defining exact message structures, fields, validations, and flows. The ground truth for `iso20022/` and `tck/`. |
+| **Irrevocabilidad** | irrevocability | The point after which a payment is final, binding, and enforceable against third parties. For inter-network payments it attaches when the SIP has notified and the beneficiary red has **received** the order — before the customer credit is confirmed. State `ACSP`. (BCE-GG-007-2026, defs. 9, arts. 12–13; Catálogo Operacional §11.3) |
+| **Malla (de compensación)** | netting cycle | The set of bilateral and multilateral net positions the SIP builds in real time from irrevocable payments. Liquidation runs on the multilateral malla, several times a day. (Catálogo Operacional §9) |
+| **Por conciliar** | pending reconciliation | State of a llave or payment whose outcome is unresolved after a communication failure. Payments must be given a final state the same day by 18:00 (parameterized), and reconciliation is run by the redes. (Catálogo Operacional §11.4, §13.2) |
+| **Nivel de riesgo aceptable** | acceptable risk level | Per-institution ceiling on committed outgoing payments, derived weekly from its reserve requirement. Crossing it makes the SIP block the institution's outgoing payments automatically; re-enablement is manual. (Catálogo Operacional §10) |
+| **Catálogo técnico / operacional** | technical / operational catalog | BCE documents defining exact message structures, fields, validations, and flows. **The operational catalog is public** and decoded in [research/catalogo-operacional.md](research/catalogo-operacional.md); the technical one is still outstanding. |
 | **CCE — Cámara de Compensación Especializada** | specialized clearing house | BCE clearing system whose specifications govern clearing/settlement information. (BCE-GG-008-2025, art. 9) |
 | **Sistema Auxiliar de Pagos** | auxiliary payment system | BCE-authorized private payment infrastructure (e.g. BANRED's services). |
 | **SPI — Sistema de Pagos Interbancarios** | interbank payment system | Ecuador's legacy deferred transfer system (three daily windows) at the BCE. Not to be confused with Brazil's SPI. |

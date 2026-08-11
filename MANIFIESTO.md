@@ -1,4 +1,4 @@
-# Manifiesto RPI EC
+# Manifiesto
 
 ## Merecemos usar nuestro dinero en cualquier lugar, a cualquier hora y sin costo
 
