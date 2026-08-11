@@ -21,7 +21,7 @@ Then, depending on your role:
 - **Setting up to develop?** → [development/local-stack.md](development/local-stack.md).
 - **Proposing a change to scheme behavior?** → [rfcs/](rfcs/README.md).
 - **Evaluating the project for your institution?** → the [manifesto](../MANIFIESTO.md) (Spanish) and the blueprint's operator model section.
-- **Doing outreach?** → [product/adoption.md](product/adoption.md).
+- **Doing outreach?** → [product/adoption.md](product/adoption.md) for the strategy, [outreach/](outreach/README.md) for the actual letters and what has been sent.
 - **Press / policy audience?** → the [website](https://caudal-sip.pages.dev) and the manifesto.
 
 ## Structure
@@ -51,6 +51,7 @@ docs/
 │   └── adr/             Architecture Decision Records (numbered, immutable)
 ├── development/
 │   └── local-stack.md   Running the whole simulated network locally
+├── outreach/        🇪🇸 Drafts of institutional correspondence, and the register
 ├── plan/
 │   ├── action-plan.md   Participant-facing track: phases, outreach, risks
 │   └── core-build-order.md  Central system: ledger-first build sequence
