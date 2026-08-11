@@ -13,4 +13,11 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { blog };
+// Reference documents are rendered straight from `docs/` — the repository keeps
+// the only copy. Page metadata lives in the route, so the source markdown stays
+// clean for readers on GitHub.
+const docs = defineCollection({
+  loader: glob({ pattern: 'catalogo-operacional.md', base: '../docs/research' }),
+});
+
+export const collections = { blog, docs };

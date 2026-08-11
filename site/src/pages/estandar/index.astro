@@ -1,0 +1,151 @@
+---
+import { getEntry, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { SITE } from '../../config';
+
+const entry = await getEntry('docs', 'catalogo-operacional');
+if (!entry) throw new Error('docs/research/catalogo-operacional.md not found');
+const { Content, headings } = await render(entry);
+
+const title = 'El estándar de pagos en tiempo real del Ecuador, explicado';
+const description =
+  'Referencia abierta del Catálogo Operacional del Sistema Integrador de Pagos (SIP): estados de una orden de pago, códigos de rechazo, tipos de llave, tiempos, mensajería ISO 20022, compensación y riesgo de liquidez.';
+
+const toc = headings.filter((h) => h.depth === 2);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: title,
+  description,
+  inLanguage: 'es-EC',
+  isAccessibleForFree: true,
+  license: 'https://www.apache.org/licenses/LICENSE-2.0',
+  author: { '@type': 'Organization', name: SITE.fullName, url: SITE.url },
+  publisher: { '@type': 'Organization', name: SITE.fullName, url: SITE.url },
+  mainEntityOfPage: new URL('/estandar/', SITE.url).href,
+  about: [
+    'Sistema Integrador de Pagos',
+    'Red de Pagos Instantáneos',
+    'ISO 20022',
+    'pagos en tiempo real',
+    'Banco Central del Ecuador',
+  ],
+  citation:
+    'Catálogo Operacional para transferencias electrónicas de pago en tiempo real — Sistema Integrador de Pagos, v1.0, marzo de 2026, Banco Central del Ecuador',
+};
+---
+
+<Base title={title} description={description} jsonLd={jsonLd}>
+  <article class="container container--narrow prose">
+    <p class="doc-kicker">Referencia</p>
+    <h1>{title}</h1>
+
+    <aside class="doc-note">
+      <p>
+        Esta página es nuestra lectura del <strong>Catálogo Operacional</strong> que publicó el
+        Banco Central del Ecuador en marzo de 2026, el documento que define cómo van a funcionar
+        los pagos en tiempo real en el país. Lo resumimos y lo ordenamos para que cualquier
+        institución pueda entender qué le van a exigir.
+      </p>
+      <p>
+        No reemplaza a la norma: cada afirmación cita la sección del catálogo original para que la
+        puedas verificar en la fuente. Si encuentras un error,{' '}
+        <a href={`${SITE.github}/issues/new`} rel="noopener">abre un issue</a> y lo corregimos a la
+        vista de todos.
+      </p>
+    </aside>
+
+    <nav class="doc-toc" aria-label="Contenido">
+      <p class="doc-toc__title">Contenido</p>
+      <ul>
+        {toc.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}
+      </ul>
+    </nav>
+
+    <Content />
+
+    <hr />
+
+    <footer class="doc-footer">
+      <p>
+        El texto de esta página se genera desde
+        <a
+          href={`${SITE.github}/blob/main/docs/research/catalogo-operacional.md`}
+          rel="noopener">
+          <code>docs/research/catalogo-operacional.md</code>
+        </a>
+        en el repositorio: una sola versión, sin copias que se desincronicen. El historial de
+        cambios está en Git.
+      </p>
+      <p>
+        ¿Te sirve esto para tu institución? Las preguntas abiertas del final son el trabajo que
+        sigue, y se discuten en público en
+        <a href={`${SITE.github}/discussions`} rel="noopener">GitHub Discussions</a>.
+      </p>
+    </footer>
+  </article>
+</Base>
+
+<style>
+  .doc-kicker {
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .doc-note {
+    border-left: 3px solid var(--accent);
+    padding: 0.25rem 0 0.25rem 1.25rem;
+    margin: 2rem 0;
+  }
+
+  .doc-note p {
+    font-size: 0.95rem;
+    color: var(--text-muted, inherit);
+  }
+
+  .doc-toc {
+    margin: 2.5rem 0 3rem;
+    padding: 1.5rem 1.75rem;
+    background: var(--surface, rgba(0, 0, 0, 0.02));
+    border-radius: 10px;
+  }
+
+  .doc-toc__title {
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 0 0 0.75rem;
+  }
+
+  /* The headings already carry their own section numbers — no list markers. */
+  .doc-toc ul {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+    columns: 2;
+    column-gap: 2rem;
+  }
+
+  .doc-toc li {
+    margin: 0.3rem 0;
+    break-inside: avoid;
+    font-size: 0.95rem;
+  }
+
+  .doc-footer p {
+    font-size: 0.9rem;
+    color: var(--text-muted, inherit);
+  }
+
+  @media (max-width: 640px) {
+    .doc-toc ol {
+      columns: 1;
+    }
+  }
+</style>

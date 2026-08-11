@@ -15,10 +15,20 @@ npm run preview  # serve the built output
 |---|---|
 | `src/config.ts` | Project identity: name, tagline, description, GitHub URL. The one file to edit for branding. |
 | `src/content/blog/` | Blog posts (Markdown). Frontmatter schema in `src/content.config.ts`. |
+| `src/pages/estandar/` | Renders `docs/research/catalogo-operacional.md` — see below. |
 | `src/pages/manifiesto.md` | Mirror of the root `MANIFIESTO.md` — **change both together.** |
 | `src/layouts/` | `Base.astro` (shell, SEO, JSON-LD) and `Prose.astro` (long-form pages). |
+| `src/lib/remark-repo-links.mjs` | Rewrites repo-relative links in rendered docs to GitHub or to site routes. |
 | `src/styles/global.css` | All styling. No framework, no build-time CSS tooling. |
 | `src/pages/robots.txt.ts`, `llms.txt.ts` | Generated at build so they always match the live origin. |
+
+## Documents rendered from `docs/`
+
+Reference documents are **not copied into the site**. The `docs` content collection in `src/content.config.ts` loads them from `../docs/`, so the repository keeps a single canonical copy and there is nothing to keep in sync. Page metadata — title, description, JSON-LD — lives in the route, which keeps the source markdown clean for readers on GitHub.
+
+Two consequences worth knowing. Editing a file under `docs/` changes the site, which is why the CI workflow watches `docs/**` as well as `site/**`. And links inside those documents are repo-relative, so `remark-repo-links.mjs` rewrites them at build: to a site route when the page exists here, otherwise to the file on GitHub. Add new mappings to `WEB_ROUTES` in that file when you publish another document.
+
+The `manifiesto.md` mirror predates this arrangement and is the one exception; it stays a mirror because it is edited as public copy rather than as documentation.
 
 Public-facing copy is Spanish and must follow [`docs/spanish-style.md`](../docs/spanish-style.md).
 
