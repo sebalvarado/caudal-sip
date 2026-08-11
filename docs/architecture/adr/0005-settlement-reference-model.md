@@ -1,8 +1,10 @@
 # 0005. Reference settlement model: RTGS-style gross, no overdraft; DNS as a simulation mode
 
-- **Status**: Accepted
+- **Status**: Superseded by [0009](0009-risk-ceiling-as-funded-account.md)
 - **Date**: 2026-08-05
 - **Deciders**: Founding maintainer
+
+> Written before the Catálogo Operacional was available. Its assumptions ("likely deferred net settlement") turned out to be correct, but it missed the liquidity-risk engine entirely and proposed two separate settlement implementations where one funded-control-account model covers both. See [ADR-0009](0009-risk-ceiling-as-funded-account.md).
 
 ## Context
 

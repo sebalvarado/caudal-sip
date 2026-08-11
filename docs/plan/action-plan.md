@@ -1,10 +1,12 @@
 # Action Plan: Build in Public, Aim at the Deadline
 
+> **This plan covers the participant-facing track only.** The build order for the central system — the SIP-equivalent core, which is now ledger-first — is in [`core-build-order.md`](core-build-order.md). The two plans have not yet been reconciled into a single roadmap.
+
 The strategic clock: **November 30, 2026** — every red de pagos and every integrante must speak the BCE's ISO 20022 standard for intra-network real-time payments. Hundreds of institutions, especially cooperativas, need tooling that does not exist. Every month between now and then, this project gets more relevant, not less.
 
 ## Phase 0 — Foundation (weeks 1–4)
 
-1. **Obtain the catálogo técnico y operacional** attached to BCE-GG-007-2026. These define exact message fields, validations, and flows — the ground truth for `iso20022/` and `tck/`. Routes: BCE website / Registro Oficial (Segundo Suplemento Nº 245), Asobanca, a public-records request (LOTAIP), or direct contact with Gerencia de Medios de Pago y Servicios Nacionales.
+1. ~~**Obtain the catálogo técnico y operacional**~~ — **half done (2026-08-05)**. The *Catálogo Operacional* v1.0 is published on bce.fin.ec and is decoded in [`../research/catalogo-operacional.md`](../research/catalogo-operacional.md): payment states, reason codes, llave types, timing windows, message versions, netting, and the liquidity-risk engine. **Still outstanding: the catálogo técnico** (field-level XSDs and validation rules). Routes: Registro Oficial (Segundo Suplemento Nº 245), Asobanca, a LOTAIP public-records request, or Gerencia de Medios de Pago y Servicios Nacionales directly.
 2. **Get into the foros de interoperabilidad** (Comité Consultivo Interinstitucional de Pagos, created by BCE-GG-008-2025). Attend as fintech/expert. Being in the room = early access to standards drafts + credibility + distribution.
 3. **License + manifesto.** Name decided: **RPI EC** (with non-affiliation disclaimer). Apache-2.0. Manifesto drafted in Spanish at `MANIFIESTO.md` — publish as the first post.
 4. **Publish this research** (`docs/research/landscape.md`) as the opening content piece. It is already better documentation of Ecuador's RTP framework than anything public today — that alone earns attention from the industry and the BCE.
@@ -48,15 +50,17 @@ Weekly, in public, ES+EN: "Building Ecuador's open payments stack" — each comp
 
 ## Risks and honest caveats
 
-- **The catálogo técnico may be slow to obtain or under NDA within forums.** Mitigation: build profile-driven (generic core + country profile), track Bre-B/Pix profiles meanwhile.
+- **The catálogo técnico may be slow to obtain or under NDA within forums.** Reduced: the operational catalog is public and gives us states, codes, flows, message versions and mandatory fields, so `iso20022/` and `tck/` can start now. Mitigation for the rest: build profile-driven (generic core + country profile), track Bre-B/Pix profiles meanwhile.
 - **BCE may see an OSS implementation as encroachment.** Mitigation: relentless positioning as *complement* (participant-side tooling + education), never "replacement for SIP." The Pix-on-GitHub precedent is the talking point.
 - **BANRED and incumbent vendors sell competing integration services.** That's validation. OSS wins the long tail (cooperativas) that vendors underserve.
 - **Timeline slippage by BCE** (18-month SIP deadline was ambitious). Doesn't hurt us: participant-side deadlines still stand, and slippage increases demand for ready-made tooling.
 
 ## Immediate next actions
 
-- [ ] Decide name + create GitHub org
-- [ ] Hunt down catálogo técnico/operacional of BCE-GG-007-2026
+- [x] Decide name + create GitHub org
+- [x] ~~Hunt down the catálogo operacional~~ — found, decoded, docs reconciled
+- [ ] Request the **catálogo técnico** (field-level profiles) via LOTAIP
+- [ ] Raise the `pacs.008.001.08` vs `pacs.008.004.08` version inconsistency with the BCE — a small, precise, well-sourced question is the cheapest possible first contact
 - [ ] Contact BCE re: foros de interoperabilidad participation
 - [ ] Scaffold the Go monorepo (`iso20022/` first) 
 - [ ] Publish manifesto + landscape research as posts 1 and 2
