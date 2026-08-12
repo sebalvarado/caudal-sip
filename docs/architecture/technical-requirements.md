@@ -46,7 +46,17 @@ Payments do not have a maintenance window. The whole promise is Sunday at midnig
 
 Payments software is attacked. The [security policy](../../SECURITY.md) covers reporting; these are the build requirements.
 
-**Transport and messages.** mTLS everywhere, with certificate pinning per counterparty where the scheme allows. Detached signatures on messages (JWS-style, as Pix does) so authenticity survives transport termination. Key rotation designed in from the first release, with expiry warnings surfaced in the participant console long before anything breaks — an expired certificate at 3am is a far more likely outage than a clever attack.
+**What the norm actually requires.** Art. 10 of BCE-GG-008-2025 is written in terms of outcomes, not mechanisms. It requires confidentiality, integrity, availability, authenticity and traceability, using "protocolos alineados con estándares internacionales reconocidos" plus whatever directives the BCE issues, with documented and auditable procedures. Its seven minimum components are robust encryption **in transit and at rest**, access control and strong authentication between systems and between systems and users, vulnerability management, continuous security monitoring, business continuity plans, IT disaster recovery, and event traceability.
+
+**No protocol is mandated anywhere in the published norm.** The words VPN, TLS and certificate do not appear in any of the four resolutions or in the Catálogo Operacional. Two provisions explain why: Art. 5.1 requires connection "a los enlaces de telecomunicación establecidos por el BCE", and Disposición General TERCERA assigns the Gerencia de Riesgos and the Gerencia de Tecnologías de Información the job of issuing an internal document containing the security standards **and the connection standards for the SIP and the RPI**. That document is named, assigned, and unpublished. Until it appears, every statement about transport in this project is a default we chose, not a requirement we inherited.
+
+**Our defaults, and why.** mTLS between counterparties with per-counterparty certificate pinning where allowed, plus detached message signatures (JWS-style) so authenticity survives transport termination. The precedent is Pix, which runs over RSFN — a dedicated private network — with mTLS and ICP-Brasil certificates layered on top, and the phrase "enlaces de telecomunicación establecidos por el BCE" suggests Ecuador lands somewhere similar, plausibly reusing the links institutions already have for SPI and the cámaras.
+
+**Therefore transport is pluggable, and nothing above it may assume otherwise.** No component hard-codes a certificate authority, an addressing scheme, a cipher suite, or the assumption that the peer is reachable over the public internet. If the BCE mandates a dedicated link and its own PKI, that must be configuration rather than a rewrite. This is a design constraint, not a preference — it is the single largest piece of unpublished specification we are exposed to.
+
+**Encryption at rest** is explicitly required by Art. 10(a) and applies to every Postgres deployment, backup, and log sink. It is not optional and not something an operator should have to think to enable.
+
+**Keys and rotation.** Key rotation designed in from the first release, with expiry warnings surfaced in the console long before anything breaks — an expired certificate at 3am is a far more likely outage than a clever attack.
 
 **Keys.** Private keys live in a KMS or HSM behind a pluggable interface, never in the database, never in configuration files, never in the repository. The interface ships with a file-based development implementation that refuses to start when the environment is production.
 
@@ -54,7 +64,7 @@ Payments software is attacked. The [security policy](../../SECURITY.md) covers r
 
 **Supply chain.** A deliberately small dependency tree — every addition is a decision, not a convenience. Signed releases with an SBOM, reproducible builds, pinned versions, and automated vulnerability scanning that blocks the release rather than filing a ticket. An institution's risk officer will read this list, and it is easier to defend a short one.
 
-**Auditability.** Append-only audit written in the same transaction as the change, hash-chained **[proposal]**, and sufficient to reconstruct any payment years later without access to production. This maps directly to the security and continuity obligations of Art. 10 of BCE-GG-008-2025.
+**Auditability.** Append-only audit written in the same transaction as the change, hash-chained **[proposal]**, and sufficient to reconstruct any payment years later without access to production. This satisfies Art. 10(g) of BCE-GG-008-2025, on registry and traceability of relevant events.
 
 ## Correctness and testing
 

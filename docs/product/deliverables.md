@@ -34,7 +34,7 @@ Note what is scarce: **exactly two deliverables are imported.** Almost nobody in
 | Deliverable | What it is | Primary audience | Mode |
 |---|---|---|---|
 | **`sip`** | The central system: registry, central key system, resolution, payment router, risk funding, clearing and the ledger | The BCE (Scheme Core profile) | Deploy |
-| **`red`** | Network profile: intra-network routing plus a distributed directory node | Redes de pagos — BANRED, COONECTA, ETIKO's, DEUNA | Deploy |
+| **`red`** | Network profile: intra-network routing plus a distributed directory node. A *red de pagos* is a **licensed institution**, not a network topology — see below | Redes de pagos — BANRED, COONECTA, ETIKO's, DEUNA | Deploy |
 | **`gateway`** | What an institution puts between its core banking and a red: simple API in, signed ISO 20022 over mTLS out | Banks, cooperativas, mutualistas, SEDPEs | Deploy / Hosted |
 | **North API** | The gateway's REST + webhook surface, versioned | Core-banking systems and their vendors | Call |
 | **SDKs** | Generated clients in Go, TypeScript and Java | Integration developers | Generate |
@@ -81,6 +81,16 @@ A `docker compose` stack that starts the entire simulated national network local
 ### `caudalctl` — the CLI
 
 **Not the day-to-day operations tool.** Daily work happens in the console; the *Jefe de Operaciones* never opens a terminal. `caudalctl` is for engineers: validate a message against the profile, inspect a payment by end-to-end ID during an incident, run migrations, generate configuration, rotate keys. Installation and incident response, not routine operation.
+
+### `red` — and what a "red de pagos" actually is
+
+The Spanish word invites a misreading. A **red de pagos is a licensed institution, not a network deployment and not a VPN** — an authorized *administradora* that routes payments among its member integrantes, in the sense that "the Visa network" names a company's routing role rather than any cabling. BANRED, COONECTA, ETIKO's and DEUNA are the four named in Anexo 2 of the catálogo.
+
+Its regulated responsibilities are specific: incorporate integrantes into real-time operation, administer their distributed directory, and — the part that matters most for us — **technically qualify and validate its own members** (BCE-GG-008-2025, Art. 4). A red is the certifying authority for the institutions beneath it, which makes it a natural adopter of the conformance kit and one of the highest-leverage relationships in the project.
+
+`red` is simply the binary such an institution deploys.
+
+**On connectivity**, the published norm mandates no transport protocol at all. Art. 5.1 requires connection "a los enlaces de telecomunicación establecidos por el BCE" and Disposición General TERCERA assigns a separate, still-unpublished document containing the connection standards. Our defaults and the resulting design constraint — transport must stay pluggable — are in [`../architecture/technical-requirements.md`](../architecture/technical-requirements.md).
 
 ### Consoles — the undecided part
 

@@ -139,7 +139,7 @@ Scheme-level design decisions (integration APIs, direct/indirect participation, 
 
 - **Language**: Go throughout. Single static binaries per service, Docker images, Helm charts later. Cooperativa IT departments can run a binary; they cannot run a 40-pod Kubernetes hub (Mojaloop's practical adoption problem).
 - **Messaging**: ISO 20022 XML on the wire (BCE mandate), JSON representations for internal APIs and debugging. Learn from `moov-io/rtp20022` on Go XML namespace handling.
-- **Security**: mTLS everywhere + detached message signatures (JWS like Pix SPI), key rotation story from day one, audit log append-only. Maps directly to Art. 10 of BCE-GG-008-2025.
+- **Security**: mTLS + detached message signatures (JWS like Pix SPI), key rotation from day one, append-only audit log — **our defaults, not the norm's requirements**. Art. 10 of BCE-GG-008-2025 specifies outcomes and leaves the mechanisms to an unpublished BCE connection standard, so transport stays pluggable. See [`technical-requirements.md`](technical-requirements.md).
 - **Ledger**: strict double-entry, immutable journal, event-sourced state for settlement. (Optionally benchmark against TigerBeetle as a pluggable backend later — good content, good performance story.)
 - **Storage**: Postgres for everything at first. Boring wins trust in payments.
 - **Protocol discipline**: every inter-service contract published as OpenAPI/protobuf with versioned releases, Pix-style. The spec *is* the product as much as the code.

@@ -25,7 +25,13 @@ En particular, los esquemas y las reglas de validación campo por campo de los m
 
 Si el documento todavía no ha sido expedido, solicito se me informe su estado y la fecha prevista de publicación.
 
-## 2. Parámetros de operación
+## 2. Estándares de conexión y de seguridad de la información
+
+Copia del documento previsto en la **Disposición General Tercera de la Resolución BCE-GG-008-2025**, cuya emisión corresponde a la Gerencia de Riesgos y a la Gerencia de Tecnologías de Información, y que debe contener los estándares de seguridad de la información y ciberseguridad, así como **los estándares de conexión al Sistema Integrador de Pagos y a la Red de Pagos Instantáneos**.
+
+De no encontrarse aún emitido, solicito se me informe su estado y, en particular, si los "enlaces de telecomunicación establecidos por el BCE" a los que se refiere el artículo 5, numeral 1, de la misma resolución corresponden a una red dedicada, a la infraestructura de conexión que las entidades ya mantienen con el Banco Central para el SPI y las cámaras de compensación, o a otro mecanismo.
+
+## 3. Parámetros de operación
 
 Los valores actualmente definidos para:
 
@@ -35,11 +41,11 @@ b) el horario y el número de liquidaciones diarias de las mallas de compensaci�
 
 c) los *timeouts* por etapa del proceso de pago, previstos en la sección 5, regla 13.
 
-## 3. Foros de interoperabilidad
+## 4. Foros de interoperabilidad
 
 Los **criterios y el procedimiento de participación** en el Comité Consultivo Interinstitucional de Pagos y en los demás foros de interoperabilidad previstos en la Resolución BCE-GG-008-2025, incluyendo si contemplan la participación de personas naturales o de organizaciones técnicas no reguladas.
 
-## 4. Niveles de riesgo pendientes
+## 5. Niveles de riesgo pendientes
 
 Los porcentajes de requerimiento de encaje y de nivel de riesgo aceptable correspondientes a los códigos de sector `0007` (Cooperativas de Ahorro y Crédito Segmento 4) y `0008` (Segmento 5), que en la Tabla 19 del Catálogo Operacional constan sin valores asignados.
 
