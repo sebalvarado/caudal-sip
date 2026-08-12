@@ -12,6 +12,8 @@
 | **An operable product** | Institutions that must comply, and the people who run them daily | A cooperativa passes BCE qualification and operates the thing with existing staff, not new hires | `gateway/`, participant console, `tck/`, runbooks |
 | **A public argument** | Regulators, networks, multilaterals, press | "Building this is hard and slow" stops being credible, because it is running and measurable | `sandbox/`, `docs/research/`, load-test numbers, the manifesto |
 
+> The directory names above predate the decision to build the central system, and a fourth product — the scheme core the BCE would run — is missing from the table. [`deliverables.md`](deliverables.md) is the current list of what ships and who touches it; this section is due a rewrite against it.
+
 Confusing these is the main failure mode. A beautiful Go library that no institution can operate fails product 2. A working gateway nobody outside one cooperativa has heard of fails product 3.
 
 ## Primary: institutions that must comply

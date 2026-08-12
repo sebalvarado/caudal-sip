@@ -18,6 +18,7 @@ Then, depending on your role:
 - **Writing code?** → [architecture/data-model.md](architecture/data-model.md) (entities, lifecycles, invariants), [architecture/technical-requirements.md](architecture/technical-requirements.md) (the non-functional bar), [architecture/adr/](architecture/adr/README.md) (decisions already made), and [glossary.md](glossary.md) (the vocabulary of record). Also read `/AGENTS.md` at the repo root.
 - **Building the ledger or settlement?** → [architecture/ledger.md](architecture/ledger.md) (accounts, invariants, interface) then [architecture/posting-patterns.md](architecture/posting-patterns.md) (the exact postings for every flow). Fees live in [architecture/tariff.md](architecture/tariff.md).
 - **Scoping a feature?** → [product/stakeholders.md](product/stakeholders.md) then [product/requirements.md](product/requirements.md). If it serves nobody in the first, it doesn't belong in the second.
+- **Wondering what we actually ship, or where something belongs in the tree?** → [product/deliverables.md](product/deliverables.md).
 - **Setting up to develop?** → [development/local-stack.md](development/local-stack.md).
 - **Proposing a change to scheme behavior?** → [rfcs/](rfcs/README.md).
 - **Evaluating the project for your institution?** → the [manifesto](../MANIFIESTO.md) (Spanish) and the blueprint's operator model section.
@@ -38,6 +39,7 @@ docs/
 ├── product/
 │   ├── north-star.md    Direction, trust ladder, guardrails — read before scoping
 │   ├── stakeholders.md  Who we build for, the people inside them, who we don't
+│   ├── deliverables.md  What ships, who uses each piece, how they touch it
 │   ├── requirements.md  Jobs, phased scope, surfaces (including internal UIs), non-goals
 │   └── adoption.md      Why each group says yes, objections, proof artifacts
 ├── architecture/
