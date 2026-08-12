@@ -42,11 +42,68 @@ Note what is scarce: **exactly two deliverables are imported.** Almost nobody in
 | **`spec`** | OpenAPI for the North API, ISO 20022 profile definitions, QR payload spec | Everyone, including our own SDK generation | Read / Generate |
 | **`tck`** | Conformance runner producing a pass/fail report against the standard | Jefe de Sistemas, before BCE qualification | Run |
 | **`sandbox`** | The whole simulated network in one command | Developers, and anyone who needs to see it work | Run |
-| **`caudalctl`** | CLI: validate a message, inspect a payment, administer a deployment | Operators and developers | Run |
+| **`caudalctl`** | CLI: validate a message, inspect a payment, run migrations, rotate keys | Engineers, during installation and incidents — **not** daily operations | Run |
 | **`pkg/iso20022`** | Go message library for the BCE profile | The rare institution or red building its own gateway | Import |
 | **`pkg/qr`** | EMV QRCPS encoder and decoder carrying llaves | Same, plus mobile app teams | Import |
 | **Documentation** | The catálogo decode, architecture, RFCs, runbooks, tutorials | Institutions, regulators, contributors | Read |
 | **The simulation** | Published models: liquidity ceilings, netting exposure, fee scenarios | The BCE, multilaterals, the press | Read |
+
+## What each thing is built as, and where its data lives
+
+The table above says who touches what. This one says what a maintainer is actually building and what has to be backed up.
+
+| Deliverable | Built as | Its data |
+|---|---|---|
+| `sip` | Go binary, long-running service | **Postgres**: ledger, registry, central key system, event log. TigerBeetle later as an alternative ledger backend |
+| `red` | Go binary, same codebase, network profile | **Postgres**: distributed directory node, routing and empadronamiento state, event log |
+| `gateway` | Go binary, single- or multi-tenant | **Postgres**: payment records, llave mappings, credential snapshots, outbox |
+| North API | HTTP + JSON, defined by OpenAPI; webhooks outbound | None — the gateway's storage |
+| SDKs | Generated from the OpenAPI spec, published to Go modules, npm and Maven Central | None |
+| Consoles | Web application; **stack not yet decided — see below** | None of its own; reads the backend it is attached to |
+| `spec` | Not code: OpenAPI YAML, ISO 20022 profile definitions and XSDs, QR payload spec. Versioned releases | Not applicable |
+| `tck` | Go binary plus a corpus of declarative scenarios and golden messages | Emits report files; no persistent store |
+| `sandbox` | `docker compose` stack with seed data | Ephemeral Postgres per container, thrown away |
+| `caudalctl` | Go CLI, single binary | None; talks to a service or a file |
+| `pkg/iso20022`, `pkg/qr` | Go libraries, semantically versioned | None |
+| Documentation | Markdown in `docs/`, rendered by `site/` | Git |
+| The simulation | Offline analysis: Go or notebooks over reconstructed public data | Input files and published results |
+
+Every stateful component is **Postgres**, per [ADR-0007](../architecture/adr/0007-postgres-first.md). One database technology across the whole system is a deliberate operability constraint: a cooperativa's IT department can back up and audit Postgres with skills it already has.
+
+### `tck` — the conformance kit
+
+Not a test framework for us; a **conformance driver aimed at somebody else's implementation**. It impersonates the counterparty — a red, or the SIP — and drives the institution's gateway through a scripted corpus: the happy path, every rejection code in Tabla 12, each of the four exceptions in §11.4, llave registration and cancellation, timeout behaviour. It then produces a pass/fail report suitable for handing to the BCE. Mojaloop's Testing Toolkit is the closest prior art. An institution runs it before qualification and after every change. The ambition is that it becomes the de facto pre-certification tool for the whole country, including for institutions that never deploy our gateway.
+
+### `sandbox` — the network in a box
+
+A `docker compose` stack that starts the entire simulated national network locally: a fake SIP, two redes, several mock banks, seeded llaves and test identities. One command, no real infrastructure, no BCE involvement. It serves the fifteen-minute clone-to-payment experience, the demo video that makes "building this is hard" stop being credible, and the substrate the `tck` runs against.
+
+### `caudalctl` — the CLI
+
+**Not the day-to-day operations tool.** Daily work happens in the console; the *Jefe de Operaciones* never opens a terminal. `caudalctl` is for engineers: validate a message against the profile, inspect a payment by end-to-end ID during an incident, run migrations, generate configuration, rotate keys. Installation and incident response, not routine operation.
+
+### Consoles — the undecided part
+
+One web application with role-scoped views, but **the stack is an open decision that matters more than it looks**. Embedding the UI in the Go binary — server-rendered, no separate deployment — means an institution installs one file and is done. A separate single-page application is more pleasant to build and gives us a second thing for a cooperativa without an infrastructure team to deploy, monitor and upgrade. Given that [`stakeholders.md`](stakeholders.md) identifies operability by existing staff as the adoption constraint, the single-binary option is strongly indicated, but this needs an ADR before anyone writes console code.
+
+## Data pipelines: what exists and what deliberately does not
+
+**There is no ETL in the payment path and no data platform.** Payments are synchronous request and response over an append-only event log. No Kafka, no warehouse, no stream processing. At Ecuador's volumes the transactional database also answers the reporting and dashboard queries the catálogo requires, and adding a second data tier would buy nothing while doubling what an operator has to run.
+
+What does exist is a small set of **scheduled jobs**, each mandated by the catálogo:
+
+| Job | Cadence | Source |
+|---|---|---|
+| Poll the integrante's BCE current-account balance | Every 30 minutes, parameterized | Sistema SLA (§10, rule 7) |
+| Recompute the nivel de riesgo aceptable | Weekly, Thursday to Wednesday | Sistema SBA encaje cycle (§10) |
+| Settle the multilateral malla | Several times daily, plus manual | Internal (§9, rules 2–3) |
+| Close the `por conciliar` queue | Daily by 18:00 | Internal (§13.2) |
+| Synchronize the central key system with distributed directories | Continuous, reconciled periodically | Internal (§3, §12) |
+| Operational reports | On demand and scheduled | Internal (§2.1.17) |
+
+Two of these — the SLA balance poll and the SBA encaje feed — are **integrations with existing BCE systems we do not control**, which makes them the most likely source of operational surprises and the first thing to stub in the sandbox.
+
+The simulation deliverable is genuinely batch data work, but it is offline analysis over public data, not production infrastructure.
 
 ## What each audience actually touches
 
@@ -78,7 +135,7 @@ Four consequences follow directly, and they settle the structure argument.
 
 **`spec/` is a top-level deliverable, not a byproduct.** SDKs generate from it, the conformance kit tests against it, and it is what institutions read. It is the closest thing this project has to a product in the Pix sense, where the specification *is* the artifact.
 
-**Consoles need a home.** One application, three role-scoped views, and it is not the marketing site. `site/` stays what it is.
+**Consoles need a home**, and it is not the marketing site — `site/` stays what it is. Where exactly depends on the stack decision above: server-rendered templates live beside the Go code they serve, while a single-page application needs its own directory and build. That ADR should come before the restructure touches this.
 
 **Only `pkg/` is imported, and it is small.** Everything else in the engine is deployed, which is exactly why the core lives under `internal/` — we owe operability there, not API stability. Packages get promoted to `pkg/` when a real consumer appears, never speculatively.
 
