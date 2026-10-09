@@ -4,6 +4,8 @@
 - **Date**: 2026-08-05
 - **Deciders**: Founding maintainer
 
+> The profile-driven XML decision below is unchanged. Wording that binds the library to Go types, or to Go's XML namespace behavior via moov-io, yields to [ADR-0011](0011-rust-monorepo.md): codecs, golden files, and fuzzing are Rust. moov-io remains prior art for the namespace problems, not the implementation.
+
 ## Context
 
 BCE-GG-007-2026 mandates ISO 20022 messages (pacs.008, pacs.002, acmt family) whose exact fields and validations live in the BCE's catálogo técnico y operacional — which we do not yet possess. We must start building without it, and remain correct when we obtain it. Reference systems differ: Pix uses ISO 20022 XML; Mojaloop uses an ISO 20022-inspired JSON profile.

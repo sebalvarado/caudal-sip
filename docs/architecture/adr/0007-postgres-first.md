@@ -4,6 +4,8 @@
 - **Date**: 2026-08-05
 - **Deciders**: Founding maintainer
 
+> The Postgres decision below is unchanged. "Narrow Go interfaces" is restated by [ADR-0011](0011-rust-monorepo.md) as Rust traits. Explicit SQL stays; the query layer is `sqlx`, not an ORM.
+
 ## Context
 
 Realistic national volumes are modest by software standards: Bre-B — serving a country three times Ecuador's size — peaks around 5M transactions/day (~60 TPS average). Adopting institutions must be able to operate and audit the storage layer with skills they already have. Trust ("boring and auditable") outweighs exotic performance.

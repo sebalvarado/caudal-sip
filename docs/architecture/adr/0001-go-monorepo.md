@@ -1,8 +1,10 @@
 # 0001. Build in Go, in a single monorepo
 
-- **Status**: Accepted
+- **Status**: Superseded by [0011](0011-rust-monorepo.md)
 - **Date**: 2026-08-05
 - **Deciders**: Founding maintainer
+
+> The language half of this decision is reversed. The single-repository half stands and is restated in [ADR-0011](0011-rust-monorepo.md). Read 0011 for the toolchain.
 
 ## Context
 

@@ -87,7 +87,7 @@ Mirrors Ecuador's regulated topology (redes de pagos + SIP + RPI) so every compo
         └───────────┘
 ```
 
-## Repository shape (Go monorepo, moov-io DX conventions)
+## Repository shape (Rust Cargo workspace, moov-io DX conventions)
 
 This repository is the **single source of truth**: code, specs, docs, research, manifesto, and community artifacts all live here. No satellite repos until scale forces it.
 
@@ -100,27 +100,27 @@ caudal-sip/
 ├── site/           ✅ The website: manifesto, blog, /estandar/
 │
 │  ── The central system (the SIP-equivalent core) ──
-├── ledger/         ✅ The scheme's obligation ledger. Accounts, balanced
+├── ledger/            The scheme's obligation ledger. Accounts, balanced
 │   │                  entries, two-phase reservations, the no-overdraft
 │   │                  invariant. Two ledgers: obligations and headroom.
-│   ├── postgres/   ✅ Default backend (ADR-0007)
+│   ├── postgres/      Default backend (ADR-0007)
 │   └── tigerbeetle/   Second backend; differential-tested against Postgres
-├── tariff/         ✅ Effective-dated fee schedules; quote-then-commit
-├── risk/           ✅ Funding service for the liquidity ceiling
-├── clearing/       ✅ Mallas, netting, settlement instructions
+├── tariff/            Effective-dated fee schedules; quote-then-commit
+├── risk/              Funding service for the liquidity ceiling
+├── clearing/          Mallas, netting, settlement instructions
 ├── registry/          Integrantes, redes, BICs, empadronamiento
 ├── llaves/            Central key system + distributed directory sync
 ├── router/            Stateless payment router and validator (was `switch/`)
 ├── reconciliation/    The `por conciliar` work queue and directory divergence
 │
 │  ── The participant side ──
-├── iso20022/          Go structs, codecs and validation for the BCE profile
+├── iso20022/          Rust types, codecs and validation for the BCE profile
 ├── gateway/           What an institution deploys: simple API in, signed
 │                      ISO 20022 over mTLS out
 ├── qr/                EMV QRCPS encoder/decoder carrying llaves
 │
 │  ── Shared and supporting ──
-├── cmd/            ✅ Binaries (`sip` today)
+├── Cargo.toml         Workspace root; binaries (`sip`, `red`, `gateway`) are members
 ├── spec/              Machine-readable contracts: OpenAPI, XSD profiles, QR
 │                      payload. Versioned releases, Pix-style.
 ├── sandbox/           "Payments network in a box": docker compose, 2 redes,
@@ -137,8 +137,8 @@ Scheme-level design decisions (integration APIs, direct/indirect participation, 
 
 ### Technical decisions (proposed defaults)
 
-- **Language**: Go throughout. Single static binaries per service, Docker images, Helm charts later. Cooperativa IT departments can run a binary; they cannot run a 40-pod Kubernetes hub (Mojaloop's practical adoption problem).
-- **Messaging**: ISO 20022 XML on the wire (BCE mandate), JSON representations for internal APIs and debugging. Learn from `moov-io/rtp20022` on Go XML namespace handling.
+- **Language**: Rust throughout ([ADR-0011](adr/0011-rust-monorepo.md)). Single release binaries per service, Docker images, Helm charts later. Cooperativa IT departments can run a binary; they cannot run a 40-pod Kubernetes hub (Mojaloop's practical adoption problem).
+- **Messaging**: ISO 20022 XML on the wire (BCE mandate), JSON representations for internal APIs and debugging. `moov-io/rtp20022` stays useful prior art on XML namespace handling.
 - **Security**: mTLS + detached message signatures (JWS like Pix SPI), key rotation from day one, append-only audit log — **our defaults, not the norm's requirements**. Art. 10 of BCE-GG-008-2025 specifies outcomes and leaves the mechanisms to an unpublished BCE connection standard, so transport stays pluggable. See [`technical-requirements.md`](technical-requirements.md).
 - **Ledger**: strict double-entry, immutable journal, event-sourced state for settlement. (Optionally benchmark against TigerBeetle as a pluggable backend later — good content, good performance story.)
 - **Storage**: Postgres for everything at first. Boring wins trust in payments.
@@ -153,4 +153,4 @@ Scheme-level design decisions (integration APIs, direct/indirect participation, 
 
 ## Naming (decided)
 
-**RPI EC** — adopting the regulation's own nomenclature (Red de Pagos Instantáneos) so the project reads as an implementation of the national standard, not a parallel invention. Go module paths: `github.com/<org>/rpi-ec/...`. Non-affiliation disclaimer mandatory in README, manifesto, and site.
+**RPI EC** — adopting the regulation's own nomenclature (Red de Pagos Instantáneos) so the project reads as an implementation of the national standard, not a parallel invention. Non-affiliation disclaimer mandatory in README, manifesto, and site.

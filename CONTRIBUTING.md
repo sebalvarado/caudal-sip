@@ -21,13 +21,13 @@ Thank you for helping build open payments infrastructure for Ecuador. Contributi
 
 ## Development
 
-The Go workspace is being scaffolded (see the [blueprint](docs/architecture/blueprint.md) for the target layout). Until then, the website is the only buildable artifact:
+The Cargo workspace is not scaffolded yet (see the [blueprint](docs/architecture/blueprint.md) and [ADR-0011](docs/architecture/adr/0011-rust-monorepo.md)). Until then, the website is the only buildable artifact:
 
 ```bash
 cd site && npm install && npm run dev
 ```
 
-When Go code lands, the standard loop will be: `go build ./...`, `go test ./...`, `golangci-lint run` — CI will enforce all three.
+When the workspace lands, the standard loop will be: `cargo build --workspace`, `cargo test --workspace`, `cargo clippy --workspace -- -D warnings` — CI will enforce all three.
 
 ## Pull requests
 

@@ -14,7 +14,7 @@ ADRs cover component-level decisions. Scheme-level behavior (message profiles, l
 
 | # | Title | Status |
 |---|---|---|
-| [0001](0001-go-monorepo.md) | Go, single monorepo | Accepted |
+| [0001](0001-go-monorepo.md) | Go, single monorepo | Superseded by 0011 |
 | [0002](0002-apache-license.md) | Apache-2.0 license | Accepted |
 | [0003](0003-iso20022-profile-driven.md) | ISO 20022 XML on the wire, profile-driven message library | Accepted |
 | [0004](0004-two-api-surfaces.md) | Two API surfaces: North (ours) and South (mandated) | Accepted |
@@ -24,3 +24,4 @@ ADRs cover component-level decisions. Scheme-level behavior (message profiles, l
 | [0008](0008-ledger-architecture.md) | Ledger architecture: one bounded service, event log of record, two backends | Accepted |
 | [0009](0009-risk-ceiling-as-funded-account.md) | Risk ceiling as a funded control account; one ledger for both settlement models | Accepted |
 | [0010](0010-commissions-as-postings.md) | Commissions and taxes as first-class postings, quoted before charged | Accepted |
+| [0011](0011-rust-monorepo.md) | Rust, single monorepo | Accepted |

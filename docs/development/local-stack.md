@@ -1,6 +1,6 @@
 # Running the Full Stack Locally
 
-> **Status: this is a design contract, not documentation of something that exists.** No Go code is in the repository yet. This document specifies the developer experience we are committing to build, because writing it first is what forces the architecture to stay operable. When the code lands, this file becomes the setup guide and this notice goes away.
+> **Status: this is a design contract, not documentation of something that exists.** No backend code is in the repository yet. This document specifies the developer experience we are committing to build, because writing it first is what forces the architecture to stay operable. When the code lands, this file becomes the setup guide and this notice goes away.
 
 ## The commitment
 
@@ -46,7 +46,7 @@ caudal pay --from banco-alfa --llave 0991234567 --amount 25.40
 caudal payment show <end-to-end-id>               # full state history and every message
 ```
 
-The CLI name `caudal` is **[proposal]** pending an ADR; it should match whatever the Go module path becomes.
+The CLI name `caudal` is **[proposal]** pending an ADR; it should match whatever the binary crate is named.
 
 ## Seeded state
 
@@ -85,13 +85,13 @@ make chaos-badsig       # tampered signature: rejected at the switch, nothing re
 | `make test` | Unit and property tests |
 | `make test-e2e` | Full network scenarios against a running stack |
 | `make tck` | Conformance suite against a target, producing the shareable report |
-| `make lint` | `golangci-lint` plus format check |
+| `make lint` | `cargo clippy` plus `cargo fmt` check |
 
 Two conventions worth adopting from day one because retrofitting them is painful: **deterministic per-worktree port offsets and database names**, derived from the directory name, so several branches run simultaneously without conflict; and **a database snapshot you can restore** rather than only a seed script, so debugging a specific state does not require replaying a scenario.
 
 ## Prerequisites
 
-Go 1.23+, Docker with Compose, and `make`. Deliberately nothing else — no language runtime beyond Go, no Kubernetes, no cloud CLI, no account anywhere. Postgres runs in Docker; a client is useful but optional.
+A stable Rust toolchain, Docker with Compose, and `make`. Deliberately nothing else — no second language runtime, no Kubernetes, no cloud CLI, no account anywhere. Postgres runs in Docker; a client is useful but optional.
 
 If setting this up takes more than fifteen minutes on a clean machine, that is a bug worth an issue, not a documentation problem.
 
