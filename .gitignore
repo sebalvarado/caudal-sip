@@ -6,10 +6,8 @@ dist/
 .vercel/
 .wrangler/
 
-# Go
-bin/
-*.test
-coverage.out
+# Rust
+/target/
 
 # Local tooling noise
 logs/
@@ -19,8 +17,11 @@ logs/
 .env.*
 !.env.example
 
-# Third-party papers are linked, not redistributed (see research/README.md)
+# Third-party papers are linked, not redistributed (see research/README.md).
+# Primary BCE sources in research/bce/ are deliberately vendored.
 research/*.pdf
+!research/bce/
+!research/bce/*.pdf
 
 # Vendored agent skills belong to their upstream authors; skills-lock.json
 # pins them and `npx skills experimental_install` restores them.

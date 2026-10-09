@@ -1,6 +1,6 @@
 # El Catálogo Operacional, explicado
 
-**Fuente**: *Catálogo Operacional para transferencias electrónicas de pago en tiempo real — Sistema Integrador de Pagos*, v1.0, marzo de 2026, Gerencia de Medios de Pago y Servicios Nacionales del BCE. Publicado en [bce.fin.ec](https://www.bce.fin.ec/storage/BCE/resoluciones/Catalogo-Operacional.pdf); hay una copia local en `research/` (excluida del repositorio).
+**Fuente**: *Catálogo Operacional para transferencias electrónicas de pago en tiempo real — Sistema Integrador de Pagos*, v1.0, marzo de 2026, Gerencia de Medios de Pago y Servicios Nacionales del BCE. El [PDF oficial local](../../research/bce/Catalogo-Operacional.pdf) y su [transcripción mecánica](../../research/bce/Catalogo-Operacional.md) están versionados junto con su URL, fecha de descarga y SHA-256 en [`research/bce/README.md`](../../research/bce/README.md).
 
 > **English abstract.** This is the reference document for Ecuador's real-time payment scheme: the operational specification behind resolutions BCE-GG-007-2026 and BCE-GG-008-2025. It defines the payment state machine, rejection codes, llave (payment key) types and lifecycles, timing limits, ISO 20022 message versions and mandatory fields, deferred net settlement, and a liquidity-risk engine that automatically blocks an institution's outgoing payments when its committed obligations exceed a reserve-derived ceiling. Written in Spanish because its readers are Ecuadorian institutions working against a Spanish-language specification; section numbers refer to the catálogo itself so every claim can be verified. The companion *catálogo técnico* (field-level schemas) has not been published.
 
@@ -157,7 +157,9 @@ Cada integrante recibe un **nivel de riesgo aceptable** derivado de su requerimi
 | `0006` | Cooperativas segmento 3 | 1% | 100% |
 | `0007` | Cooperativas segmento 4 | *(sin valores en el catálogo)* | |
 | `0008` | Cooperativas segmento 5 | *(sin valores en el catálogo)* | |
-| `0009` | SEDPES (fintech) | 0,5% | 100% más un recargo según su nivel de riesgo |
+| `0009` | SEDPES (fintech) | 0,5% más un porcentaje según su nivel de riesgo | 100% |
+
+Para las SEDPES, la nota 6 de la tabla ubica el porcentaje adicional en el **encaje**, no en el factor de riesgo. El catálogo no publica la fórmula de ese porcentaje.
 
 Que los segmentos 4 y 5 aparezcan con las celdas vacías puede ser un descuido de edición o una decisión pendiente, pero son justamente las cooperativas más pequeñas del país. Vale preguntarlo.
 
