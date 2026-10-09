@@ -2,7 +2,7 @@
 
 The sequence for building the central system — the SIP-equivalent the BCE would run. This is what changed when we decided the no-overdraft rule is a database invariant ([ADR-0009](../architecture/adr/0009-risk-ceiling-as-funded-account.md)) and commissions are first-class postings ([ADR-0010](../architecture/adr/0010-commissions-as-postings.md)).
 
-> **Scope note.** [`action-plan.md`](action-plan.md) describes the participant-facing strategy — message library, gateway, TCK — written before the decision to build the central system. Both tracks are real and neither replaces the other, but the two plans have not yet been reconciled into one roadmap. That reconciliation is pending and should also revisit [`../product/north-star.md`](../product/north-star.md) and [`../product/stakeholders.md`](../product/stakeholders.md), which still assume participant-first positioning.
+> **Scope note.** [`action-plan.md`](action-plan.md) describes the participant-facing strategy — message library, gateway, TCK — written before the decision to build the central system. Both tracks are real and neither replaces the other; [`epics.md`](epics.md) reconciles them into one roadmap to 2026-11-30. Still pending: revisiting [`../product/north-star.md`](../product/north-star.md) and [`../product/stakeholders.md`](../product/stakeholders.md), which still assume participant-first positioning.
 
 ## What changed
 

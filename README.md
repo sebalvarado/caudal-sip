@@ -27,6 +27,7 @@ Everything lives in this monorepo: code, specs, docs, primary sources, the websi
 | [docs/architecture/data-model.md](docs/architecture/data-model.md) | Entities, payment and llave lifecycles, ledger and audit invariants |
 | [docs/architecture/technical-requirements.md](docs/architecture/technical-requirements.md) | Latency budget, availability, security, testing and observability bar |
 | [docs/architecture/adr/](docs/architecture/adr/README.md) | Architecture Decision Records — including [ADR-0011](docs/architecture/adr/0011-rust-monorepo.md): the backend is Rust |
+| [docs/plan/epics.md](docs/plan/epics.md) | **The roadmap to 2026-11-30**: three epics, acceptance criteria, how agents work |
 | [docs/plan/core-build-order.md](docs/plan/core-build-order.md) | Build order for the central system: the ledger core comes first |
 | [docs/development/local-stack.md](docs/development/local-stack.md) | The one-command local network we're committing to build |
 | [docs/rfcs/](docs/rfcs/README.md) | RFC process for scheme-level proposals |

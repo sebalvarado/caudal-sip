@@ -1,6 +1,6 @@
 # Action Plan: Build in Public, Aim at the Deadline
 
-> **This plan covers the participant-facing track only.** The build order for the central system — the SIP-equivalent core, which is now ledger-first — is in [`core-build-order.md`](core-build-order.md). The two plans have not yet been reconciled into a single roadmap.
+> **This plan covers the participant-facing track only.** The build order for the central system — the SIP-equivalent core, which is now ledger-first — is in [`core-build-order.md`](core-build-order.md). Both are reconciled into a single roadmap in [`epics.md`](epics.md), which wins where they disagree.
 
 The strategic clock: **November 30, 2026** — every red de pagos and every integrante must speak the BCE's ISO 20022 standard for intra-network real-time payments. Hundreds of institutions, especially cooperativas, need tooling that does not exist. Every month between now and then, this project gets more relevant, not less.
 

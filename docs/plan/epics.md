@@ -1,0 +1,97 @@
+# Epics to 2026-11-30
+
+> **Status:** proposed, pending maintainer review · **Owner:** Sebastián · **Adopted:** —
+>
+> The single roadmap to the regulatory deadline. It reconciles the participant-first [`action-plan.md`](action-plan.md), the ledger-first [`core-build-order.md`](core-build-order.md), and the licensing track in [`workstream/authorized-red/`](../../workstream/authorized-red/README.md). Where they disagree on scope or sequence before 2026-11-30, this document wins.
+
+Three epics, each serving a different audience, plus one foundation workstream that all three ship through. Every end state is dated **2026-11-30**. Tasks live as GitHub issues under the `2026-11-30` milestone; this file defines only end states, acceptance criteria, and cuts.
+
+Every epic must ship **a public demo and a blog post** before it counts as done. Public proof is a rule of every epic, not an epic of its own.
+
+## Epic 1 — Network in a box
+
+**Audience:** developers, the BCE as a technical reader, the press.
+
+**End state.** Someone clones the repository, runs one command, and within fifteen minutes sends a payment from a mock cooperativa on red 1 to a mock bank on red 2 through `sip`. They watch it reach `ACSP`, then `ACSC` once a malla settles. When the cooperativa's headroom is exhausted, its next payment is blocked by the ledger. The same stack runs live on Azure, driven from a page on the site.
+
+**Acceptance criteria**
+
+- **Ledger crate** (build order steps 1–2): double entry, two-phase reservations, the no-overdraft invariant, append-only event log, Postgres backend. A property-based suite exercises every flow in [`posting-patterns.md`](../architecture/posting-patterns.md), including the four catálogo exceptions.
+- **Risk ceiling as a funded account** (step 4, [ADR-0009](../architecture/adr/0009-risk-ceiling-as-funded-account.md)), with reserve data seeded rather than fetched from the BCE.
+- **Clearing** (step 6): multilateral malla netting and at least one settlement cycle that can be triggered manually.
+- **Router**: a minimal `pacs.008` / `pacs.002` exchange on our own profile, marked **[assumption]** until the catálogo técnico is published. Idempotent on `(BIC, end-to-end id)`; returns a subset of the Tabla 12 reason codes.
+- **Llaves**: a seeded central key system using the catálogo's llave types; resolution returns the masked name.
+- **Topology**: two `red` profiles and at least three mock institutions, started by one command.
+- **Hosted**: deployed to Azure on every merge to `main`, with the demo page on the site.
+- **Public artifact**: a published simulation of one day of national traffic — net positions, settlement cycles, and what the ceiling does to a segment-3 cooperativa on a payroll day.
+
+**Cut:** the tariff module (commissions post as zero, but the posting structure of [ADR-0010](../architecture/adr/0010-commissions-as-postings.md) is kept), the TigerBeetle backend, the reconciliation queue, the console.
+
+## Epic 2 — An institution connects
+
+**Audience:** cooperativas, fintechs (SEDPES), core-banking vendors.
+
+**End state.** A developer at a cooperativa or a core-banking vendor follows a Spanish tutorial, runs `gateway` against the sandbox, and through the North API registers a llave, resolves one, sends a payment, and receives one by webhook. They run `tck` and get a pass/fail report in Spanish they could hand to their red.
+
+**Acceptance criteria**
+
+- `spec/` holds a v0 OpenAPI definition of the North API and the red↔gateway message contract.
+- `gateway` binary: single tenant, Postgres, outbox, idempotency keys, signed webhooks; mTLS to the red as our default, not as a requirement of the norm.
+- `tck`: the happy path, at least five Tabla 12 reason codes, the four exceptions of §11.4, and timeout behaviour.
+- A Spanish tutorial, *Conecta una cooperativa en 30 minutos*.
+- Every message rule cites the catálogo or is marked **[assumption]**.
+
+**Cut:** generated SDKs, multi-tenant hosting, the console.
+
+**Dependency:** the red↔gateway contract lands in `spec/` in week 1, so this epic builds against a mock red while Epic 1 builds the real one.
+
+## Epic 3 — The Caudal red is ready to file
+
+**Audience:** the BCE as regulator, prospective members.
+
+**End state.** The Caudal operating company could submit its BCE-GG-024-2024 authorization dossier the next day, and a BCE technical visit could be run against the live Azure stack.
+
+**Acceptance criteria**
+
+- Every item in [`dossier-psap.md`](../../workstream/authorized-red/regulatory/dossier-psap.md) is drafted or has a named external owner and date.
+- [`technical/readiness.md`](../../workstream/authorized-red/technical/readiness.md) maps each requirement to evidence from Epics 1 and 2: CI runs, tests, the demo.
+- Spanish runbooks for the red: operations, incidents, and continuity (a red is a single point of failure for its integrantes — see the observations register in [`../rfcs/README.md`](../rfcs/README.md)).
+- At least three written expressions of interest from fintechs or cooperativas in the pipeline. The number is an **[assumption]**; no personal data enters the repository.
+- Every item in [`open-questions.md`](../../workstream/authorized-red/regulatory/open-questions.md) is answered or escalated.
+
+**Limit:** incorporation, capital, and signatures belong to the maintainer. Agents draft; they never sign or submit.
+
+## Foundation workstream
+
+Serves all three epics and owns CI, CD, and the site.
+
+- **Workspace**: a Cargo workspace with the toolchain pinned in `rust-toolchain.toml` and `Cargo.lock` committed, in week 1 before any epic code ([ADR-0011](../architecture/adr/0011-rust-monorepo.md)).
+- **CI** (GitHub Actions, path-filtered, required on `main`): `cargo fmt --check`, `cargo clippy --workspace -- -D warnings`, `cargo test --workspace` against a Postgres service container, `cargo-deny` for licences and advisories. The existing site build stays. A DCO sign-off check on every PR.
+- **CD**: on merge to `main`, build container images, push to GHCR, and deploy the demo network to Azure Container Apps with Azure Database for PostgreSQL; the site keeps deploying to Cloudflare Pages. On a `v*` tag, a GitHub Release with Linux and macOS binaries and versioned images.
+- **Public demo**: a page on the Astro site calling the public sandbox API. Rate-limited, CORS restricted to the site origin, synthetic data only, non-affiliation disclaimer visible.
+- **ADRs first**: Azure as the demo host, and the public demo API boundary — what it exposes and why it can never carry real data.
+- **Blog**: at least one Spanish post every two weeks, tied to epic milestones.
+
+## How agents work
+
+- **Tracking**: one GitHub epic issue per epic plus one for the foundation, the `2026-11-30` milestone, and labels per epic and component. Each task issue is an agent brief: goal, directories it may touch, docs to read first, acceptance check, and verification command.
+- **Delivery**: one issue, one branch in its own git worktree, one PR. CI green, then the maintainer reviews and merges. Agents never push to `main`, and a PR that touches another workstream's directories says so.
+- **Parallelism**: workstreams map to directories — the workspace root and `.github/`, `ledger/` and the core crates, `spec/` and `gateway/`, `workstream/authorized-red/` — so they run concurrently without conflicts.
+
+## Calendar
+
+Seven weeks from 2026-10-12.
+
+| Week | Foundation | Epic 1 | Epic 2 | Epic 3 |
+|---|---|---|---|---|
+| 1 | Workspace, CI, the two ADRs | Ledger core | red↔gateway contract in `spec/` | Dossier gap list |
+| 2–3 | CD to Azure, demo API | Posting patterns, risk ceiling | North API v0, gateway against a mock red | Runbooks, pipeline outreach |
+| 4–5 | Demo page | Clearing, router, llaves, sandbox | `tck` scenarios | Readiness mapped to evidence |
+| 6 | Release v0.1 | Simulation post | Tutorial | Dossier ready |
+| 7 | Buffer and hardening | Buffer and hardening | Buffer and hardening | Buffer and hardening |
+
+## Risks
+
+- **Rust learning curve on Epic 1's critical path.** Everything else depends on the ledger.
+- **The catálogo técnico is unpublished.** Messages follow our profile, marked **[assumption]**, and get reworked when it appears.
+- **Azure setup time and cost.** If Epic 1 slips, the hosted demo page is the first thing cut; the local one-command sandbox is not.

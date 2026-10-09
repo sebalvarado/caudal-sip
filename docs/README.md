@@ -11,7 +11,7 @@ How to navigate this project's documentation, whether you're a contributor, an i
 | 3 | [research/catalogo-operacional.md](research/catalogo-operacional.md) 🇪🇸 | **The specification itself**, decoded: payment states, reason codes, llave rules, timing, netting, the liquidity-risk engine, and who is already obligated. The reference every component is built against. In Spanish, with an English abstract | 20 min |
 | 4 | [architecture/blueprint.md](architecture/blueprint.md) | What we're building: components, monorepo layout, the four-operator deployment model, PaaS/SaaS strategy | 15 min |
 | 5 | [architecture/scheme-design.md](architecture/scheme-design.md) | How it works: North/South APIs, direct & indirect participants, llave rules, settlement model | 15 min |
-| 6 | [plan/action-plan.md](plan/action-plan.md) | When and how: phases, outreach strategy, risks | 10 min |
+| 6 | [plan/epics.md](plan/epics.md) | What ships by 2026-11-30: epics, acceptance criteria, calendar | 10 min |
 
 Then, depending on your role:
 
@@ -59,6 +59,7 @@ docs/
 ├── diagrams/            Approved conceptual Mermaid sources and visual drafts
 ├── outreach/        🇪🇸 Drafts of institutional correspondence, and the register
 ├── plan/
+│   ├── epics.md         The roadmap to 2026-11-30: three epics and the foundation
 │   ├── action-plan.md   Participant-facing track: phases, outreach, risks
 │   └── core-build-order.md  Central system: ledger-first build sequence
 └── rfcs/                Requests for Comments: scheme-level proposals
