@@ -29,3 +29,8 @@ research/*.pdf
 .agents/skills/*
 !.agents/skills/authorized-red/
 !.agents/skills/caudal-diagrams/
+!.agents/skills/worktree-management/
+!.agents/skills/self-verification/
+
+# Per-worktree handoff brief for a subagent
+WORKTREE_CONTEXT.md

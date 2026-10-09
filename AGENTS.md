@@ -4,8 +4,11 @@
 
 ## Commands
 
-- Site: `cd site && npm run dev` (:4321) · `npm run build` must pass before finishing site work.
-- Rust (when the workspace lands): `cargo build --workspace && cargo test --workspace && cargo clippy --workspace -- -D warnings`.
+`just` is the command surface (`just` lists recipes; `just doctor` checks tools). No Turborepo: Cargo is the build graph.
+
+- `just check <crate>` / `just test <crate>` — the fast loop · `just ci` — the done-gate, once before a PR
+- `just db` — this worktree's own Postgres database; `DATABASE_URL` is set per worktree
+- `just site` (:4321) · `just site-build` must pass before finishing site or `docs/` work
 
 ## Before non-trivial work, read the relevant doc — don't guess
 
@@ -34,8 +37,21 @@
 
 ## Loop
 
-Work is planned in [`docs/plan/epics.md`](docs/plan/epics.md) and tracked as GitHub issues against the `2026-11-30` milestone. One issue, one branch (a git worktree when agents run in parallel), one PR; CI green before review. Write the failing test first — golden files for messages, property tests for ledger invariants — and run the verification command before claiming anything is done.
+Work is planned in [`docs/plan/epics.md`](docs/plan/epics.md) and tracked as GitHub issues against the `2026-11-30` milestone. One issue, one `wt` worktree, one PR; CI green before review. Write the failing test first — golden files for messages, property tests for ledger invariants.
 
-Skills in `.agents/skills/`: model domain types with domain-modeling; check claims with grill-with-docs; create visuals with caudal-diagrams; work the licensing track with authorized-red. Third-party skills are restored with `npx skills experimental_install`.
+**Decisions before code.** Issues labelled `blocked` are not started. No implementation begins until the Domain foundations epic (#17) is merged: crate map, kernel types, ledger trait, data ownership, time and identifiers, composition. Each crate's `AGENTS.md` says what it owns and must never depend on; Cargo dependencies enforce it.
+
+Process is Caudal-owned. Do not follow Superpowers or other generic brainstorm / plan / TDD / worktree stacks.
+
+| Skill (`.agents/skills/`) | When to use |
+|---|---|
+| `worktree-management` | Starting an issue, handing off to a subagent, cleaning up merged branches |
+| `self-verification` | After every change and before claiming done |
+| `domain-modeling` | Pinning terminology or recording a decision during Domain foundations |
+| `grill-with-docs` | Checking a claim against the docs before relying on it |
+| `caudal-diagrams` | Any diagram |
+| `authorized-red` | The licensing track |
+
+Third-party skills are restored with `npx skills experimental_install`.
 
 Verify before finishing: build passes, mirrors in sync, new docs linked from indexes, Spanish reads native.

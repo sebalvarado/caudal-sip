@@ -79,6 +79,10 @@ Serves all three epics and owns CI, CD, and the site.
 - **ADRs first**: Azure as the demo host, and the public demo API boundary — what it exposes and why it can never carry real data.
 - **Blog**: at least one Spanish post every two weeks, tied to epic milestones.
 
+## Decisions before code
+
+The **Domain foundations** epic ([#17](https://github.com/sebalvarado/caudal-sip/issues/17)) gates every implementation issue. Seven decisions, made one at a time with the maintainer and recorded as ADRs or doc updates: crate map and dependency rules, shared kernel types, the ledger trait in Rust, data ownership and the audit log, time and identifiers, in-process composition and the message plane, and the open modeling questions. Until they merge, agents only draft decisions.
+
 ## How agents work
 
 - **Tracking**: one GitHub epic issue per epic plus one for the foundation, the `2026-11-30` milestone, and labels per epic and component. Each task issue is an agent brief: goal, directories it may touch, docs to read first, acceptance check, and verification command.

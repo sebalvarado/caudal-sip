@@ -1,0 +1,19 @@
+# Worktrunk project configuration, shared through git.
+# See https://worktrunk.dev/config/#project-configuration
+
+# Blocking: must finish before work starts in the new worktree.
+[post-create]
+deps = "if [ -f Cargo.toml ]; then cargo fetch --quiet; fi"
+db = "just db >/dev/null 2>&1 || echo 'Postgres not started; run `just db` when you need it'"
+
+# Background, after post-create.
+[post-start]
+copy = "wt step copy-ignored"
+
+# Blocking, fail-fast, before merging into the target branch.
+[pre-merge]
+ci = "just ci"
+
+# Remove the worktree's database with the worktree.
+[pre-remove]
+db = "just db-drop >/dev/null 2>&1 || true"

@@ -27,7 +27,9 @@ The Cargo workspace is not scaffolded yet (see the [blueprint](docs/architecture
 cd site && npm install && npm run dev
 ```
 
-When the workspace lands, the standard loop will be: `cargo build --workspace`, `cargo test --workspace`, `cargo clippy --workspace -- -D warnings` — CI will enforce all three.
+Tools: [rustup](https://rustup.rs), [just](https://just.systems), Docker, and Node 22 for the site; [Worktrunk](https://worktrunk.dev) (`wt`) and `sccache` if you run parallel worktrees. On macOS: `brew install rustup just worktrunk sccache`. `just doctor` reports what is missing.
+
+The loop is `just check <crate>` and `just test <crate>` while working, then `just ci` — format, clippy with warnings denied, tests, `cargo deny`, and the site build — once before opening a PR. CI runs the same checks.
 
 ## Pull requests
 

@@ -1,0 +1,6 @@
+# Gitignored files copied into a new worktree by `wt step copy-ignored`.
+# Never list anything holding real credentials; this repo has none by rule.
+
+.env
+.env.local
+site/node_modules/
