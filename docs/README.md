@@ -17,6 +17,8 @@ Then, depending on your role:
 
 - **Writing code?** → [architecture/data-model.md](architecture/data-model.md) (entities, lifecycles, invariants), [architecture/technical-requirements.md](architecture/technical-requirements.md) (the non-functional bar), [architecture/adr/](architecture/adr/README.md) (decisions already made), and [glossary.md](glossary.md) (the vocabulary of record). Also read `/AGENTS.md` at the repo root.
 - **Building the ledger or settlement?** → [architecture/ledger.md](architecture/ledger.md) (accounts, invariants, interface) then [architecture/posting-patterns.md](architecture/posting-patterns.md) (the exact postings for every flow). Fees live in [architecture/tariff.md](architecture/tariff.md).
+- **Building the network profile?** → [architecture/red.md](architecture/red.md): what a *red de pagos* does, the domain model, the requirements, and what deploying the binary does and does not give you.
+- **Creating or reviewing a diagram?** → [diagrams/](diagrams/README.md) for Mermaid sources, then use the `caudal-diagrams` skill before styling.
 - **Scoping a feature?** → [product/stakeholders.md](product/stakeholders.md) then [product/requirements.md](product/requirements.md). If it serves nobody in the first, it doesn't belong in the second.
 - **Wondering what we actually ship, or where something belongs in the tree?** → [product/deliverables.md](product/deliverables.md).
 - **Setting up to develop?** → [development/local-stack.md](development/local-stack.md).
@@ -45,6 +47,7 @@ docs/
 ├── architecture/
 │   ├── blueprint.md     Components, repo shape, operator/deployment model
 │   ├── scheme-design.md APIs, participants, llaves, settlement
+│   ├── red.md           The network profile: what a red does, domain model, requirements
 │   ├── data-model.md    Entities, lifecycles, invariants across components
 │   ├── ledger.md        Chart of accounts, ledger invariants, the Ledger interface
 │   ├── posting-patterns.md  Exact postings per flow — the implementation reference
@@ -53,6 +56,7 @@ docs/
 │   └── adr/             Architecture Decision Records (numbered, immutable)
 ├── development/
 │   └── local-stack.md   Running the whole simulated network locally
+├── diagrams/            Approved conceptual Mermaid sources and visual drafts
 ├── outreach/        🇪🇸 Drafts of institutional correspondence, and the register
 ├── plan/
 │   ├── action-plan.md   Participant-facing track: phases, outreach, risks

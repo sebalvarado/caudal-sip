@@ -88,7 +88,7 @@ The Spanish word invites a misreading. A **red de pagos is a licensed institutio
 
 Its regulated responsibilities are specific: incorporate integrantes into real-time operation, administer their distributed directory, and — the part that matters most for us — **technically qualify and validate its own members** (BCE-GG-008-2025, Art. 4). A red is the certifying authority for the institutions beneath it, which makes it a natural adopter of the conformance kit and one of the highest-leverage relationships in the project.
 
-`red` is simply the binary such an institution deploys.
+`red` is simply the binary such an institution deploys. Its architecture, domain model and requirements — and an honest account of what deploying it does *not* give you — are in [`../architecture/red.md`](../architecture/red.md).
 
 **On connectivity**, the published norm mandates no transport protocol at all. Art. 5.1 requires connection "a los enlaces de telecomunicación establecidos por el BCE" and Disposición General TERCERA assigns a separate, still-unpublished document containing the connection standards. Our defaults and the resulting design constraint — transport must stay pluggable — are in [`../architecture/technical-requirements.md`](../architecture/technical-requirements.md).
 

@@ -25,6 +25,8 @@ Findings from reading the norm that are candidates for an RFC, a question to the
 |---|---|---|
 | **Settlement is not 24/7 although the system declares itself 24/7** | **RFC [0001](0001-liquidacion-continua.md)** | Catálogo §2.1, §5.8–9, §9.4 |
 | **Connection standards are a distinct unpublished document** from the catálogo técnico, assigned to the Gerencia de Riesgos and the Gerencia de TI. No published text mandates any transport protocol; "VPN", "TLS" and "certificado" appear nowhere in the four resolutions or the catálogo | Request to the BCE | BCE-GG-008-2025 Art. 5.1, Disp. Gral. PRIMERA and TERCERA |
+| **How intra-red payments settle is undocumented.** Payments between two integrantes of the same red do not reach the SIP, so the red runs its own clearing — but nothing says how those positions reach central bank money, or what prudential limits apply | Question to the BCE | Absent; implied by the inter-red scope of Catálogo §9 |
+| **A red is a mandatory hop with no failover for its members.** If a red is unavailable, every one of its integrantes is off the rail simultaneously, and no continuity or reassignment mechanism is described | RFC candidate | Catálogo §2, topology |
 | `PDNG` is named "por conciliar" but defined as next-day deferral after cut-off — so the irrevocable-but-unknown state may have no code at all | Question to the BCE | Catálogo Tabla 11 |
 | `pacs.008.001.08` (§8) vs `pacs.008.004.08` (§11.3) version inconsistency | Question to the BCE | Catálogo §8, §11.3 |
 | Risk table leaves reserve and risk factor **blank for cooperative segments 4 and 5** | Question to the BCE | Catálogo Tabla 19 |
