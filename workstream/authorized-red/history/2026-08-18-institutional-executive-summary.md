@@ -1,7 +1,5 @@
 # Institutional Executive Summary Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
-
 **Goal:** Produce a sourced, standalone Spanish executive summary that explains Ecuador's real-time payment opportunity and Caudal's gateway-to-red strategy to fintechs, cooperatives, and core-banking vendors.
 
 **Architecture:** The document synthesizes the normative corpus and existing workstream trackers without replacing them. It uses two introductory diagrams, concise evidence tables, inline citations, and explicit labels for estimates and assumptions.

@@ -17,6 +17,7 @@ La línea de trabajo societaria y de licenciamiento para constituir la **socieda
 | [`commercial/pipeline.md`](commercial/pipeline.md) | Prospectos de miembros y seguimiento de contratos de adhesión — los contratos son un **requisito del expediente**, no un detalle |
 | [`technical/readiness.md`](technical/readiness.md) | Lo que debe estar funcionando y ser demostrable para la visita técnica del BCE, componente por componente |
 | [`technical/requerimientos.md`](technical/requerimientos.md) | Hoja de construcción: componentes, pruebas, puertas de salida y ruta crítica hacia la red Caudal |
+| [`history/`](history/) | Diseños y planes ya ejecutados en este frente, conservados como registro |
 | [`../../research/bce/README.md`](../../research/bce/README.md) | Fuentes primarias del BCE: PDF oficial y transcripción Markdown para búsqueda, con URL y SHA-256 |
 
 ## Reglas de trabajo en este frente

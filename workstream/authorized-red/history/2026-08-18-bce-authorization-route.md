@@ -1,7 +1,5 @@
 # BCE Authorization Route Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
-
 **Goal:** Crear una guía interna, detallada y accionable para obtener la autorización del BCE y llevar la red propia hasta su calificación técnica y conexión productiva.
 
 **Architecture:** La guía nueva ordenará cronológicamente los requisitos que hoy están distribuidos entre el expediente, el plan, las preguntas abiertas y la preparación técnica. `dossier-psap.md` conservará el detalle requisito por requisito; `ruta-autorizacion-bce.md` será la vista operativa, con puertas de salida, responsables, evidencia y dependencias.
@@ -179,7 +177,7 @@ Enlazar la nueva guía desde los frentes legal y de expediente de `plan.md`. Con
 
 - [ ] **Step 1: Revisar cobertura contra el diseño**
 
-Comprobar uno por uno los siete criterios de aceptación de `docs/superpowers/specs/2026-08-18-bce-authorization-route-design.md`.
+Comprobar uno por uno los siete criterios de aceptación de `workstream/authorized-red/history/2026-08-18-bce-authorization-route-design.md`.
 
 - [ ] **Step 2: Buscar marcadores y contradicciones**
 

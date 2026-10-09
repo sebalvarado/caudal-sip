@@ -1,7 +1,5 @@
 # Caudal Naming Normalization Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
-
 **Goal:** Identificar inequívocamente a Caudal, su red y su conector en todos los documentos del frente autorizado.
 
 **Architecture:** Aplicar una convención semántica: marca, red, producto y persona jurídica futura tendrán denominaciones distintas. Los roles regulatorios genéricos conservarán el vocabulario de la norma.

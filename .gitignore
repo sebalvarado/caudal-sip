@@ -24,6 +24,8 @@ research/*.pdf
 !research/bce/*.pdf
 
 # Vendored agent skills belong to their upstream authors; skills-lock.json
-# pins them and `npx skills experimental_install` restores them.
-.agents/skills/
-.claude/skills
+# pins them and `npx skills experimental_install` restores them. Skills
+# written for this project are committed.
+.agents/skills/*
+!.agents/skills/authorized-red/
+!.agents/skills/caudal-diagrams/

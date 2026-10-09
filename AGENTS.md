@@ -34,6 +34,8 @@
 
 ## Loop
 
-Skills in `.agents/skills/` (restore with `npx skills experimental_install`): brainstorming → writing-plans → executing-plans → test-driven-development (golden files for messages) → verification-before-completion → requesting/receiving-code-review. Debug with systematic-debugging; model domain types with domain-modeling; check claims with grill-with-docs; create visuals with caudal-diagrams.
+Work is planned in [`docs/plan/epics.md`](docs/plan/epics.md) and tracked as GitHub issues against the `2026-11-30` milestone. One issue, one branch (a git worktree when agents run in parallel), one PR; CI green before review. Write the failing test first — golden files for messages, property tests for ledger invariants — and run the verification command before claiming anything is done.
+
+Skills in `.agents/skills/`: model domain types with domain-modeling; check claims with grill-with-docs; create visuals with caudal-diagrams; work the licensing track with authorized-red. Third-party skills are restored with `npx skills experimental_install`.
 
 Verify before finishing: build passes, mirrors in sync, new docs linked from indexes, Spanish reads native.
