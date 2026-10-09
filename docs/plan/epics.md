@@ -1,6 +1,6 @@
 # Epics to 2026-11-30
 
-> **Status:** proposed, pending maintainer review · **Owner:** Sebastián · **Adopted:** —
+> **Status:** adopted · **Owner:** Sebastián · **Adopted:** 2026-10-09 · **Tracking:** GitHub milestone `2026-11-30`
 >
 > The single roadmap to the regulatory deadline. It reconciles the participant-first [`action-plan.md`](action-plan.md), the ledger-first [`core-build-order.md`](core-build-order.md), and the licensing track in [`workstream/authorized-red/`](../../workstream/authorized-red/README.md). Where they disagree on scope or sequence before 2026-11-30, this document wins.
 
@@ -22,6 +22,13 @@ Every epic must ship **a public demo and a blog post** before it counts as done.
 - **Router**: a minimal `pacs.008` / `pacs.002` exchange on our own profile, marked **[assumption]** until the catálogo técnico is published. Idempotent on `(BIC, end-to-end id)`; returns a subset of the Tabla 12 reason codes.
 - **Llaves**: a seeded central key system using the catálogo's llave types; resolution returns the masked name.
 - **Topology**: two `red` profiles and at least three mock institutions, started by one command.
+- **The `caudal` terminal**: one binary that runs `sip`, two redes, and the mock institutions in-process on an in-memory ledger backend (the same trait as Postgres), with no Docker. A full-screen terminal UI in the spirit of a Bloomberg terminal, for developers and finance professionals on a single machine:
+  - a command line to invoke any operation (pay, resolve a llave, settle a malla) and see the request, the ISO 20022 message, and the response;
+  - a live payment blotter with each payment's state;
+  - per-institution headroom with the catálogo's traffic light, and malla net positions;
+  - execution stats per operation: p50/p95/p99 latency, throughput, time from reservation to post;
+  - a load generator with named scenarios (a payroll day, a cut-off rush).
+  Every operation is also a scriptable subcommand (`caudal pay …`), matching [`local-stack.md`](../development/local-stack.md).
 - **Hosted**: deployed to Azure on every merge to `main`, with the demo page on the site.
 - **Public artifact**: a published simulation of one day of national traffic — net positions, settlement cycles, and what the ceiling does to a segment-3 cooperativa on a payroll day.
 
@@ -84,9 +91,9 @@ Seven weeks from 2026-10-12.
 
 | Week | Foundation | Epic 1 | Epic 2 | Epic 3 |
 |---|---|---|---|---|
-| 1 | Workspace, CI, the two ADRs | Ledger core | red↔gateway contract in `spec/` | Dossier gap list |
-| 2–3 | CD to Azure, demo API | Posting patterns, risk ceiling | North API v0, gateway against a mock red | Runbooks, pipeline outreach |
-| 4–5 | Demo page | Clearing, router, llaves, sandbox | `tck` scenarios | Readiness mapped to evidence |
+| 1 | Workspace, CI, the two ADRs | Ledger core, in-memory backend; terminal ADR | red↔gateway contract in `spec/` | Dossier gap list |
+| 2–3 | CD to Azure, demo API | Posting patterns, risk ceiling, Postgres backend; terminal shell with the ledger | North API v0, gateway against a mock red | Runbooks, pipeline outreach |
+| 4–5 | Demo page | Clearing, router, llaves, sandbox; terminal stats and scenarios | `tck` scenarios | Readiness mapped to evidence |
 | 6 | Release v0.1 | Simulation post | Tutorial | Dossier ready |
 | 7 | Buffer and hardening | Buffer and hardening | Buffer and hardening | Buffer and hardening |
 

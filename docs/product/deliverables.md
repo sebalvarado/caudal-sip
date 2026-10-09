@@ -42,6 +42,7 @@ Note what is scarce: **exactly two deliverables are imported.** Almost nobody in
 | **`spec`** | OpenAPI for the North API, ISO 20022 profile definitions, QR payload spec | Everyone, including our own SDK generation | Read / Generate |
 | **`tck`** | Conformance runner producing a pass/fail report against the standard | Jefe de Sistemas, before BCE qualification | Run |
 | **`sandbox`** | The whole simulated network in one command | Developers, and anyone who needs to see it work | Run |
+| **`caudal` terminal** | The whole network in one process with a full-screen terminal UI: invoke operations, watch payments and positions, measure execution time, run load scenarios | Developers and finance professionals exploring the scheme on one machine | Run |
 | **`caudalctl`** | CLI: validate a message, inspect a payment, run migrations, rotate keys | Engineers, during installation and incidents — **not** daily operations | Run |
 | **`pkg/iso20022`** | Go message library for the BCE profile | The rare institution or red building its own gateway | Import |
 | **`pkg/qr`** | EMV QRCPS encoder and decoder carrying llaves | Same, plus mobile app teams | Import |
@@ -63,6 +64,7 @@ The table above says who touches what. This one says what a maintainer is actual
 | `spec` | Not code: OpenAPI YAML, ISO 20022 profile definitions and XSDs, QR payload spec. Versioned releases | Not applicable |
 | `tck` | Go binary plus a corpus of declarative scenarios and golden messages | Emits report files; no persistent store |
 | `sandbox` | `docker compose` stack with seed data | Ephemeral Postgres per container, thrown away |
+| `caudal` terminal | Rust binary; terminal UI over the same crates as `sip` and `red` | In-memory, thrown away on exit |
 | `caudalctl` | Go CLI, single binary | None; talks to a service or a file |
 | `pkg/iso20022`, `pkg/qr` | Go libraries, semantically versioned | None |
 | Documentation | Markdown in `docs/`, rendered by `site/` | Git |
