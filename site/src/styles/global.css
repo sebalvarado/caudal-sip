@@ -305,6 +305,28 @@ a:hover {
   font-weight: 650;
 }
 
+.prose-diagram {
+  margin: 2.5rem 0;
+}
+
+.prose-diagram img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  background: var(--paper);
+}
+
+.prose-diagram figcaption {
+  max-width: var(--w-content);
+  margin: 0.65rem auto 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
 .prose hr {
   border: none;
   border-top: 1px solid var(--hairline);
