@@ -61,14 +61,18 @@ Términos del ecosistema ecuatoriano de pagos, en ambos idiomas. Los términos r
 
 ## Project components (this repo)
 
+The full crate map and its dependency rules are in [ADR-0012](architecture/adr/0012-crate-boundaries.md).
+
 | Component | What it is |
 |---|---|
-| `iso20022/` | Go library: read/write/validate the BCE profile of pacs.008, pacs.002, acmt. |
-| `llaves/` | Directory service: registration, uniqueness, resolution, portability. |
-| `switch/` | Stateless validator/router (UPI-inspired). |
-| `settlement/` | Ledger + RTGS simulator (and DNS mode for comparison). |
-| `gateway/` | The participant connector: simple North API inward, compliant ISO 20022 outward. Single- and multi-tenant. |
-| `tck/` | Test & certification kit: conformance scenarios against the catálogos. |
+| `iso20022` | Library: read/write/validate the BCE profile of pacs.008, pacs.002, acmt. |
+| `directory` | Llaves: registration, uniqueness, resolution, synchronization with the Sistema Central de Llaves. |
+| `payments` | The payment state machine, shared by `sip`, `red` and `gateway`. |
+| `ledger` + `clearing` | Obligation and headroom ledgers; mallas, netting and settlement instructions. |
+| `fees` | Fee schedules and quotes (the *tariff module* of ADR-0010). |
+| `gateway` | The participant connector: simple North API inward, compliant ISO 20022 outward. Single- and multi-tenant. |
+| `caudal` | The terminal: the whole network in one process, for exploring and measuring it. |
+| `tck` | Test & certification kit: conformance scenarios against the catálogos. |
 | `sandbox/` | "Ecuador's payment network in a box" — full simulated scheme via docker compose. |
 | **North API** | Our institution-facing REST/webhook API (simple JSON; no ISO 20022 knowledge needed). |
 | **South API** | The scheme-facing mandated interface: signed ISO 20022 over mTLS. |

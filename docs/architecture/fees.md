@@ -1,4 +1,6 @@
-# The Tariff Module
+# The Fees Module
+
+The crate `fees` ([ADR-0012](adr/0012-crate-boundaries.md)); [ADR-0010](adr/0010-commissions-as-postings.md) calls it the *tariff module*.
 
 A component that did not exist in the original blueprint. It exists because the Catálogo Operacional treats commissions as a parameterized flow calculated by the SIP and **shown to the payer with taxes before confirmation** (§2.1 item 18, §5 rules 2 and 12, §9 rule 5), and because [ADR-0010](adr/0010-commissions-as-postings.md) makes every fee a posting rather than a computed report.
 

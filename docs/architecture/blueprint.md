@@ -91,47 +91,57 @@ Mirrors Ecuador's regulated topology (redes de pagos + SIP + RPI) so every compo
 
 This repository is the **single source of truth**: code, specs, docs, research, manifesto, and community artifacts all live here. No satellite repos until scale forces it.
 
-Directories are created when the work reaches them, in the order given by [`../plan/core-build-order.md`](../plan/core-build-order.md). Empty placeholder packages are clutter, so ✅ marks what exists today and the rest is intent.
+Directories are created when the work reaches them, in the order given by [`../plan/epics.md`](../plan/epics.md). Empty placeholder packages are clutter, so ✅ marks what exists today and the rest is intent. Crate boundaries and the dependency rules between them are in [ADR-0012](adr/0012-crate-boundaries.md).
 
 ```
 caudal-sip/
 ├── MANIFIESTO.md      The public manifesto (Spanish)
 ├── docs/           ✅ Research, architecture, ADRs, RFCs, product, plan
 ├── site/           ✅ The website: manifesto, blog, /estandar/
+├── spec/              Machine-readable contracts: OpenAPI, ISO 20022 profiles,
+│                      QR payload. Versioned releases, Pix-style.
+├── Cargo.toml         Workspace root
+├── justfile        ✅ The command surface (`just ci`, `just db`, ...)
+├── xtask/             Architecture checks over `cargo metadata`
 │
-│  ── The central system (the SIP-equivalent core) ──
-├── ledger/            The scheme's obligation ledger. Accounts, balanced
-│   │                  entries, two-phase reservations, the no-overdraft
-│   │                  invariant. Two ledgers: obligations and headroom.
-│   ├── postgres/      Default backend (ADR-0007)
-│   └── tigerbeetle/   Second backend; differential-tested against Postgres
-├── tariff/            Effective-dated fee schedules; quote-then-commit
-├── risk/              Funding service for the liquidity ceiling
-├── clearing/          Mallas, netting, settlement instructions
-├── registry/          Integrantes, redes, BICs, empadronamiento
-├── llaves/            Central key system + distributed directory sync
-├── router/            Stateless payment router and validator (was `switch/`)
-├── reconciliation/    The `por conciliar` work queue and directory divergence
+├── crates/            Libraries, each named `caudal-<name>`
+│   │  ── Kernel ──
+│   ├── types/         Money, BIC, end-to-end id, payment state, reason code
+│   │  ── Domain: synchronous, no I/O ──
+│   ├── registry/      Integrantes, redes, BICs, membership and certification
+│   ├── directory/     Llaves: registration, resolution, directory sync
+│   ├── payments/      The payment state machine and idempotency
+│   ├── ledger/        Obligation and headroom ledgers, reservations,
+│   │                  the no-overdraft invariant
+│   ├── fees/          Effective-dated fee schedules; quote-then-commit
+│   ├── risk/          Funding service for the liquidity ceiling
+│   ├── clearing/      Mallas, netting, settlement instructions
+│   ├── reconciliation/  The `por conciliar` queue and the daily close
+│   │  ── Protocol ──
+│   ├── iso20022/      Codecs and validation for the BCE profile
+│   ├── qr/            EMV QRCPS encoder/decoder carrying llaves
+│   │  ── Adapters: all I/O ──
+│   ├── ledger-postgres/   Default backend (ADR-0007); one per stateful domain
+│   ├── msgplane/      Transport, signing, idempotency, deadlines
+│   ├── audit/         The append-only log
+│   └── north-api/     The gateway's HTTP + webhook surface
 │
-│  ── The participant side ──
-├── iso20022/          Rust types, codecs and validation for the BCE profile
-├── gateway/           What an institution deploys: simple API in, signed
-│                      ISO 20022 over mTLS out
-├── qr/                EMV QRCPS encoder/decoder carrying llaves
+├── apps/              Binaries: wiring only
+│   ├── sip/           The central system
+│   ├── red/           The network profile
+│   ├── gateway/       What an institution deploys
+│   ├── caudal/        The terminal: the whole network in one process
+│   └── tck/           Conformance runner and certification reports
 │
-│  ── Shared and supporting ──
-├── Cargo.toml         Workspace root; binaries (`sip`, `red`, `gateway`) are members
-├── spec/              Machine-readable contracts: OpenAPI, XSD profiles, QR
-│                      payload. Versioned releases, Pix-style.
 ├── sandbox/           "Payments network in a box": docker compose, 2 redes,
 │                      N mock banks, one command to an end-to-end payment
-├── tck/               Conformance runner and certification reports
-├── console/           Operations UI: flows, messages, reconciliation queue,
-│                      headroom monitoring, tariff administration
+├── console/           Operations UI (stack not yet decided)
 └── examples/          "Connect a cooperativa in 30 minutes"
 ```
 
-Two departures from the original plan, both consequences of decisions taken later. `settlement/` was described as an RTGS simulator; it is now `ledger/` plus `clearing/`, because the ledger turned out to be the core of the system rather than a bookkeeping concern at the end of it ([ADR-0008](adr/0008-ledger-architecture.md)). And `tariff/` and `risk/` did not exist in the original component list at all — the first because the catálogo treats commissions as a real parameterized flow ([ADR-0010](adr/0010-commissions-as-postings.md)), the second because the liquidity ceiling needs funding rather than enforcement ([ADR-0009](adr/0009-risk-ceiling-as-funded-account.md)).
+There is no `router` crate: routing is `payments` composed with `msgplane` inside `sip` and `red` ([ADR-0012](adr/0012-crate-boundaries.md)). TigerBeetle, when it comes, is another adapter beside `ledger-postgres`.
+
+Two departures from the original plan, both consequences of decisions taken later. `settlement/` was described as an RTGS simulator; it is now `ledger` plus `clearing`, because the ledger turned out to be the core of the system rather than a bookkeeping concern at the end of it ([ADR-0008](adr/0008-ledger-architecture.md)). And `fees` (first called the tariff module) and `risk` did not exist in the original component list at all — the first because the catálogo treats commissions as a real parameterized flow ([ADR-0010](adr/0010-commissions-as-postings.md)), the second because the liquidity ceiling needs funding rather than enforcement ([ADR-0009](adr/0009-risk-ceiling-as-funded-account.md)).
 
 Scheme-level design decisions (integration APIs, direct/indirect participation, llave rules, settlement model) are specified in [`scheme-design.md`](scheme-design.md).
 
