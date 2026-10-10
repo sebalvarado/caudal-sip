@@ -17,6 +17,17 @@ The domains already exist on paper. [`data-model.md`](../data-model.md) names fi
 
 Libraries live in `crates/<name>/`, binaries in `apps/<name>/`. The repository root keeps `docs/`, `spec/`, `site/`, `research/` and `workstream/`. Every package is named `caudal-<name>` (imported as `caudal_<name>`), so the two importable libraries publish without name clashes. Architecture checks live in `xtask/`.
 
+### TypeScript in the same repository
+
+`apps/` holds deployables in any language. A Next.js web app lives at `apps/web/`, beside the Rust binaries, and generated TypeScript clients live in `packages/<name>/`.
+
+- **Two package managers, one command surface.** Cargo builds the Rust crates; a pnpm workspace (`pnpm-workspace.yaml`) holds `apps/web`, `site/` and `packages/*`. `just` runs both, and `just ci` gates both. Turborepo is not used; if the TypeScript side grows past a few packages it may be added for that side only, never wrapping Cargo.
+- **The contract is `spec/`, not shared code.** The web app talks to the Rust services only through APIs defined in `spec/` (OpenAPI), and imports a client generated from it. Rust types are never exported to TypeScript directly; the published spec stays the single contract, and a breaking change fails CI on both sides.
+- **`apps/web` is hosted by us**: the Caudal red's member portal, the public demo, our own operations. Nothing an institution must deploy depends on Node. The participant console that institutions run remains an open decision ([`deliverables.md`](../../product/deliverables.md)) and needs its own ADR.
+- **Worktrees** install TypeScript dependencies with `pnpm install --frozen-lockfile` in the same `wt` hook that runs `cargo fetch`; pnpm's shared store keeps that cheap.
+
+The pnpm workspace, the `site/` move off its npm lockfile, the hooks and the CI job land with the first TypeScript package, not before.
+
 ### Five layers, dependencies only downward
 
 | Layer | Crates | May depend on | Never |
@@ -67,6 +78,7 @@ The fees module is the crate `fees`; [ADR-0010](0010-commissions-as-postings.md)
 - **A state machine per profile.** Rejected: three readings of the same catálogo states would drift, and the conformance kit would have to test all three.
 - **No kernel; each domain exports its own types.** Rejected: `Usd`, `Bic` and `ReasonCode` would end up owned by whichever crate defined them first, and every domain would depend on it.
 - **One crate per layer.** Rejected: it gives up the compile-time boundary between domains, which is the point.
+- **Turborepo over everything, or a separate repository for the web app.** Rejected: Cargo already is the Rust build graph, and a second repository breaks the single-source-of-truth rule and lets the spec and its client drift.
 
 ## Consequences
 

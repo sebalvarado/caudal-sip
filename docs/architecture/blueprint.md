@@ -131,7 +131,9 @@ caudal-sip/
 │   ├── red/           The network profile
 │   ├── gateway/       What an institution deploys
 │   ├── caudal/        The terminal: the whole network in one process
-│   └── tck/           Conformance runner and certification reports
+│   ├── tck/           Conformance runner and certification reports
+│   └── web/           Next.js app we host: member portal, demo, operations
+├── packages/          TypeScript clients generated from `spec/` (pnpm workspace)
 │
 ├── sandbox/           "Payments network in a box": docker compose, 2 redes,
 │                      N mock banks, one command to an end-to-end payment
