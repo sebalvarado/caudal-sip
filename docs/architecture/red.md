@@ -93,6 +93,8 @@ Reconciliation items exist because of a specific and unavoidable failure mode: t
 
 ## The codebase
 
+> **Crate names follow [ADR-0012](adr/0012-crate-boundaries.md).** The sketch below predates it: `cmd/red/` is `apps/red/`, `membership/` lives in the `registry` crate, `directory/` is the `directory` crate, and `routing/` is `payments` composed with `msgplane` inside `apps/red`.
+
 `red` is not a separate program. It is the same repository and the same packages as `sip`, wired into a different binary. That is the decision that makes the project buildable by a small team, and it is worth being concrete about how much is genuinely shared.
 
 ```

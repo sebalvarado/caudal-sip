@@ -16,7 +16,7 @@ How to navigate this project's documentation, whether you're a contributor, an i
 Then, depending on your role:
 
 - **Writing code?** → [architecture/data-model.md](architecture/data-model.md) (entities, lifecycles, invariants), [architecture/technical-requirements.md](architecture/technical-requirements.md) (the non-functional bar), [architecture/adr/](architecture/adr/README.md) (decisions already made), and [glossary.md](glossary.md) (the vocabulary of record). Also read `/AGENTS.md` at the repo root.
-- **Building the ledger or settlement?** → [architecture/ledger.md](architecture/ledger.md) (accounts, invariants, interface) then [architecture/posting-patterns.md](architecture/posting-patterns.md) (the exact postings for every flow). Fees live in [architecture/tariff.md](architecture/tariff.md).
+- **Building the ledger or settlement?** → [architecture/ledger.md](architecture/ledger.md) (accounts, invariants, interface) then [architecture/posting-patterns.md](architecture/posting-patterns.md) (the exact postings for every flow). Fees live in [architecture/fees.md](architecture/fees.md). Crate boundaries are in [ADR-0012](architecture/adr/0012-crate-boundaries.md).
 - **Building the network profile?** → [architecture/red.md](architecture/red.md): what a *red de pagos* does, the domain model, the requirements, and what deploying the binary does and does not give you.
 - **Creating or reviewing a diagram?** → [diagrams/](diagrams/README.md) for Mermaid sources, then use the `caudal-diagrams` skill before styling.
 - **Scoping a feature?** → [product/stakeholders.md](product/stakeholders.md) then [product/requirements.md](product/requirements.md). If it serves nobody in the first, it doesn't belong in the second.
@@ -51,7 +51,7 @@ docs/
 │   ├── data-model.md    Entities, lifecycles, invariants across components
 │   ├── ledger.md        Chart of accounts, ledger invariants, the Ledger interface
 │   ├── posting-patterns.md  Exact postings per flow — the implementation reference
-│   ├── tariff.md        Fee schedules, quoting, and why fees are their own module
+│   ├── fees.md          Fee schedules, quoting, and why fees are their own module
 │   ├── technical-requirements.md  Latency, availability, security, testing bar
 │   └── adr/             Architecture Decision Records (numbered, immutable)
 ├── development/

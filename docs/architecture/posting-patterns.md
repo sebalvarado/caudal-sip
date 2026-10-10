@@ -119,7 +119,7 @@ Nothing is ever updated or deleted. A correction is a new entry that mirrors the
 
 **Malla close** — netted against every other obligation in the cycle, settled at the BCE, positions closed against `scheme:liquidado`, and 100.2875 of headroom returns to Pichincha.
 
-Rounding is decided once, in the tariff module, and the tax leg is computed from the quoted commission — never recomputed downstream, or the entry will not balance.
+Rounding is decided once, in the `fees` module, and the tax leg is computed from the quoted commission — never recomputed downstream, or the entry will not balance.
 
 ## 6. What must never appear
 

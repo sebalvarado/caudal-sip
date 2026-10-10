@@ -32,7 +32,7 @@ Every epic must ship **a public demo and a blog post** before it counts as done.
 - **Hosted**: deployed to Azure on every merge to `main`, with the demo page on the site.
 - **Public artifact**: a published simulation of one day of national traffic — net positions, settlement cycles, and what the ceiling does to a segment-3 cooperativa on a payroll day.
 
-**Cut:** the tariff module (commissions post as zero, but the posting structure of [ADR-0010](../architecture/adr/0010-commissions-as-postings.md) is kept), the TigerBeetle backend, the reconciliation queue, the console.
+**Cut:** the `fees` module (commissions post as zero, but the posting structure of [ADR-0010](../architecture/adr/0010-commissions-as-postings.md) is kept), the TigerBeetle backend, the reconciliation queue, the console.
 
 ## Epic 2 — An institution connects
 

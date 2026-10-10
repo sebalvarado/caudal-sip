@@ -6,9 +6,9 @@ The sequence for building the central system — the SIP-equivalent the BCE woul
 
 ## What changed
 
-Previously the ledger was late work — Phase 3, after the message library and the gateway, on the assumption it was a bookkeeping concern that could follow the protocol. It cannot. The ledger now enforces the liquidity ceiling synchronously inside payment authorization, which puts it on the critical path of the first payment that ever flows. **The ledger and the tariff module are foundations, not later phases.**
+Previously the ledger was late work — Phase 3, after the message library and the gateway, on the assumption it was a bookkeeping concern that could follow the protocol. It cannot. The ledger now enforces the liquidity ceiling synchronously inside payment authorization, which puts it on the critical path of the first payment that ever flows. **The ledger and the fees module are foundations, not later phases.**
 
-The tariff module is new; it did not appear in any earlier component list.
+The fees module (called the tariff module in ADR-0010) is new; it did not appear in any earlier component list.
 
 ## Sequence
 
@@ -18,7 +18,7 @@ Each step ends in something demonstrable, because a step that cannot be shown ca
 
 **2. Chart of accounts and posting patterns, executable.** [`../architecture/posting-patterns.md`](../architecture/posting-patterns.md) turned into tests: every flow in that document, including all four catálogo exceptions, exercised against the ledger. *Proves:* the design survives contact with the failure modes, particularly exceptions 3 and 4 where money is irrevocably committed and the sender does not know it.
 
-**3. Tariff module and quote-then-commit.** Effective-dated schedules, quoting, the snapshot onto the payment, multi-leg entries with commission and tax. *Proves:* what the customer is shown is exactly what posts, and any historical charge is explainable.
+**3. Fees module and quote-then-commit.** Effective-dated schedules, quoting, the snapshot onto the payment, multi-leg entries with commission and tax. *Proves:* what the customer is shown is exactly what posts, and any historical charge is explainable.
 
 **4. Risk engine as a funding service.** Weekly ceiling calculation from reserve requirements, headroom funding, the traffic light as a balance projection, and the ceiling-decrease edge case. *Proves:* the automatic block works and cannot be bypassed, because it is not code that can be forgotten.
 
@@ -30,7 +30,7 @@ Each step ends in something demonstrable, because a step that cannot be shown ca
 
 **8. Registry, directory, and resolution.** Llaves, the Sistema Central de Llaves and its two-phase reservation, distributed directory synchronization.
 
-**9. Reconciliation service and operations console.** The `por conciliar` work queue with its 18:00 daily close, directory divergence resolution, headroom monitoring, tariff administration.
+**9. Reconciliation service and operations console.** The `por conciliar` work queue with its 18:00 daily close, directory divergence resolution, headroom monitoring, fee administration.
 
 ## Why this order
 

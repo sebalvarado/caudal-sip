@@ -25,3 +25,4 @@ ADRs cover component-level decisions. Scheme-level behavior (message profiles, l
 | [0009](0009-risk-ceiling-as-funded-account.md) | Risk ceiling as a funded control account; one ledger for both settlement models | Accepted |
 | [0010](0010-commissions-as-postings.md) | Commissions and taxes as first-class postings, quoted before charged | Accepted |
 | [0011](0011-rust-monorepo.md) | Rust, single monorepo | Accepted |
+| [0012](0012-crate-boundaries.md) | Crate boundaries and dependency rules | Accepted |
