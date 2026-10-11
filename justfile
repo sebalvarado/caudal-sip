@@ -62,9 +62,13 @@ ci: db
     cargo deny check
     just site-build
 
-# Run the caudal terminal (lands with #12)
+# The network in one process: no args opens the full-screen terminal, e.g. `just terminal pay --from banco-alfa --llave llave-01 --amount 25.40`
 terminal *args:
     cargo run -p caudal -- {{args}}
+
+# Regenerate the published one-day national simulation
+simulation:
+    cargo run --release -p caudal -- scenario national --json > site/src/data/simulacion-nacional.json
 
 # Website dev server
 site:

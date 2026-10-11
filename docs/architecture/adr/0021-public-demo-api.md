@@ -26,7 +26,7 @@ The site drives a live network ([ADR-0020](0020-azure-container-apps-demo-host.m
 
 **Abuse limits.** A fixed-window rate limit allows 30 requests per minute per client address, held in memory and never logged. CORS allows only the site's origin. No cookies, no authentication, no stored request bodies. The network resets to the seed every fifteen minutes (ADR-0020), so nothing persists.
 
-**Every response carries the disclaimer**, in the `X-Caudal-Disclaimer` header and in a `disclaimer` field of every JSON body: *Demostración con datos ficticios. Proyecto Caudal es independiente y no está afiliado al Banco Central del Ecuador.*
+**Every response carries the disclaimer**, in the `X-Caudal-Disclaimer` header and in a `disclaimer` field of every JSON body: *Demostración con datos ficticios. Proyecto Caudal es independiente y no está afiliado al Banco Central del Ecuador.* HTTP header values are ASCII, so the header carries the same sentence without accents.
 
 ## Alternatives considered
 

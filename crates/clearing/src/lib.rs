@@ -20,6 +20,12 @@ impl Malla {
         self.payments.is_empty() && self.nets.values().all(|n| *n == 0)
     }
 
+    /// What the payments add up to before netting.
+    pub fn gross(&self) -> Usd {
+        Usd::from_cents(self.bilateral.values().map(|u| u.cents()).sum())
+    }
+
+    /// What moves at settlement: the sum of the positive nets.
     pub fn total(&self) -> Usd {
         Usd::from_cents(self.nets.values().filter(|n| **n > 0).map(|n| *n as u64).sum())
     }
@@ -160,6 +166,8 @@ mod tests {
         assert_eq!(m.nets.values().sum::<i128>(), 0);
         assert_eq!(m.bilateral[&(bic(0), bic(1))], Usd::from_cents(5_000));
         assert_eq!(m.payments.len(), 4);
+        assert_eq!(m.gross(), Usd::from_cents(9_500));
+        assert_eq!(m.total(), Usd::from_cents(1_500), "only the nets move");
         assert!(settle(&ledger, 2).is_empty(), "a settled malla is not settled again");
         for i in 0..3 {
             assert_eq!(available(&ledger, i), i128::from(FUNDED), "headroom returns on settlement");

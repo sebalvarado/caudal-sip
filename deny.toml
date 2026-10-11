@@ -23,9 +23,19 @@ wildcards = "deny"
 allow-wildcard-paths = true
 deny = [
     { crate = "sqlx", wrappers = ["caudal-ledger-postgres"] },
-    { crate = "tokio", wrappers = ["caudal-ledger-postgres", "sqlx-core", "sqlx-macros-core", "tokio-stream"] },
-    { crate = "axum" },
-    { crate = "hyper" },
+    { crate = "tokio", wrappers = [
+        "axum",
+        "caudal",
+        "caudal-ledger-postgres",
+        "hyper",
+        "hyper-util",
+        "sqlx-core",
+        "sqlx-macros-core",
+        "tokio-stream",
+        "tower",
+    ] },
+    { crate = "axum", wrappers = ["caudal"] },
+    { crate = "hyper", wrappers = ["axum", "hyper-util"] },
     { crate = "rustls" },
     { crate = "quick-xml", wrappers = ["caudal-iso20022"] },
 ]

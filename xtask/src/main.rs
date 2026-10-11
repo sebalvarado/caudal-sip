@@ -57,7 +57,11 @@ fn arch() -> Result<(), Vec<String>> {
     let metadata = MetadataCommand::new().no_deps().exec().map_err(|e| vec![format!("cargo metadata: {e}")])?;
     let mut errors = Vec::new();
     for package in metadata.workspace_packages() {
-        let Some(name) = package.name.strip_prefix("caudal-") else {
+        let name = match package.name.as_str() {
+            "caudal" => Some("caudal"),
+            other => other.strip_prefix("caudal-"),
+        };
+        let Some(name) = name else {
             if package.name.as_str() != "xtask" {
                 errors.push(format!("{}: workspace packages are named caudal-<name>", package.name));
             }
