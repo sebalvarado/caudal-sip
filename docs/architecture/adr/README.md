@@ -26,3 +26,9 @@ ADRs cover component-level decisions. Scheme-level behavior (message profiles, l
 | [0010](0010-commissions-as-postings.md) | Commissions and taxes as first-class postings, quoted before charged | Accepted |
 | [0011](0011-rust-monorepo.md) | Rust, single monorepo | Accepted |
 | [0012](0012-crate-boundaries.md) | Crate boundaries and dependency rules | Accepted |
+| [0013](0013-ledger-is-the-aggregate.md) | The ledger is the consistency boundary; a payment is a process | Accepted |
+| [0014](0014-kernel-types.md) | Kernel types: catálogo vocabulary that cannot hold an invalid value | Accepted |
+| [0015](0015-ledger-interface.md) | The ledger interface: one synchronous rule core behind an async port | Accepted |
+| [0016](0016-data-ownership-and-audit.md) | One schema per domain, append-only by privilege, one audit chain per schema | Accepted |
+| [0017](0017-time-calendar-identifiers.md) | Time is an argument, the calendar is data, identifiers come from the catálogo or the edge | Accepted |
+| [0018](0018-composition-and-message-plane.md) | The same nodes run in one process or many; only transport, clock, and storage change | Accepted |

@@ -4,6 +4,7 @@
 - **Date**: 2026-10-09
 - **Deciders**: Founding maintainer
 - **Supersedes**: the language half of [0001](0001-go-monorepo.md). The single-repository half of 0001 stands and is restated here.
+- **Refined by**: [0015](0015-ledger-interface.md), on what "synchronous" means for a domain crate
 
 ## Context
 

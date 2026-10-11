@@ -4,6 +4,7 @@
 - **Date**: 2026-10-10
 - **Deciders**: Founding maintainer
 - **Issue**: [#18](https://github.com/sebalvarado/caudal-sip/issues/18), first decision of the Domain foundations epic ([#17](https://github.com/sebalvarado/caudal-sip/issues/17))
+- **Refined by**: [0014](0014-kernel-types.md) (the kernel set), [0015](0015-ledger-interface.md) (storage ports), [0016](0016-data-ownership-and-audit.md) (who writes audit), [0018](0018-composition-and-message-plane.md) (translation and `south-api`)
 
 ## Context
 

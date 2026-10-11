@@ -108,7 +108,7 @@ Son códigos externos estándar de ISO 20022, así que nuestra librería puede a
 
 ### Iniciación e identificadores
 
-Los canales se codifican `0001` Web y `0002` APP, y la forma de iniciación se marca como `Key`, `Cred` o `QR` (§5, Tablas 10 y 13). El identificador único del pago lo genera el integrante ordenante con la forma **BIC + `AAAAMMDDHHMMSS` + secuencial o hash criptográfico**, de 20 a 35 caracteres; por ejemplo `PACIECEG` `27012026094735` `XYZ12345` (§7). No es editable, es obligatorio, aparece en el comprobante del cliente y es la referencia para toda la trazabilidad y conciliación.
+Los canales se codifican `0001` Web y `0002` APP, y la forma de iniciación se marca como `Key`, `Cred` o `QR` (§5, Tablas 10 y 13). El identificador único del pago lo genera el integrante ordenante con la forma **BIC + `DDMMAAAAHHMMSS` + secuencial o hash criptográfico**, de 20 a 35 caracteres; por ejemplo `PACIECEG` `27012026094735` `XYZ12345`, generado el 27 de enero de 2026 a las 09:47:35 (§7, Tabla 14). La tabla no explicita el formato de la fecha; se deduce de ese ejemplo. No es editable, es obligatorio, aparece en el comprobante del cliente y es la referencia para toda la trazabilidad y conciliación.
 
 La aplicación del integrante ordenante debe mostrar el nombre del beneficiario y el valor de la comisión con impuestos antes de que el cliente confirme, se haya iniciado el pago con llave o con credencial (§2.2, regla 6; §5, reglas 1 y 2).
 

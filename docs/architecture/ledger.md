@@ -1,6 +1,6 @@
 # The Ledger: accounts, invariants, and interface
 
-The design of the scheme's obligation ledger. Decisions behind it are in [ADR-0008](adr/0008-ledger-architecture.md) (architecture), [ADR-0009](adr/0009-risk-ceiling-as-funded-account.md) (risk ceiling as a funded account) and [ADR-0010](adr/0010-commissions-as-postings.md) (fees as postings). The exact postings for every flow are in [`posting-patterns.md`](posting-patterns.md). Regulatory grounding is [`../research/catalogo-operacional.md`](../research/catalogo-operacional.md).
+The design of the scheme's obligation ledger. The ledger is the only transactional aggregate; a payment is a process that calls it ([ADR-0013](adr/0013-ledger-is-the-aggregate.md)). Decisions behind the books themselves are in [ADR-0008](adr/0008-ledger-architecture.md) (architecture), [ADR-0009](adr/0009-risk-ceiling-as-funded-account.md) (risk ceiling as a funded account) and [ADR-0010](adr/0010-commissions-as-postings.md) (fees as postings). The exact postings for every flow are in [`posting-patterns.md`](posting-patterns.md). Regulatory grounding is [`../research/catalogo-operacional.md`](../research/catalogo-operacional.md).
 
 ## Scope: which ledger this is
 
@@ -53,48 +53,57 @@ Enforced by the storage engine wherever possible, verified by property-based tes
 4. **Balances are derived** from postings. A materialized balance may exist as a cache with a job that proves it matches.
 5. **Reservation is atomic across both ledgers.** The obligation reservation and the headroom debit succeed together or neither happens.
 6. **Every entry references the event and the signed wire message that caused it**, so any figure on any screen is traceable to evidence years later.
-7. **Idempotency is structural**: `(originator BIC, end-to-end id)` deduplicates network-wide, and a repeated reservation returns the original reservation rather than creating a second.
+7. **Idempotency is structural**: the payment id, which holds the ordering BIC, deduplicates network-wide, and a repeated reservation returns the original reservation rather than creating a second ([ADR-0013](adr/0013-ledger-is-the-aggregate.md)).
 
 ## The interface
 
-Narrow on purpose — this is the entire surface other components may use.
+Narrow on purpose — this is the entire surface other components may use. The rules live in a synchronous core; this trait is the async port over it, with no runtime dependency ([ADR-0015](adr/0015-ledger-interface.md)).
 
-```go
-type Ledger interface {
-    // Two-phase: reserve consumes headroom and creates pending obligations
-    // atomically across both ledgers. Returns ErrInsufficientHeadroom when
-    // the ceiling would be breached — that error is the red semáforo, and it
-    // maps to the catálogo's AM04, which is the SIP's code for malla-level
-    // insufficiency, not the customer's balance.
-    Reserve(ctx context.Context, req ReserveRequest) (ReservationID, error)
-    Post(ctx context.Context, id ReservationID) error              // ACSP
-    Void(ctx context.Context, id ReservationID, code ReasonCode) error // RJCT
+```rust
+pub trait Ledger {
+    /// Consumes headroom and creates the pending obligations, atomically
+    /// across both ledgers. A repeat with the same payment id returns the
+    /// original reservation.
+    fn reserve(&self, r: Reserve) -> impl Future<Output = Result<Reservation, LedgerError>> + Send;
+    /// ACSP. Idempotent.
+    fn post(&self, id: PaymentId) -> impl Future<Output = Result<Reservation, LedgerError>> + Send;
+    /// RJCT. Idempotent. Refused once posted.
+    fn void(&self, id: PaymentId, reason: ReasonCode) -> impl Future<Output = Result<Reservation, LedgerError>> + Send;
 
-    // Immediate balanced entry: funding, settlement, corrections.
-    Transfer(ctx context.Context, entry Entry) (EntryID, error)
+    /// Immediate balanced entry: funding, settlement, corrections.
+    /// Idempotent on `Transfer::id`.
+    fn transfer(&self, t: Transfer) -> impl Future<Output = Result<EntryId, LedgerError>> + Send;
 
-    // Reads. `at` enables point-in-time queries for reconciliation and audit.
-    Balance(ctx context.Context, acct AccountID, at time.Time) (Balance, error)
-    Positions(ctx context.Context, ledger LedgerID, at time.Time) ([]Position, error)
-    Entries(ctx context.Context, q EntryQuery) ([]Entry, error)
+    /// Reads at the latest state or at a past commit time.
+    fn balance(&self, account: AccountId, at: AsOf) -> impl Future<Output = Result<Balance, LedgerError>> + Send;
+    fn positions(&self, book: Book, at: AsOf) -> impl Future<Output = Result<Vec<Position>, LedgerError>> + Send;
+    fn entries(&self, q: EntryQuery) -> impl Future<Output = Result<Vec<Entry>, LedgerError>> + Send;
+}
+
+pub enum LedgerError {
+    /// Final: nothing was committed.
+    Refused(Refusal),
+    /// The call ended without saying whether it committed. Repeat the command;
+    /// never treat this as a refusal.
+    Unknown,
 }
 ```
 
-`ReserveRequest` carries the payment amount, the quoted fee and tax legs ([ADR-0010](adr/0010-commissions-as-postings.md)), both BICs, the end-to-end id, and a timeout after which an unresolved reservation expires. `ReasonCode` is the catálogo's own code — `AC04`, `AM04`, `DT01` — never an internal enum.
+`Reserve` carries the payment id, the beneficiary's BIC, the amount, the quoted fee and tax ([ADR-0010](adr/0010-commissions-as-postings.md)), and the causing event and message hash (invariant 6). It carries no timeout: only `Post` or `Void` ends a reservation. `Refusal::InsufficientHeadroom` is the red semáforo and maps to the catálogo's `AM04`, the SIP's code for malla-level insufficiency, not the customer's balance. The other refusals are listed in [ADR-0015](adr/0015-ledger-interface.md). `ReasonCode` is the catálogo's own code — `AC04`, `AM04`, `DT01` — never an internal enum ([ADR-0014](adr/0014-kernel-types.md)). `Book` names one of the two ledgers. `Usd` is the kernel's amount, and the headroom unit is `ledger`'s own type.
 
 ## Backend mapping
 
 | Concept | TigerBeetle | Postgres |
 |---|---|---|
-| Reservation | `pending` transfer with `timeout` | Row in `reservation` plus pending postings, expiry job |
-| Post / Void | `post_pending_transfer` / `void_pending_transfer` | State transition plus posting materialization |
+| Reservation | `pending` transfer, timeout `0` | Appended reservation event plus pending postings; no expiry job |
+| Post / Void | `post_pending_transfer` / `void_pending_transfer` | Appended post or void event plus its postings |
 | Multi-leg atomicity | `linked` chain | One transaction |
 | No overdraft | `debits_must_not_exceed_credits` flag | `CHECK` on a derived balance with serialized writes per account |
 | Reason code | `code` field | Column |
 | Correlation | `user_data_128` / `user_data_64` | Columns |
-| Point-in-time balance | Native historical balances | Aggregate over postings up to a timestamp |
+| Point-in-time balance | Native historical balances | Aggregate over postings up to a commit time |
 
-Two things to know about the TigerBeetle backend. Clients batch automatically — up to 8,189 events per request — so the throughput story requires no work from us, but a single in-flight request per client means the connection is shared rather than pooled per goroutine. And production means multi-replica consensus; single-replica mode exists for development only.
+Two things to know about the TigerBeetle backend. Clients batch automatically — up to 8,189 events per request — so the throughput story requires no work from us, but a single in-flight request per client means the connection is shared rather than pooled per task. And production means multi-replica consensus; single-replica mode exists for development only.
 
 The Postgres backend must avoid the trap that makes hot-account ledgers slow: **never `UPDATE` a balance column.** Insert postings append-only and derive balances. With a few dozen accounts and append-only writes there is no lock contention to speak of at Ecuador's volumes.
 

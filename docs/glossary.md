@@ -17,6 +17,7 @@ Términos del ecosistema ecuatoriano de pagos, en ambos idiomas. Los términos r
 | **Red de pagos** | payment network | Private technological infrastructure that routes real-time payments among its integrantes (e.g. BANRED). Runs a distributed llave directory for its members. |
 | **SIP — Sistema Integrador de Pagos** | payments integrator system | BCE-operated infrastructure that resolves llaves and clears **inter-network** payments, feeding settlement. |
 | **RPI — Red de Pagos Instantáneos** | instant payments network | The BCE's own payment network, participating alongside private redes. |
+| **Código único de la orden de pago** | payment id | The identifier the ordering integrante generates for each payment: its BIC, the date and time, and a sequence or hash, 20 to 35 characters. Carried in `PmtId/InstrId`; not the ISO `EndToEndId`. (Catálogo Operacional §7, Tabla 14) |
 | **Orden de pago intra-red / inter-redes** | intra-/inter-network payment order | Payment between integrantes of the same network / of different networks (the latter routed through the SIP). |
 | **Irrevocabilidad** | irrevocability | The point after which a payment is final, binding, and enforceable against third parties. For inter-network payments it attaches when the SIP has notified and the beneficiary red has **received** the order — before the customer credit is confirmed. State `ACSP`. (BCE-GG-007-2026, defs. 9, arts. 12–13; Catálogo Operacional §11.3) |
 | **Malla (de compensación)** | netting cycle | The set of bilateral and multilateral net positions the SIP builds in real time from irrevocable payments. Liquidation runs on the multilateral malla, several times a day. (Catálogo Operacional §9) |
@@ -59,6 +60,24 @@ Términos del ecosistema ecuatoriano de pagos, en ambos idiomas. Los términos r
 | **Directory (directorio de llaves)** | The service mapping llaves → credenciales de pago; distributed per red, integrated via the SIP. Analog of Pix's DICT and Bre-B's DICE. |
 | **Four-party model** | Payer app/PSP + payer bank + payee bank + payee — the UPI participation topology. |
 
+## Terms in code
+
+The Rust type each term becomes. The shapes are fixed in [ADR-0014](architecture/adr/0014-kernel-types.md) and [ADR-0017](architecture/adr/0017-time-calendar-identifiers.md); the payment and ledger language is in [`CONTEXT.md`](../CONTEXT.md).
+
+| Term | Type | Crate |
+|---|---|---|
+| Amount in dollars | `Usd` (integer cents) | `types` |
+| BIC (integrante or red) | `Bic` | `types` |
+| Código único de la orden de pago | `PaymentId` (holds the ordering `Bic`) | `types` |
+| Payment state (Tabla 11) | `PaymentState` | `types` |
+| Reason code (Tabla 12) | `ReasonCode`; a code received from a counterparty is a `ReceivedReason` | `types` |
+| Llave type (Tabla 1) | `LlaveType` | `types` |
+| Business day, operating hours, cut-offs, reconciliation close | `BusinessCalendar` | `types` |
+| Llave de pago | `Llave` | `directory` |
+| Credencial de pago | `Credencial` | `directory` |
+| Masked beneficiary name | `MaskedName` | `directory` |
+| Ledger account, headroom | `AccountId`, `Headroom` | `ledger` |
+
 ## Project components (this repo)
 
 The full crate map and its dependency rules are in [ADR-0012](architecture/adr/0012-crate-boundaries.md).
@@ -66,6 +85,7 @@ The full crate map and its dependency rules are in [ADR-0012](architecture/adr/0
 | Component | What it is |
 |---|---|
 | `iso20022` | Library: read/write/validate the BCE profile of pacs.008, pacs.002, acmt. |
+| `south-api` | Translation between `iso20022` and the domain, and the loop that runs each node's role over `msgplane` ([ADR-0018](architecture/adr/0018-composition-and-message-plane.md)). |
 | `directory` | Llaves: registration, uniqueness, resolution, synchronization with the Sistema Central de Llaves. |
 | `payments` | The payment state machine, shared by `sip`, `red` and `gateway`. |
 | `ledger` + `clearing` | Obligation and headroom ledgers; mallas, netting and settlement instructions. |
