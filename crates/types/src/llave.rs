@@ -3,7 +3,7 @@ use std::str::FromStr;
 
 use crate::InvalidValue;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum LlaveType {
     Celular,
     Identificacion,

@@ -19,6 +19,14 @@ all = { level = "warn", priority = -1 }
 [workspace.dependencies]
 caudal-types = { path = "crates/types" }
 caudal-ledger = { path = "crates/ledger" }
+caudal-registry = { path = "crates/registry" }
+caudal-directory = { path = "crates/directory" }
+caudal-risk = { path = "crates/risk" }
+caudal-clearing = { path = "crates/clearing" }
+caudal-payments = { path = "crates/payments" }
+caudal-iso20022 = { path = "crates/iso20022" }
+caudal-msgplane = { path = "crates/msgplane" }
+caudal-south-api = { path = "crates/south-api" }
 
 cargo_metadata = "0.23"
 jiff = { version = "0.2", default-features = false, features = ["std"] }
