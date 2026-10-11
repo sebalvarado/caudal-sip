@@ -73,7 +73,7 @@ Every epic must ship **a public demo and a blog post** before it counts as done.
 Serves all three epics and owns CI, CD, and the site.
 
 - **Workspace**: a Cargo workspace with the toolchain pinned in `rust-toolchain.toml` and `Cargo.lock` committed, in week 1 before any epic code ([ADR-0011](../architecture/adr/0011-rust-monorepo.md)).
-- **CI** (GitHub Actions, path-filtered, required on `main`): `cargo fmt --check`, `cargo clippy --workspace -- -D warnings`, `cargo test --workspace` against a Postgres service container, `cargo-deny` for licences and advisories. The existing site build stays. A DCO sign-off check on every PR.
+- **CI** (Azure Pipelines reading GitHub, required on `main`, [ADR-0019](../architecture/adr/0019-ci-on-azure-pipelines.md)): `cargo fmt --check`, `cargo clippy --workspace -- -D warnings`, `cargo test --workspace` against a Postgres service container, `cargo-deny` for licences and advisories. The existing site build stays on GitHub Actions. A DCO sign-off check on every PR.
 - **CD**: on merge to `main`, build container images, push to GHCR, and deploy the demo network to Azure Container Apps with Azure Database for PostgreSQL; the site keeps deploying to Cloudflare Pages. On a `v*` tag, a GitHub Release with Linux and macOS binaries and versioned images.
 - **Public demo**: a page on the Astro site calling the public sandbox API. Rate-limited, CORS restricted to the site origin, synthetic data only, non-affiliation disclaimer visible.
 - **ADRs first**: Azure as the demo host, and the public demo API boundary — what it exposes and why it can never carry real data.

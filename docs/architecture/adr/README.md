@@ -32,3 +32,4 @@ ADRs cover component-level decisions. Scheme-level behavior (message profiles, l
 | [0016](0016-data-ownership-and-audit.md) | One schema per domain, append-only by privilege, one audit chain per schema | Accepted |
 | [0017](0017-time-calendar-identifiers.md) | Time is an argument, the calendar is data, identifiers come from the catálogo or the edge | Accepted |
 | [0018](0018-composition-and-message-plane.md) | The same nodes run in one process or many; only transport, clock, and storage change | Accepted |
+| [0019](0019-ci-on-azure-pipelines.md) | Rust CI runs on Azure Pipelines; the code stays on GitHub | Accepted |
