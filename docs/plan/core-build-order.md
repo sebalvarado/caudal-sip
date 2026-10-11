@@ -26,7 +26,7 @@ Each step ends in something demonstrable, because a step that cannot be shown ca
 
 **6. Clearing engine.** Bilateral and multilateral malla accumulation, netting, settlement instruction generation, position close, headroom release. *Proves:* a day of simulated national traffic nets correctly and settles.
 
-**7. Payment router and the message plane.** Only now — the ISO 20022 surface over a core that is already correct. Idempotency via `(BIC, end-to-end id)`, reason codes straight from the catálogo, the state machine wired to reserve, post, and void.
+**7. Payment router and the message plane.** Only now — the ISO 20022 surface over a core that is already correct. Idempotency via the payment id (`InstrId`, which holds the ordering BIC), reason codes straight from the catálogo, the state machine wired to reserve, post, and void.
 
 **8. Registry, directory, and resolution.** Llaves, the Sistema Central de Llaves and its two-phase reservation, distributed directory synchronization.
 

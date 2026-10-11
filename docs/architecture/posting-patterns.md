@@ -4,7 +4,7 @@ Exactly which postings each flow produces. This is the implementation reference:
 
 Accounts and invariants are in [`ledger.md`](ledger.md). Flows and states come from the Catálogo Operacional ([decoded](../research/catalogo-operacional.md) §5, §9, §10, §11.3–§11.4).
 
-Notation: `A` is the payment amount, `F` the commission, `T` the tax on it. `ORD` is the ordering integrante's BIC, `BEN` the beneficiary's. Every entry carries the end-to-end id, the causing event id, and the hash of the wire message.
+Notation: `A` is the payment amount, `F` the commission, `T` the tax on it. `ORD` is the ordering integrante's BIC, `BEN` the beneficiary's. Every entry carries the payment id, the causing event id, and the hash of the wire message.
 
 ## 1. Inter-red payment, happy path
 
@@ -12,13 +12,13 @@ Notation: `A` is the payment amount, `F` the commission, `T` the tax on it. `ORD
 
 Before routing to the beneficiary red. Atomic across both ledgers; if the headroom leg fails, nothing happens and the payment is rejected.
 
-**Ledger 2 — headroom** (pending, with timeout)
+**Ledger 2 — headroom** (pending)
 
 | Debit | Credit | Amount |
 |---|---|---|
 | `ir:ORD:headroom` | `scheme:headroom_comprometido` | `A + F + T` |
 
-**Ledger 1 — obligations** (pending, with timeout, linked)
+**Ledger 1 — obligations** (pending, linked)
 
 | Debit | Credit | Amount |
 |---|---|---|
@@ -26,7 +26,7 @@ Before routing to the beneficiary red. Atomic across both ledgers; if the headro
 | `ir:ORD:posicion` | `scheme:comisiones_por_cobrar` | `F` |
 | `ir:ORD:posicion` | `scheme:impuestos_por_pagar` | `T` |
 
-The headroom reservation covers amount plus fees, because that is the institution's total commitment. Insufficient headroom returns `ErrInsufficientHeadroom` — the red semáforo — and the payment is rejected before it ever reaches the beneficiary red.
+The headroom reservation covers amount plus fees, because that is the institution's total commitment. Insufficient headroom returns `Refusal::InsufficientHeadroom` — the red semáforo — and the payment is rejected before it ever reaches the beneficiary red.
 
 ### 1.2 Post — on confirmation (§11.3 step 10, state `ACSP`)
 
@@ -67,7 +67,7 @@ Mapped to the catálogo's four named exceptions (§11.4).
 | Exception 3 — beneficiary red cannot return confirmation | `ACSP` | **Yes** | **Post**, then move to suspense (below) |
 | Exception 4 — SIP cannot return confirmation to the ordering red | `ACSC` | **Yes** | Post normally; the malla is generated |
 
-Voiding releases headroom and cancels the obligations in one atomic operation. The reservation timeout is a safety net, not the primary mechanism — an expired reservation that was never posted or voided is an incident to investigate, not a routine outcome.
+Voiding releases headroom and cancels the obligations in one atomic operation. A reservation has no timeout: only a post or a void ends it ([ADR-0013](adr/0013-ledger-is-the-aggregate.md)). One still open at the reconciliation close is an incident to investigate, not a routine outcome.
 
 ### 2.1 Suspense — `por conciliar` (exception 3)
 
@@ -111,15 +111,15 @@ Nothing is ever updated or deleted. A correction is a new entry that mirrors the
 
 ## 5. Worked example
 
-`A = 100.00`, `F = 0.25`, `T = 0.0375` (15% IVA on the commission), ordering `PICHECEQ500`, beneficiary `CJEPECEQ`.
+`A = 100.00`, `F = 0.25`, `T = 0.04` (15% IVA on the commission is 0.0375, rounded half-up to the cent by `fees`), ordering `BALFECEQ` (the fictional banco-alfa), beneficiary `CBETECEQ` (the fictional coop-beta).
 
-**Reserve** — headroom: debit `ir:PICHECEQ500:headroom` 100.2875, credit `scheme:headroom_comprometido` 100.2875. Obligations, linked: debit `ir:PICHECEQ500:posicion` 100.00 / credit `ir:CJEPECEQ:posicion` 100.00; debit `ir:PICHECEQ500:posicion` 0.25 / credit `scheme:comisiones_por_cobrar` 0.25; debit `ir:PICHECEQ500:posicion` 0.0375 / credit `scheme:impuestos_por_pagar` 0.0375.
+**Reserve** — headroom: debit `ir:BALFECEQ:headroom` 100.29, credit `scheme:headroom_comprometido` 100.29. Obligations, linked: debit `ir:BALFECEQ:posicion` 100.00 / credit `ir:CBETECEQ:posicion` 100.00; debit `ir:BALFECEQ:posicion` 0.25 / credit `scheme:comisiones_por_cobrar` 0.25; debit `ir:BALFECEQ:posicion` 0.04 / credit `scheme:impuestos_por_pagar` 0.04.
 
-**Post at `ACSP`** — the same amounts become posted. Pichincha's position now shows 100.2875 owed; JEP is owed 100.00.
+**Post at `ACSP`** — the same amounts become posted. banco-alfa's position now shows 100.29 owed; coop-beta is owed 100.00.
 
-**Malla close** — netted against every other obligation in the cycle, settled at the BCE, positions closed against `scheme:liquidado`, and 100.2875 of headroom returns to Pichincha.
+**Malla close** — netted against every other obligation in the cycle, settled at the BCE, positions closed against `scheme:liquidado`, and 100.29 of headroom returns to banco-alfa.
 
-Rounding is decided once, in the `fees` module, and the tax leg is computed from the quoted commission — never recomputed downstream, or the entry will not balance.
+Rounding is decided once, in the `fees` module, and the tax leg is computed from the quoted commission — never recomputed downstream, or the entry will not balance. The ledger holds whole cents only ([ADR-0014](adr/0014-kernel-types.md)).
 
 ## 6. What must never appear
 

@@ -106,7 +106,8 @@ caudal-sip/
 │
 ├── crates/            Libraries, each named `caudal-<name>`
 │   │  ── Kernel ──
-│   ├── types/         Money, BIC, end-to-end id, payment state, reason code
+│   ├── types/         Money, BIC, payment id, payment state, reason code,
+│   │                  llave type, business calendar (ADR-0014, ADR-0017)
 │   │  ── Domain: synchronous, no I/O ──
 │   ├── registry/      Integrantes, redes, BICs, membership and certification
 │   ├── directory/     Llaves: registration, resolution, directory sync
@@ -122,8 +123,9 @@ caudal-sip/
 │   ├── qr/            EMV QRCPS encoder/decoder carrying llaves
 │   │  ── Adapters: all I/O ──
 │   ├── ledger-postgres/   Default backend (ADR-0007); one per stateful domain
-│   ├── msgplane/      Transport, signing, idempotency, deadlines
-│   ├── audit/         The append-only log
+│   ├── msgplane/      Transport, signing, clock and deadlines
+│   ├── audit/         Audit record format, per-schema chains, anchors
+│   ├── south-api/     ISO 20022 ↔ domain translation; runs each node's role
 │   └── north-api/     The gateway's HTTP + webhook surface
 │
 ├── apps/              Binaries: wiring only
@@ -141,7 +143,7 @@ caudal-sip/
 └── examples/          "Connect a cooperativa in 30 minutes"
 ```
 
-There is no `router` crate: routing is `payments` composed with `msgplane` inside `sip` and `red` ([ADR-0012](adr/0012-crate-boundaries.md)). TigerBeetle, when it comes, is another adapter beside `ledger-postgres`.
+There is no `router` crate: routing is the `payments` role machines run by `south-api` over `msgplane`, built into `sip` and `red` ([ADR-0012](adr/0012-crate-boundaries.md), [ADR-0018](adr/0018-composition-and-message-plane.md)). TigerBeetle, when it comes, is another adapter beside `ledger-postgres`.
 
 Two departures from the original plan, both consequences of decisions taken later. `settlement/` was described as an RTGS simulator; it is now `ledger` plus `clearing`, because the ledger turned out to be the core of the system rather than a bookkeeping concern at the end of it ([ADR-0008](adr/0008-ledger-architecture.md)). And `fees` (first called the tariff module) and `risk` did not exist in the original component list at all — the first because the catálogo treats commissions as a real parameterized flow ([ADR-0010](adr/0010-commissions-as-postings.md)), the second because the liquidity ceiling needs funding rather than enforcement ([ADR-0009](adr/0009-risk-ceiling-as-funded-account.md)).
 

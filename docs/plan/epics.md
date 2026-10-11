@@ -19,7 +19,7 @@ Every epic must ship **a public demo and a blog post** before it counts as done.
 - **Ledger crate** (build order steps 1–2): double entry, two-phase reservations, the no-overdraft invariant, append-only event log, Postgres backend. A property-based suite exercises every flow in [`posting-patterns.md`](../architecture/posting-patterns.md), including the four catálogo exceptions.
 - **Risk ceiling as a funded account** (step 4, [ADR-0009](../architecture/adr/0009-risk-ceiling-as-funded-account.md)), with reserve data seeded rather than fetched from the BCE.
 - **Clearing** (step 6): multilateral malla netting and at least one settlement cycle that can be triggered manually.
-- **Router**: a minimal `pacs.008` / `pacs.002` exchange on our own profile, marked **[assumption]** until the catálogo técnico is published. Idempotent on `(BIC, end-to-end id)`; returns a subset of the Tabla 12 reason codes.
+- **Router**: a minimal `pacs.008` / `pacs.002` exchange on our own profile, marked **[assumption]** until the catálogo técnico is published. Idempotent on the payment id (`InstrId`, which holds the ordering BIC); returns a subset of the Tabla 12 reason codes.
 - **Llaves**: a seeded central key system using the catálogo's llave types; resolution returns the masked name.
 - **Topology**: two `red` profiles and at least three mock institutions, started by one command.
 - **The `caudal` terminal**: one binary that runs `sip`, two redes, and the mock institutions in-process on an in-memory ledger backend (the same trait as Postgres), with no Docker. A full-screen terminal UI in the spirit of a Bloomberg terminal, for developers and finance professionals on a single machine:
@@ -85,9 +85,9 @@ The **Domain foundations** epic ([#17](https://github.com/sebalvarado/caudal-sip
 
 ## How agents work
 
-- **Tracking**: one GitHub epic issue per epic plus one for the foundation, the `2026-11-30` milestone, and labels per epic and component. Each task issue is an agent brief: goal, directories it may touch, docs to read first, acceptance check, and verification command.
-- **Delivery**: one issue, one branch in its own git worktree, one PR. CI green, then the maintainer reviews and merges. Agents never push to `main`, and a PR that touches another workstream's directories says so.
-- **Parallelism**: workstreams map to directories — the workspace root and `.github/`, `ledger/` and the core crates, `spec/` and `gateway/`, `workstream/authorized-red/` — so they run concurrently without conflicts.
+- **Tracking**: one GitHub issue per epic, the `2026-11-30` milestone, and the epic's acceptance criteria as its checklist. Smaller issues already opened are that checklist. Do not open a new issue for a slice of an epic.
+- **Delivery**: one epic, one long-lived branch, one git worktree, until the epic's acceptance criteria are met. Merge that branch back in reviewable pull requests. A slice does not get its own worktree. CI green, then the maintainer reviews and merges. Agents never push to `main`.
+- **Parallelism**: epics own directories and run at the same time only when those directories do not overlap. Domain foundations owns `docs/architecture/`. Network in a box owns the domain crates and `apps/caudal`. An institution connects owns `spec/`, `apps/gateway`, and `apps/tck`. The Caudal red owns `workstream/authorized-red/`. The foundation workstream owns the workspace root, `.github/`, and deploy. The map is in the `worktree-management` skill.
 
 ## Calendar
 

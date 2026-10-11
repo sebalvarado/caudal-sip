@@ -4,6 +4,7 @@
 - **Date**: 2026-08-11
 - **Deciders**: Founding maintainer
 - **Extends**: [0007](0007-postgres-first.md)
+- **Refined by**: [0013](0013-ledger-is-the-aggregate.md) (reservations have no timeout), [0016](0016-data-ownership-and-audit.md) (where the event log of record lives)
 
 ## Context
 

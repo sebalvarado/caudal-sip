@@ -37,6 +37,9 @@ Findings from reading the norm that are candidates for an RFC, a question to the
 | No request-to-pay (`pain.013`-style collection) | RFC candidate | Absent from the catálogo |
 | Remittance data too thin for automatic invoice reconciliation (B2B adoption blocker) | RFC candidate | Catálogo §8 |
 | Timeout values are all "parametrizable" with no published values | Question to the BCE | Catálogo §5 |
+| What the Sistema Central de Llaves stores field by field, and which copy wins when it and a Directorio Distribuido disagree | Question to the BCE | Catálogo §3, §12 |
+| `PmtId/InstrId` carries the payment's unique code (§7), but nothing says how `EndToEndId` relates to it or whether it must be unique | Question to the BCE | Catálogo §7, §8 |
+| No published norm sets retention periods for payments, messages, llave events, or audit records | Question to the BCE | Absent from the four resolutions and the catálogo |
 | Directory anti-enumeration: rate limits, audit and privacy rules for llave resolution | RFC candidate | Absent from the catálogo |
 | Commission policy: is free P2P viable within this design? | RFC candidate | Catálogo §2.1.18, §9.5 |
 
