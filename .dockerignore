@@ -1,0 +1,11 @@
+target
+site
+docs
+research
+workstream
+logs
+.git
+.agents
+.claude
+.cursor
+**/node_modules
