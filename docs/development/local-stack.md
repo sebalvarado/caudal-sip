@@ -44,6 +44,22 @@ fault 3                             the next payment loses its confirmation and 
 scenario payroll                    300 salaries against a 60,000.00 ceiling
 ```
 
+## Scenario scripts
+
+A scenario is a script: the terminal's commands placed on a simulated clock, plus statements that generate load. The built-in scenarios are scripts too.
+
+```text
+# Día de pago de sueldos
+ceiling coop-beta 30000
+at 08:00 traffic 600 until 12:00
+at 09:00 repeat 300 every 18s: pay coop-beta llave-02,llave-04 180..520
+at 11:00 settle
+wait 1m
+retry
+```
+
+`just run my-day.caudal` runs one; `caudal run -` reads it from standard input; `help` in the terminal lists every statement. A parse error names its line. The same scripts run in the browser, on the site's `/simulador/` page ([ADR-0022](../architecture/adr/0022-browser-playground.md)), compiled to WebAssembly; `just playground` rebuilds that after a Rust change.
+
 Every command is also a scriptable subcommand:
 
 ```bash
@@ -51,7 +67,7 @@ caudal llave resolve --llave llave-02
 caudal pay --from coop-beta --llave llave-02 --amount 25.40 --settle --xml
 caudal payment show <payment-id>
 caudal scenario national --json
-printf 'pay coop-beta llave-02 25.40\nsettle\nnetwork\n' | caudal batch
+printf 'at 09:00 pay coop-beta llave-02 25.40\nsettle\nnetwork\n' | caudal run -
 caudal validate crates/iso20022/tests/golden/pacs008.xml
 ```
 
@@ -74,14 +90,16 @@ The catálogo's four exceptions are commands, not afterthoughts. `fault 1` throu
 | `just check <crate>` / `just test <crate>` | The fast loop |
 | `just test` | Every test. Starts this worktree's Postgres for the adapter tests |
 | `just terminal` | The network in a box |
+| `just run <file>` | Run a scenario script |
 | `just simulation` | Regenerate the published one-day simulation |
+| `just playground` | Rebuild the browser simulator after a Rust change |
 | `just ci` | Everything CI runs, once before a PR |
 
 Each worktree gets its own Postgres database on a port that never collides with another project's (55432 by default). Nothing but the Postgres adapter tests needs it.
 
 ## Prerequisites
 
-The pinned Rust toolchain and `just`. Docker only for the Postgres adapter tests. Deliberately nothing else — no second language runtime, no Kubernetes, no cloud CLI, no account anywhere.
+The pinned Rust toolchain and `just`. Docker only for the Postgres adapter tests. `wasm-bindgen-cli` 0.2.129 only to rebuild the browser simulator. Deliberately nothing else — no second language runtime, no Kubernetes, no cloud CLI, no account anywhere.
 
 If setting this up takes more than fifteen minutes on a clean machine, that is a bug worth an issue, not a documentation problem.
 

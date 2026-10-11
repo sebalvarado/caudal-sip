@@ -1,13 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
 import { SITE } from '../config';
-import data from '../data/simulacion-nacional.json';
+import run from '../data/simulacion-nacional.json';
 
 const title = 'Un día de pagos de todo un país';
 const description =
   'Simulamos un día completo de pagos instantáneos entre dos redes y cuatro instituciones ficticias: posiciones netas, tres liquidaciones y lo que el techo de riesgo le hace a una cooperativa del segmento 3 en un día de pago de sueldos.';
 
 // The report prints amounts as 1,234.56; the site writes them as 1.234,56.
+const data = run.report;
 const usd = (s: string) => s.replace(/,/g, '_').replace('.', ',').replace(/_/g, '.');
 const int = (n: number) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 const pct = (n: number) => `${(Math.floor(n * 10) / 10).toFixed(1).replace('.', ',')} %`;
@@ -24,7 +25,7 @@ const rejected = Object.entries(data.rejected).map(([code, by]) => ({
 }));
 const am04 = rejected.find((r) => r.code === 'AM04');
 const timeline = data.timeline.filter((s) => s.at.slice(3, 5) === '00' || s.at.slice(3, 5) === '30');
-const payroll = data.payroll!;
+const payroll = data.tracked!;
 const peak = (id: string) =>
   Math.max(...data.timeline.flatMap((s) => s.institutions.filter((i) => i.id === id).map((i) => i.used_percent)));
 const bankPeak = Math.ceil(Math.max(peak('banco-alfa'), peak('mutual-delta')));
@@ -47,8 +48,8 @@ const hop = Object.fromEntries(data.stats.map((s) => [s.op, s]));
     <p>
       Cada pago recorre la red completa: se firma, se codifica en ISO 20022, se reserva en el libro
       del SIP, se vuelve irrevocable al llegar a la red beneficiaria y se liquida cuando cierra la
-      malla. Es el mismo código de la <a href="/demo/">demo en vivo</a>, corrido sobre un reloj
-      simulado.
+      malla. Es el mismo código que corre en el <a href="/simulador/?plantilla=national">simulador</a>,
+      sobre un reloj simulado.
     </p>
 
     <div class="stats">
@@ -76,11 +77,12 @@ const hop = Object.fromEntries(data.stats.map((s) => [s.op, s]));
       su encaje alcanza para {payroll.paid_first_try}. Los otros {payroll.blocked_am04} se
       rechazan con <code>AM04</code>: el SIP no deja que una institución comprometa más de lo que su
       techo permite, y el cupo usado solo vuelve cuando se liquida la malla. La cooperativa los
-      reintenta después de cada liquidación, y el último sueldo se acredita a las
-      {hhmm(payroll.last_paid_at!)}, cuando la nómina debía terminar antes de las 10:00.
+      reintenta apenas se liquida la de las 11:00: entran {payroll.paid_after_retry} y el último se
+      acredita a las {hhmm(payroll.last_paid_at!)}, cuando la nómina debía terminar antes de las 10:00.
     </p>
     <p>
-      Mientras tanto, los demás pagos de sus socios también se rechazan. El resto de la red ni se
+      Esos sueldos vuelven a llenar el techo hasta la malla de las 15:00, y mientras tanto los
+      demás pagos de sus socios a otras redes también se rechazan. El resto de la red ni se
       entera: banco-alfa y mutual-delta nunca comprometen más del {bankPeak} % de su techo.
     </p>
 
@@ -192,7 +194,11 @@ const hop = Object.fromEntries(data.stats.map((s) => [s.op, s]));
     </ul>
 
     <h2>Repítela</h2>
-    <p>La simulación es determinista: con la misma semilla da el mismo resultado.</p>
+    <p>
+      La simulación es determinista: con la misma semilla da el mismo resultado. Puedes cambiar el
+      guion y correrlo en tu navegador, en el
+      <a href="/simulador/?plantilla=national">simulador</a>, o en tu computadora:
+    </p>
     <pre><code>just terminal scenario national --seed {data.seed}</code></pre>
     <p>
       El código está en <a href={SITE.github} rel="noopener">GitHub</a>, bajo licencia Apache-2.0.

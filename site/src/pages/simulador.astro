@@ -1,0 +1,563 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../config';
+
+const title = 'Simulador';
+const description =
+  'Escribe un día de pagos instantáneos —nóminas, tráfico, liquidaciones, techos de riesgo— y córrelo en tu navegador sobre una red completa: el SIP, dos redes y cuatro instituciones ficticias.';
+const disclaimer =
+  'Demostración con datos ficticios. Proyecto Caudal es independiente y no está afiliado al Banco Central del Ecuador.';
+
+const reference = [
+  ['seed 7', 'Semilla del tráfico aleatorio y de los montos. Con la misma semilla, el mismo día.'],
+  ['ceiling coop-beta 30000', 'Cambia el techo de riesgo de una institución antes de que empiece el día.'],
+  ['at 09:00', 'Mueve el reloj a esa hora. Las líneas siguientes ocurren desde ahí. El día empieza a las 08:00.'],
+  ['wait 1m', 'Avanza el reloj: 400ms, 30s, 5m, 1h.'],
+  ['pay coop-beta llave-02 25.40', 'Envía un pago y espera su resultado.'],
+  [
+    'repeat 300 every 12s: pay coop-beta llave-02,llave-04 180..520',
+    'Envía 300 pagos, uno cada 12 segundos, sin esperar. Las llaves se turnan; el monto se sortea en el rango.',
+  ],
+  ['traffic 20000 until 17:30', 'Tráfico aleatorio entre las cuatro instituciones hasta esa hora, a la medida de cada techo.'],
+  ['settle', 'Liquida la malla: solo se mueve el neto de cada institución y el cupo usado vuelve.'],
+  ['retry', 'Reenvía los pagos del guion rechazados por cupo (AM04).'],
+  ['network · resolve llave-01 · llaves', 'Muestra el estado de la red, resuelve una llave o lista las llaves, como en la terminal.'],
+];
+const institutions = [
+  ['banco-alfa', 'banco', 'red alfa', '4.800.000'],
+  ['mutual-delta', 'mutualista', 'red alfa', '1.920.000'],
+  ['coop-beta', 'cooperativa del segmento 3', 'red beta', '60.000'],
+  ['fintech-gamma', 'SEDPES', 'red beta', '15.000'],
+];
+const llaves = [
+  ['llave-01', 'celular', 'coop-beta'],
+  ['llave-02', 'correo', 'banco-alfa'],
+  ['llave-03', 'identificación', 'fintech-gamma'],
+  ['llave-04', 'alfanumérica', 'mutual-delta'],
+  ['llave-05', 'celular', 'banco-alfa'],
+  ['llave-06', 'correo', 'coop-beta'],
+  ['llave-07', 'celular', 'coop-beta, cuenta bloqueada: AC06'],
+  ['llave-08', 'alfanumérica', 'banco-alfa, cuenta cerrada: AC04'],
+];
+---
+
+<Base title={title} description={description}>
+  <div class="container sim">
+    <div class="prose sim__intro">
+      <p class="sim__kicker">Simulador</p>
+      <h1>Escribe un día de pagos y córrelo</h1>
+      <p class="sim__disclaimer" role="note">{disclaimer}</p>
+      <p>
+        Cada línea del guion es algo que pasa en la red a una hora del día: una nómina, el tráfico de
+        los clientes, una liquidación. Al correrlo, tu navegador levanta la red completa —el Sistema
+        Integrador de Pagos (SIP), dos redes y cuatro instituciones ficticias— y procesa cada pago:
+        lo firma, lo codifica en ISO 20022, lo reserva en el libro del SIP y lo liquida cuando cierra
+        la malla. Nada de lo que escribas sale de tu computadora.
+      </p>
+    </div>
+
+    <div class="sim__toolbar">
+      <label>
+        Plantilla
+        <select id="template" disabled><option>Cargando…</option></select>
+      </label>
+      <button type="button" class="btn btn--primary" id="run" disabled>Correr</button>
+      <button type="button" class="btn btn--ghost" id="share" disabled>Copiar enlace</button>
+      <span id="status" class="sim__status" aria-live="polite">Cargando la red…</span>
+    </div>
+
+    <div class="sim__workspace">
+      <div class="sim__editor">
+        <textarea id="source" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Guion"></textarea>
+        <p id="diagnostic" class="sim__diagnostic" aria-live="polite"></p>
+        <p class="sim__hint">Ctrl + Enter o ⌘ + Enter para correr.</p>
+      </div>
+      <div class="sim__results prose" id="results">
+        <p class="sim__placeholder">Elige una plantilla o escribe tu guion, y córrelo.</p>
+      </div>
+    </div>
+
+    <div class="prose sim__reference">
+      <h2>El lenguaje</h2>
+      <p>
+        Un guion es una lista de instrucciones, una por línea. Lo que va después de <code>#</code> es
+        un comentario, y el primer comentario es el título. Una instrucción puede ir en la misma línea
+        que su hora: <code>at 11:00 settle</code>.
+      </p>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Instrucción</th><th>Qué hace</th></tr></thead>
+          <tbody>
+            {reference.map(([code, what]) => <tr><td><code>{code}</code></td><td>{what}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Las instituciones y sus llaves</h2>
+      <p>
+        Son ficticias. Los techos salen de la Tabla 19 del Catálogo Operacional aplicada a captaciones
+        inventadas; para la SEDPES usamos solo el 0,5 % base de encaje <strong>[supuesto]</strong>.
+      </p>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Institución</th><th>Tipo</th><th>Red</th><th>Techo (USD)</th></tr></thead>
+          <tbody>
+            {institutions.map(([id, kind, red, ceiling]) => <tr><td><code>{id}</code></td><td>{kind}</td><td>{red}</td><td>{ceiling}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Llave</th><th>Tipo</th><th>Cuenta en</th></tr></thead>
+          <tbody>
+            {llaves.map(([id, kind, at]) => <tr><td><code>{id}</code></td><td>{kind}</td><td>{at}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+      <p>
+        ¿Quieres ver un día completo ya analizado? Lee
+        <a href="/simulacion/">un día de pagos de todo un país</a>. El simulador es el mismo programa
+        que la terminal de Caudal; el código está en <a href={SITE.github} rel="noopener">GitHub</a>,
+        bajo licencia Apache-2.0.
+      </p>
+    </div>
+  </div>
+</Base>
+
+<script>
+  type Line = { at: string; tone: string; text: string };
+  type Institution = { id: string; used_percent: number; light: string; available: string };
+  type Report = {
+    title: string;
+    disclaimer: string;
+    seed: number;
+    payments: number;
+    accepted: number;
+    settled: number;
+    intra_red: number;
+    por_conciliar: number;
+    value_accepted: string;
+    rejected: Record<string, Record<string, number>>;
+    settlements: { at: string; payments: number; gross: string; net: string; nets: Record<string, string> }[];
+    timeline: { at: string; institutions: Institution[] }[];
+    tracked: null | { items: number; paid_first_try: number; blocked_am04: number; paid_after_retry: number; last_paid_at: string | null };
+    wall_ms: number;
+  };
+  type Payment = { id: string; at: string; from: string; to: string; amount: string; state: string; retry: boolean };
+  type Template = { id: string; title: string; source: string };
+  type Failure = { line: number; message: string };
+
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+  const source = $<HTMLTextAreaElement>('source');
+  const select = $<HTMLSelectElement>('template');
+  const runButton = $<HTMLButtonElement>('run');
+  const shareButton = $<HTMLButtonElement>('share');
+  const status = $('status');
+  const diagnostic = $('diagnostic');
+  const results = $('results');
+
+  const ORDER = ['banco-alfa', 'mutual-delta', 'coop-beta', 'fintech-gamma'];
+  const usd = (s: string) => s.replace(/,/g, '_').replace('.', ',').replace(/_/g, '.');
+  const int = (n: number) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  const pct = (n: number) => `${(Math.floor(n * 10) / 10).toFixed(1).replace('.', ',')} %`;
+  const hhmm = (s: string) => s.slice(0, 5);
+
+  function el(tag: string, text?: string | null, cls?: string, children: Node[] = []) {
+    const node = document.createElement(tag);
+    if (text != null) node.textContent = text;
+    if (cls) node.className = cls;
+    node.append(...children);
+    return node;
+  }
+
+  function table(head: string[], rows: (string | Node)[][], cls?: string) {
+    const tr = (cells: (string | Node)[], tag: string) =>
+      el('tr', null, undefined, cells.map((c) => (typeof c === 'string' ? el(tag, c) : el(tag, null, undefined, [c]))));
+    const t = el('table', null, cls, [el('thead', null, undefined, [tr(head, 'th')]), el('tbody', null, undefined, rows.map((r) => tr(r, 'td')))]);
+    return el('div', null, 'table-scroll', [t]);
+  }
+
+  let worker: Worker;
+  let next = 0;
+  const pending = new Map<number, { resolve: (v: any) => void; reject: (e: Error) => void; progress?: (f: number) => void }>();
+
+  function start() {
+    worker = new Worker('/simulador/worker.js', { type: 'module' });
+    worker.onmessage = ({ data }) => {
+      const call = pending.get(data.id);
+      if (!call) return;
+      if (data.kind === 'progress') return call.progress?.(data.fraction);
+      pending.delete(data.id);
+      if (data.crash) {
+        call.reject(new Error(data.crash));
+        worker.terminate();
+        start();
+      } else call.resolve(data.result);
+    };
+  }
+
+  function ask<T>(kind: string, src?: string, progress?: (f: number) => void): Promise<T> {
+    const id = ++next;
+    return new Promise((resolve, reject) => {
+      pending.set(id, { resolve, reject, progress });
+      worker.postMessage({ id, kind, source: src });
+    });
+  }
+
+  function encode(text: string) {
+    const bytes = new TextEncoder().encode(text);
+    return btoa(String.fromCharCode(...bytes)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  }
+
+  function decode(text: string) {
+    const b = atob(text.replace(/-/g, '+').replace(/_/g, '/'));
+    return new TextDecoder().decode(Uint8Array.from(b, (c) => c.charCodeAt(0)));
+  }
+
+  function showFailure(e: Failure) {
+    diagnostic.className = 'sim__diagnostic sim__diagnostic--error';
+    diagnostic.textContent = `Línea ${e.line}: ${e.message}`;
+    const lines = source.value.split('\n');
+    const startAt = lines.slice(0, e.line - 1).reduce((n, l) => n + l.length + 1, 0);
+    source.focus();
+    source.setSelectionRange(startAt, startAt + (lines[e.line - 1]?.length ?? 0));
+  }
+
+  let checkTimer: number | undefined;
+  async function check() {
+    const r = await ask<{ ok: boolean; payments?: number; error?: Failure }>('check', source.value);
+    if (r.ok) {
+      diagnostic.className = 'sim__diagnostic';
+      diagnostic.textContent = `Guion válido · ${int(r.payments!)} ${r.payments === 1 ? 'pago' : 'pagos'}`;
+    } else {
+      diagnostic.className = 'sim__diagnostic sim__diagnostic--error';
+      diagnostic.textContent = `Línea ${r.error!.line}: ${r.error!.message}`;
+    }
+  }
+
+  function render(report: Report, log: Line[], payments: Payment[]) {
+    const out: Node[] = [];
+    if (report.title) out.push(el('h2', report.title));
+    out.push(el('p', report.disclaimer, 'sim__disclaimer'));
+
+    const stat = (value: string, label: string) =>
+      el('div', null, 'stat', [el('div', value, 'stat__value'), el('div', label, 'stat__label')]);
+    const am04 = Object.values(report.rejected.AM04 ?? {}).reduce((a, b) => a + b, 0);
+    out.push(
+      el('div', null, 'stats', [
+        stat(int(report.accepted), `de ${int(report.payments)} pagos aceptados, por USD ${usd(report.value_accepted)}`),
+        stat(int(report.settled), `pagos entre redes liquidados en ${report.settlements.length} ${report.settlements.length === 1 ? 'malla' : 'mallas'}`),
+        stat(int(report.intra_red), 'pagos dentro de una misma red, que no pasan por el SIP'),
+        stat(int(am04), 'rechazos por cupo agotado (AM04)'),
+      ]),
+    );
+
+    const rejected = Object.entries(report.rejected);
+    if (rejected.length) {
+      out.push(
+        el('ul', null, undefined, rejected.map(([code, by]) =>
+          el('li', `${code}: ${Object.entries(by).map(([who, n]) => `${who} ${int(n)}`).join(', ')}`),
+        )),
+      );
+    }
+    if (report.por_conciliar) out.push(el('p', `${int(report.por_conciliar)} pagos quedaron por conciliar.`));
+
+    const t = report.tracked;
+    if (t) {
+      out.push(el('h3', 'Los pagos del guion'));
+      const last = t.last_paid_at ? ` El último se aceptó a las ${hhmm(t.last_paid_at)}.` : '';
+      out.push(
+        el('p', `De ${int(t.items)}, ${int(t.paid_first_try)} pasaron al primer intento y ${int(t.blocked_am04)} se rechazaron por cupo. Al reintentar se aceptaron ${int(t.paid_after_retry)}.${last}`),
+      );
+    }
+
+    if (report.settlements.length) {
+      out.push(el('h3', 'Liquidaciones'));
+      out.push(
+        table(
+          ['Malla', 'Pagos', 'Valor', 'Se mueve', ...ORDER],
+          report.settlements.map((s) => [hhmm(s.at), int(s.payments), usd(s.gross), usd(s.net), ...ORDER.map((id) => usd(s.nets[id] ?? '0.00'))]),
+        ),
+      );
+      out.push(el('p', 'Posición neta de cada institución en USD: negativa paga, positiva recibe.', 'sim__caption'));
+    }
+
+    if (report.timeline.length > 1) {
+      out.push(el('h3', 'Cupo comprometido durante el día'));
+      out.push(
+        table(
+          ['Hora', ...ORDER],
+          report.timeline.map((s) => [
+            hhmm(s.at),
+            ...ORDER.map((id) => {
+              const i = s.institutions.find((x) => x.id === id)!;
+              return el('span', `${pct(i.used_percent)} · ${i.light}`, `light light--${i.light}`);
+            }),
+          ]),
+        ),
+      );
+      out.push(el('p', 'Semáforo del catálogo: verde bajo 75 %, amarillo hasta 89 %, naranja hasta 99 %, rojo al 100 %.', 'sim__caption'));
+    }
+
+    if (payments.length) {
+      out.push(el('h3', 'Pagos del guion'));
+      const shown = payments.slice(0, 200);
+      out.push(
+        table(
+          ['Hora', 'Desde', 'Hacia', 'USD', 'Estado'],
+          shown.map((p) => [hhmm(p.at), p.from, p.to, usd(p.amount), el('span', `${p.state}${p.retry ? ' · reintento' : ''}`, `state state--${p.state.slice(0, 4)}`)]),
+        ),
+      );
+      if (payments.length > shown.length) out.push(el('p', `Mostramos ${shown.length} de ${int(payments.length)}.`, 'sim__caption'));
+    }
+
+    if (log.length) {
+      out.push(el('h3', 'Bitácora'));
+      out.push(el('pre', null, 'sim__log', log.map((l) => el('div', `${l.at}  ${l.text}`, `tone--${l.tone}`))));
+    }
+
+    out.push(
+      el('p', `Tu navegador procesó ${int(report.payments)} pagos, con cada mensaje firmado y verificado, en ${(report.wall_ms / 1000).toFixed(1).replace('.', ',')} s. Semilla ${report.seed}.`, 'sim__caption'),
+    );
+    results.replaceChildren(...out);
+  }
+
+  async function run() {
+    runButton.disabled = true;
+    status.textContent = 'Simulando…';
+    try {
+      const r = await ask<any>('run', source.value, (f) => (status.textContent = `Simulando… ${Math.round(f * 100)} %`));
+      if (r.ok) {
+        render(r.report, r.log, r.payments);
+        status.textContent = 'Listo.';
+        diagnostic.textContent = '';
+      } else {
+        showFailure(r.error);
+        status.textContent = 'El guion tiene un error.';
+      }
+    } catch (e) {
+      status.textContent = `La simulación falló: ${(e as Error).message}`;
+    } finally {
+      runButton.disabled = false;
+    }
+  }
+
+  async function boot() {
+    start();
+    const templates = await ask<Template[]>('templates');
+    select.replaceChildren(...templates.map((t) => Object.assign(el('option', t.title), { value: t.id })), Object.assign(el('option', 'Mi guion'), { value: '' }));
+    const params = new URLSearchParams(location.search);
+    const shared = location.hash.startsWith('#guion=') ? location.hash.slice(7) : null;
+    let initial = templates.find((t) => t.id === (params.get('plantilla') ?? 'payroll')) ?? templates[0];
+    if (shared) {
+      try {
+        source.value = decode(shared);
+        select.value = '';
+      } catch {
+        source.value = initial.source;
+        select.value = initial.id;
+      }
+    } else {
+      source.value = initial.source;
+      select.value = initial.id;
+    }
+    select.disabled = runButton.disabled = shareButton.disabled = false;
+    status.textContent = 'Lista.';
+    check();
+
+    select.addEventListener('change', () => {
+      const t = templates.find((x) => x.id === select.value);
+      if (!t) return;
+      source.value = t.source;
+      history.replaceState(null, '', `?plantilla=${t.id}`);
+      check();
+    });
+    source.addEventListener('input', () => {
+      select.value = '';
+      clearTimeout(checkTimer);
+      checkTimer = window.setTimeout(check, 250);
+    });
+    source.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        if (!runButton.disabled) run();
+      }
+    });
+    runButton.addEventListener('click', run);
+    shareButton.addEventListener('click', async () => {
+      const url = `${location.origin}${location.pathname}#guion=${encode(source.value)}`;
+      history.replaceState(null, '', url);
+      try {
+        await navigator.clipboard.writeText(url);
+        status.textContent = 'Enlace copiado.';
+      } catch {
+        status.textContent = 'El enlace está en la barra de direcciones.';
+      }
+    });
+  }
+
+  boot().catch((e) => (status.textContent = `No se pudo cargar el simulador: ${e.message}`));
+</script>
+
+<style>
+  .sim {
+    padding-bottom: 4rem;
+  }
+  .sim__intro,
+  .sim__reference {
+    max-width: var(--w-content);
+  }
+  .sim__intro {
+    padding-bottom: 0;
+  }
+  .sim__results {
+    padding: 0;
+  }
+  .sim__results > :global(:first-child) {
+    margin-top: 0;
+  }
+  .sim__reference {
+    padding-top: 3rem;
+  }
+  .sim__kicker {
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .sim :global(.sim__disclaimer) {
+    border-left: 2px solid var(--accent);
+    padding-left: 1rem;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+  .sim__toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 0.75rem;
+    margin: 1.5rem 0 1rem;
+  }
+  .sim__toolbar label {
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  .sim__toolbar select {
+    display: block;
+    margin-top: 0.3rem;
+    padding: 0.55rem 0.7rem;
+    border: 1px solid var(--hairline);
+    border-radius: 8px;
+    background: var(--paper);
+    font: inherit;
+    font-weight: 400;
+  }
+  .sim__toolbar button {
+    cursor: pointer;
+  }
+  .sim__toolbar button:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+  .sim__status {
+    color: var(--muted);
+    font-size: 0.9rem;
+    padding-bottom: 0.6rem;
+  }
+  .sim__workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 2rem;
+    align-items: start;
+  }
+  @media (max-width: 960px) {
+    .sim__workspace {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  .sim__editor {
+    position: sticky;
+    top: 1rem;
+  }
+  .sim__editor textarea {
+    width: 100%;
+    min-height: 28rem;
+    padding: 1rem;
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    background: var(--paper-raised);
+    color: var(--ink);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.85rem;
+    line-height: 1.55;
+    resize: vertical;
+    tab-size: 2;
+  }
+  .sim__diagnostic {
+    min-height: 1.4rem;
+    margin: 0.5rem 0 0;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .sim__diagnostic--error {
+    color: #9f1239;
+  }
+  .sim__hint,
+  .sim :global(.sim__caption),
+  .sim__placeholder {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .sim__results :global(.stats) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: 1.5rem 0;
+  }
+  .sim__results :global(td) {
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .sim__results :global(.sim__log) {
+    max-height: 24rem;
+    overflow: auto;
+    font-size: 0.75rem;
+  }
+  .sim :global(.tone--good) {
+    color: var(--accent-dark);
+  }
+  .sim :global(.tone--bad) {
+    color: #9f1239;
+  }
+  .sim :global(.tone--warn) {
+    color: #c2410c;
+  }
+  .sim :global(.tone--dim) {
+    color: var(--muted);
+  }
+  .sim :global(.tone--heading) {
+    font-weight: 600;
+  }
+  .sim :global(.state--ACSP),
+  .sim :global(.state--ACSC) {
+    color: var(--accent-dark);
+    font-weight: 600;
+  }
+  .sim :global(.state--RJCT) {
+    color: #9f1239;
+    font-weight: 600;
+  }
+  .sim :global(.light--verde) {
+    color: #166534;
+  }
+  .sim :global(.light--amarillo) {
+    color: #a16207;
+  }
+  .sim :global(.light--naranja) {
+    color: #c2410c;
+  }
+  .sim :global(.light--rojo) {
+    color: #9f1239;
+    font-weight: 600;
+  }
+</style>

@@ -6,9 +6,11 @@ use caudal_south_api::{Hop, Row};
 use caudal_types::{Bic, PaymentState, Usd, to_scheme_time};
 
 use crate::sandbox::{LLAVES, Sandbox, bic, institution_by_bic, money};
-use crate::scenarios::{self, Scenario};
+use crate::scenarios::Scenario;
+use crate::script;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "lowercase")]
 pub enum Tone {
     Plain,
     Heading,
@@ -62,7 +64,7 @@ pub const HELP: &[(&str, &str)] = &[
     ("settle", "close and settle the current malla"),
     ("network", "headroom, traffic light and net position per institution"),
     ("show [<payment-id>|last] [xml]", "a payment's hops, states, postings and, with xml, every message"),
-    ("scenario <single|payroll|cutoff|national>", "run a named load scenario"),
+    ("scenario <single|payroll|cutoff|national>", "run a built-in scenario script"),
     ("fault <1|2|3|4|off>", "inject one of the catálogo's four exceptions into the next payments"),
     ("quit", "leave"),
 ];
@@ -104,7 +106,7 @@ pub fn parse(line: &str) -> Result<Command, String> {
 pub fn execute(sandbox: &mut Sandbox, command: Command) -> Output {
     let mut out = Output::default();
     match command {
-        Command::Help => out.lines = help(),
+        Command::Help => out.lines = help().into_iter().chain(script::help()).collect(),
         Command::Quit => out.quit = true,
         Command::Pay { from, llave, amount } => match sandbox.pay(&from, &llave, amount) {
             Ok(id) => describe(sandbox, &id.to_string(), false, &mut out),
@@ -155,9 +157,9 @@ pub fn execute(sandbox: &mut Sandbox, command: Command) -> Output {
             }
         }
         Command::Scenario(scenario) => {
-            let (report, network) = scenarios::run_with(scenario, 7);
-            *sandbox = network;
-            out.lines.extend(scenarios::render(&report));
+            let run = scenario.run(None);
+            out.lines.extend(script::render(&run.report));
+            *sandbox = run.sandbox;
             out.push(Tone::Dim, "The panels now show the network at the end of the scenario.");
         }
         Command::Fault(n) => {

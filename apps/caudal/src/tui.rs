@@ -10,9 +10,9 @@ use ratatui::text::{Line as TextLine, Span};
 use ratatui::widgets::{Block, Borders, Cell, Paragraph, Row as TableRow, Table, Wrap};
 use ratatui::{DefaultTerminal, Frame};
 
-use crate::commands::{self, Line, Tone, clock, name_of, state_label, state_tone};
-use crate::sandbox::{Sandbox, money};
-use crate::scenarios::DISCLAIMER;
+use caudal::commands::{self, Line, Tone, clock, name_of, state_label, state_tone};
+use caudal::sandbox::{Sandbox, money};
+use caudal::script::DISCLAIMER;
 
 const ACCENT: Color = Color::Rgb(255, 176, 0);
 

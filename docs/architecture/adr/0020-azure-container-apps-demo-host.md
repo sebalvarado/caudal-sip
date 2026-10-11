@@ -1,6 +1,6 @@
 # 0020. The public demo runs on Azure Container Apps, deployed from GitHub Actions without stored secrets
 
-- **Status**: Accepted
+- **Status**: Superseded by [0022](0022-browser-playground.md)
 - **Date**: 2026-10-11
 - **Deciders**: Founding maintainer
 - **Issue**: [#7](https://github.com/sebalvarado/caudal-sip/issues/7)

@@ -15,7 +15,7 @@ default:
 # Check the tools this repo expects are installed
 doctor:
     #!/usr/bin/env bash
-    for t in cargo rustup just wt docker node npm sccache cargo-nextest cargo-deny; do
+    for t in cargo rustup just wt docker node npm sccache cargo-nextest cargo-deny wasm-bindgen; do
       if command -v "$t" >/dev/null; then printf '  ok       %s\n' "$t"; else printf '  missing  %s\n' "$t"; fi
     done
 
@@ -59,12 +59,23 @@ ci: db
     cargo clippy --workspace --all-targets -- -D warnings
     cargo test --workspace
     cargo xtask arch
+    cargo xtask playground --check
+    cargo clippy -p caudal --lib --target wasm32-unknown-unknown -- -D warnings
+    node site/scripts/playground-smoke.mjs
     cargo deny check
     just site-build
 
 # The network in one process: no args opens the full-screen terminal, e.g. `just terminal pay --from banco-alfa --llave llave-01 --amount 25.40`
 terminal *args:
     cargo run -p caudal -- {{args}}
+
+# Run a scenario script, e.g. `just run my-day.caudal`; see `just terminal help` for the language
+run file *args:
+    cargo run --release -p caudal -- run {{file}} {{args}}
+
+# Rebuild the browser simulator in site/public/simulador/pkg. Needs `cargo install wasm-bindgen-cli --version 0.2.129`
+playground:
+    cargo xtask playground
 
 # Regenerate the published one-day national simulation
 simulation:

@@ -233,6 +233,7 @@ pub struct Sandbox {
     net: Network<MemLedger>,
     registry: Registry,
     directory: Directory,
+    ceilings: BTreeMap<&'static str, Usd>,
     sequence: u32,
 }
 
@@ -245,6 +246,18 @@ impl Sandbox {
     }
 
     pub fn empty(start: Timestamp, latency: SignedDuration) -> Self {
+        Self::with_ceilings(start, latency, &[])
+    }
+
+    /// An empty network where the listed institutions get the given ceiling instead of their Tabla 19 one.
+    pub fn with_ceilings(start: Timestamp, latency: SignedDuration, overrides: &[(&'static str, Usd)]) -> Self {
+        let ceilings: BTreeMap<&'static str, Usd> = INSTITUTIONS
+            .iter()
+            .map(|i| {
+                let own = overrides.iter().rev().find(|(id, _)| *id == i.id).map(|(_, c)| *c);
+                (i.id, own.unwrap_or_else(|| ceiling(i).acceptable))
+            })
+            .collect();
         let mut registry = Registry::default();
         for r in &REDES {
             registry.add_red(RedInfo { bic: bic(r.bic), name: r.name.into() }).expect("unique seed");
@@ -286,10 +299,10 @@ impl Sandbox {
         let ledger = MemLedger::new(move || ledger_clock.now());
         let mut net = Network::new(ledger, clock, roles, bic(SIP), b"caudal-sandbox", latency);
         for i in &INSTITUTIONS {
-            let target = ceiling(i).acceptable;
+            let target = ceilings[i.id];
             net.fund(caudal_risk::adjust(bic(i.bic), Usd::ZERO, target, 0).legs).expect("funding a fresh ledger");
         }
-        Self { net, registry, directory, sequence: 0 }
+        Self { net, registry, directory, ceilings, sequence: 0 }
     }
 
     fn history(&mut self) {
@@ -402,7 +415,7 @@ impl Sandbox {
         INSTITUTIONS
             .iter()
             .map(|i| {
-                let ceiling = ceiling(i).acceptable;
+                let ceiling = self.ceilings[i.id];
                 let account = AccountId::Headroom(HeadroomAccount::Integrante(bic(i.bic)));
                 let available = pollster::block_on(self.net.ledger().balance(account, AsOf::Latest))
                     .expect("the in-memory ledger never fails")
@@ -471,6 +484,13 @@ mod tests {
         assert_eq!(ceiling(institution("banco-alfa").unwrap()).acceptable, "4800000.00".parse().unwrap());
         assert_eq!(ceiling(institution("mutual-delta").unwrap()).acceptable, "1920000.00".parse().unwrap());
         assert_eq!(ceiling(institution("fintech-gamma").unwrap()).acceptable, "15000.00".parse().unwrap());
+    }
+
+    #[test]
+    fn a_ceiling_can_be_overridden_before_the_day_starts() {
+        let s = Sandbox::with_ceilings(start_of_day(), SignedDuration::ZERO, &[("coop-beta", Usd::from_cents(100))]);
+        let coop = s.institutions().into_iter().find(|i| i.id == "coop-beta").unwrap();
+        assert_eq!((coop.ceiling, coop.available), (Usd::from_cents(100), 100));
     }
 
     #[test]

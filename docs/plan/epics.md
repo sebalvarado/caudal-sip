@@ -29,7 +29,7 @@ Every epic must ship **a public demo and a blog post** before it counts as done.
   - execution stats per operation: p50/p95/p99 latency, throughput, time from reservation to post;
   - a load generator with named scenarios (a payroll day, a cut-off rush).
   Every operation is also a scriptable subcommand (`caudal pay …`), matching [`local-stack.md`](../development/local-stack.md).
-- **Hosted**: deployed to Azure on every merge to `main`, with the demo page on the site.
+- **Public playground**: the same network running in the visitor's browser, on the site, driven by scenario scripts anyone can edit and share ([ADR-0022](../architecture/adr/0022-browser-playground.md)).
 - **Public artifact**: a published simulation of one day of national traffic — net positions, settlement cycles, and what the ceiling does to a segment-3 cooperativa on a payroll day.
 
 **Cut:** the `fees` module (commissions post as zero, but the posting structure of [ADR-0010](../architecture/adr/0010-commissions-as-postings.md) is kept), the TigerBeetle backend, the reconciliation queue, the console.
@@ -74,9 +74,8 @@ Serves all three epics and owns CI, CD, and the site.
 
 - **Workspace**: a Cargo workspace with the toolchain pinned in `rust-toolchain.toml` and `Cargo.lock` committed, in week 1 before any epic code ([ADR-0011](../architecture/adr/0011-rust-monorepo.md)).
 - **CI** (GitHub Actions, path-filtered, required on `main`): `cargo fmt --check`, `cargo clippy --workspace -- -D warnings`, `cargo test --workspace` against a Postgres service container, `cargo-deny` for licences and advisories. The existing site build stays. A DCO sign-off check on every PR.
-- **CD**: on merge to `main`, build container images, push to GHCR, and deploy the demo network to Azure Container Apps with Azure Database for PostgreSQL; the site keeps deploying to Cloudflare Pages. On a `v*` tag, a GitHub Release with Linux and macOS binaries and versioned images.
-- **Public demo**: a page on the Astro site calling the public sandbox API. Rate-limited, CORS restricted to the site origin, synthetic data only, non-affiliation disclaimer visible.
-- **ADRs first**: Azure as the demo host, and the public demo API boundary — what it exposes and why it can never carry real data.
+- **CD**: the site, simulator included, keeps deploying to Cloudflare Pages. On a `v*` tag, a GitHub Release with Linux and macOS binaries.
+- **Public demo**: the `/simulador/` page runs the network as WebAssembly in the browser; no server, synthetic data only, non-affiliation disclaimer visible ([ADR-0022](../architecture/adr/0022-browser-playground.md), which supersedes the hosted demo of ADR-0020 and ADR-0021).
 - **Blog**: at least one Spanish post every two weeks, tied to epic milestones.
 
 ## Decisions before code
@@ -96,8 +95,8 @@ Seven weeks from 2026-10-12.
 | Week | Foundation | Epic 1 | Epic 2 | Epic 3 |
 |---|---|---|---|---|
 | 1 | Workspace, CI, the two ADRs | Ledger core, in-memory backend; terminal ADR | red↔gateway contract in `spec/` | Dossier gap list |
-| 2–3 | CD to Azure, demo API | Posting patterns, risk ceiling, Postgres backend; terminal shell with the ledger | North API v0, gateway against a mock red | Runbooks, pipeline outreach |
-| 4–5 | Demo page | Clearing, router, llaves, sandbox; terminal stats and scenarios | `tck` scenarios | Readiness mapped to evidence |
+| 2–3 | Release pipeline | Posting patterns, risk ceiling, Postgres backend; terminal shell with the ledger | North API v0, gateway against a mock red | Runbooks, pipeline outreach |
+| 4–5 | Simulator page | Clearing, router, llaves, sandbox; terminal stats and scenarios | `tck` scenarios | Readiness mapped to evidence |
 | 6 | Release v0.1 | Simulation post | Tutorial | Dossier ready |
 | 7 | Buffer and hardening | Buffer and hardening | Buffer and hardening | Buffer and hardening |
 
@@ -105,4 +104,4 @@ Seven weeks from 2026-10-12.
 
 - **Rust learning curve on Epic 1's critical path.** Everything else depends on the ledger.
 - **The catálogo técnico is unpublished.** Messages follow our profile, marked **[assumption]**, and get reworked when it appears.
-- **Azure setup time and cost.** If Epic 1 slips, the hosted demo page is the first thing cut; the local one-command sandbox is not.
+- **A full day is slow in a browser.** Every message is signed and verified, so the national scenario takes tens of seconds there; the page shows progress, and the terminal runs it in seconds.

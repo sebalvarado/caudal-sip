@@ -1,6 +1,6 @@
 [package]
 name = "caudal"
-description = "The whole network in one process: subcommands, a full-screen terminal, and the public demo API."
+description = "The whole network in one process: subcommands, a full-screen terminal, scenario scripts, and the browser playground."
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -19,20 +19,20 @@ caudal-payments.workspace = true
 caudal-iso20022.workspace = true
 caudal-msgplane.workspace = true
 caudal-south-api.workspace = true
-axum.workspace = true
-clap.workspace = true
-crossterm.workspace = true
 jiff.workspace = true
 pollster.workspace = true
-ratatui.workspace = true
 serde.workspace = true
 serde_json.workspace = true
-tokio = { workspace = true, features = ["net", "time", "signal"] }
-tower-http.workspace = true
+web-time.workspace = true
 
-[dev-dependencies]
-tower = { version = "0.5", features = ["util"] }
-http-body-util = "0.1"
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+clap.workspace = true
+crossterm.workspace = true
+ratatui.workspace = true
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+wasm-bindgen.workspace = true
+js-sys.workspace = true
 
 [lints]
 workspace = true

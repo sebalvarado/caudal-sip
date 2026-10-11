@@ -1,6 +1,6 @@
 # 0021. The public demo API: a closed set of operations over a seeded catalogue
 
-- **Status**: Accepted
+- **Status**: Superseded by [0022](0022-browser-playground.md)
 - **Date**: 2026-10-11
 - **Deciders**: Founding maintainer
 - **Issue**: [#8](https://github.com/sebalvarado/caudal-sip/issues/8)

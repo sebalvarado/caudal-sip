@@ -1,19 +1,14 @@
-mod commands;
-mod sandbox;
-mod scenarios;
-mod serve;
 mod tui;
 
-use std::io::{BufRead, IsTerminal};
+use std::io::{IsTerminal, Read};
 use std::path::PathBuf;
 use std::process::ExitCode;
-use std::time::Duration;
 
+use caudal::commands::{self, Command, execute};
+use caudal::sandbox::Sandbox;
+use caudal::scenarios::Scenario;
+use caudal::script;
 use clap::{Parser, Subcommand};
-
-use crate::commands::{Command, execute, parse};
-use crate::sandbox::Sandbox;
-use crate::scenarios::Scenario;
 
 /// The whole network in one process: the SIP, two redes and four fictional institutions.
 /// With no command, opens the full-screen terminal. All data is fictional.
@@ -56,28 +51,31 @@ enum Cmd {
     Settle,
     /// Headroom, traffic light and net position per institution
     Network,
-    /// Run a named load scenario: single, payroll, cutoff or national
+    /// Run a built-in scenario: single, payroll, cutoff or national
     Scenario {
         name: Scenario,
-        #[arg(long, default_value_t = 7)]
-        seed: u64,
+        /// Replace the scenario's seed
+        #[arg(long)]
+        seed: Option<u64>,
         /// Print the report as JSON
         #[arg(long)]
         json: bool,
+        /// Print the scenario's script instead of running it
+        #[arg(long)]
+        source: bool,
     },
-    /// Read terminal commands from standard input, one per line, on one network
-    Batch,
+    /// Run a scenario script from a file, or `-` for standard input
+    Run {
+        file: PathBuf,
+        /// Replace the script's seed
+        #[arg(long)]
+        seed: Option<u64>,
+        /// Print the log, the report and the payments as JSON
+        #[arg(long)]
+        json: bool,
+    },
     /// Check that a file is a message on our ISO 20022 profile
     Validate { file: PathBuf },
-    /// Serve the public demo API
-    Serve {
-        #[arg(long, env = "PORT", default_value_t = 8080)]
-        port: u16,
-        #[arg(long, env = "CAUDAL_DEMO_ORIGIN", default_value = "https://caudal-sip.pages.dev")]
-        origin: String,
-        #[arg(long, env = "CAUDAL_DEMO_RESET_SECS", default_value_t = 900)]
-        reset_secs: u64,
-    },
 }
 
 #[derive(Subcommand)]
@@ -105,6 +103,30 @@ fn print(sandbox: &mut Sandbox, command: Command) -> bool {
     let out = execute(sandbox, command);
     print!("{}", out.plain());
     !out.lines.iter().any(|l| l.tone == commands::Tone::Bad && l.text.starts_with("no "))
+}
+
+fn run_script(source: &str, seed: Option<u64>, json: bool) -> bool {
+    match script::run(source, seed) {
+        Err(e) => {
+            eprintln!("caudal: {e}");
+            false
+        }
+        Ok(run) if json => {
+            let out = serde_json::json!({ "report": run.report, "log": run.log, "payments": run.payments });
+            println!("{}", serde_json::to_string_pretty(&out).expect("serializable"));
+            true
+        }
+        Ok(run) => {
+            for l in &run.log {
+                println!("{}  {}", l.at, l.text);
+            }
+            if !run.log.is_empty() {
+                println!();
+            }
+            script::render(&run.report).iter().for_each(|l| println!("{}", l.text));
+            true
+        }
+    }
 }
 
 fn main() -> ExitCode {
@@ -151,36 +173,23 @@ fn main() -> ExitCode {
         }
         Cmd::Settle => print(&mut sandbox(), Command::Settle),
         Cmd::Network => print(&mut sandbox(), Command::Network),
-        Cmd::Scenario { name, seed, json } => {
-            let report = scenarios::run(name, seed);
-            if json {
-                println!("{}", serde_json::to_string_pretty(&report).expect("serializable"));
-            } else {
-                scenarios::render(&report).iter().for_each(|l| println!("{}", l.text));
-            }
+        Cmd::Scenario { name, source: true, .. } => {
+            print!("{}", name.source());
             true
         }
-        Cmd::Batch => {
-            let mut s = sandbox();
-            let mut ok = true;
-            for line in std::io::stdin().lock().lines() {
-                let Ok(line) = line else { break };
-                let line = line.trim();
-                if line.is_empty() || line.starts_with('#') {
-                    continue;
-                }
-                println!("> {line}");
-                match parse(line) {
-                    Ok(Command::Quit) => break,
-                    Ok(command) => ok &= print(&mut s, command),
-                    Err(e) => {
-                        eprintln!("caudal: {e}");
-                        ok = false;
-                    }
-                }
-                println!();
+        Cmd::Scenario { name, seed, json, .. } => run_script(name.source(), seed, json),
+        Cmd::Run { file, seed, json } => {
+            let mut source = String::new();
+            let read = if file.as_os_str() == "-" {
+                std::io::stdin().read_to_string(&mut source).map(|_| ())
+            } else {
+                std::fs::read_to_string(&file).map(|s| source = s)
+            };
+            if let Err(e) = read {
+                eprintln!("caudal: {}: {e}", file.display());
+                return ExitCode::FAILURE;
             }
-            ok
+            run_script(&source, seed, json)
         }
         Cmd::Validate { file } => match std::fs::read(&file) {
             Err(e) => {
@@ -198,16 +207,6 @@ fn main() -> ExitCode {
                 }
             },
         },
-        Cmd::Serve { port, origin, reset_secs } => {
-            let runtime = tokio::runtime::Runtime::new().expect("a runtime");
-            match runtime.block_on(serve::serve(port, &origin, Duration::from_secs(reset_secs.max(60)))) {
-                Ok(()) => true,
-                Err(e) => {
-                    eprintln!("caudal: {e}");
-                    false
-                }
-            }
-        }
     };
     if ok { ExitCode::SUCCESS } else { ExitCode::FAILURE }
 }

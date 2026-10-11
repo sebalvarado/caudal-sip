@@ -33,5 +33,6 @@ ADRs cover component-level decisions. Scheme-level behavior (message profiles, l
 | [0017](0017-time-calendar-identifiers.md) | Time is an argument, the calendar is data, identifiers come from the catálogo or the edge | Accepted |
 | [0018](0018-composition-and-message-plane.md) | The same nodes run in one process or many; only transport, clock, and storage change | Accepted |
 | [0019](0019-caudal-terminal.md) | The `caudal` terminal: a deterministic simulation of the whole network, driven from one binary | Accepted |
-| [0020](0020-azure-container-apps-demo-host.md) | The public demo runs on Azure Container Apps, deployed from GitHub Actions without stored secrets | Accepted |
-| [0021](0021-public-demo-api.md) | The public demo API: a closed set of operations over a seeded catalogue | Accepted |
+| [0020](0020-azure-container-apps-demo-host.md) | The public demo runs on Azure Container Apps, deployed from GitHub Actions without stored secrets | Superseded by 0022 |
+| [0021](0021-public-demo-api.md) | The public demo API: a closed set of operations over a seeded catalogue | Superseded by 0022 |
+| [0022](0022-browser-playground.md) | The public demo is a playground that runs the network in the visitor's browser | Accepted |

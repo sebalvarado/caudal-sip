@@ -28,7 +28,7 @@ jobs:
       - run: npm run build
       - name: Check the deploy artifact has the pages we expect
         run: |
-          for f in index.html manifiesto/index.html estandar/index.html demo/index.html simulacion/index.html blog/index.html rss.xml sitemap-index.xml llms.txt; do
+          for f in index.html manifiesto/index.html estandar/index.html simulador/index.html simulador/worker.js simulador/pkg/caudal_bg.wasm simulacion/index.html blog/index.html rss.xml sitemap-index.xml llms.txt; do
             test -s "dist/$f" || { echo "missing or empty: dist/$f"; exit 1; }
           done
       - uses: actions/upload-artifact@v4
