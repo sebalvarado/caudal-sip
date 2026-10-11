@@ -1,0 +1,1237 @@
+{
+  "scenario": "national",
+  "title": "One day of national traffic",
+  "disclaimer": "Demostración con datos ficticios. Proyecto Caudal es independiente y no está afiliado al Banco Central del Ecuador.",
+  "seed": 7,
+  "date": "2026-11-30",
+  "payments": 20468,
+  "accepted": 19407,
+  "settled": 4217,
+  "intra_red": 15190,
+  "rejected": {
+    "AM04": {
+      "coop-beta": 1061
+    }
+  },
+  "por_conciliar": 0,
+  "value_accepted": "6,042,503.66",
+  "settlements": [
+    {
+      "at": "11:00:25.000",
+      "payments": 1443,
+      "gross": "359,212.02",
+      "net": "223,235.12",
+      "nets": {
+        "banco-alfa": "-184,719.35",
+        "coop-beta": "130,668.66",
+        "fintech-gamma": "92,566.46",
+        "mutual-delta": "-38,515.77"
+      }
+    },
+    {
+      "at": "15:00:25.000",
+      "payments": 1624,
+      "gross": "427,344.09",
+      "net": "285,151.07",
+      "nets": {
+        "banco-alfa": "-227,009.71",
+        "coop-beta": "161,693.75",
+        "fintech-gamma": "123,457.32",
+        "mutual-delta": "-58,141.36"
+      }
+    },
+    {
+      "at": "17:30:25.000",
+      "payments": 1150,
+      "gross": "216,073.38",
+      "net": "162,695.14",
+      "nets": {
+        "banco-alfa": "-132,337.86",
+        "coop-beta": "101,449.96",
+        "fintech-gamma": "61,245.18",
+        "mutual-delta": "-30,357.28"
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "at": "08:00:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 0.0,
+          "light": "verde",
+          "available": "4,800,000.00"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 0.0,
+          "light": "verde",
+          "available": "1,920,000.00"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 0.0,
+          "light": "verde",
+          "available": "60,000.00"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 0.0,
+          "light": "verde",
+          "available": "15,000.00"
+        }
+      ]
+    },
+    {
+      "at": "08:15:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 0.33,
+          "light": "verde",
+          "available": "4,784,019.40"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 0.08,
+          "light": "verde",
+          "available": "1,918,441.78"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 2.43,
+          "light": "verde",
+          "available": "58,537.90"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 2.29,
+          "light": "verde",
+          "available": "14,655.04"
+        }
+      ]
+    },
+    {
+      "at": "08:30:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 0.63,
+          "light": "verde",
+          "available": "4,769,539.71"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 0.21,
+          "light": "verde",
+          "available": "1,915,904.04"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 5.12,
+          "light": "verde",
+          "available": "56,927.69"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 3.54,
+          "light": "verde",
+          "available": "14,468.21"
+        }
+      ]
+    },
+    {
+      "at": "08:45:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 0.96,
+          "light": "verde",
+          "available": "4,753,635.53"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 0.34,
+          "light": "verde",
+          "available": "1,913,322.81"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 9.68,
+          "light": "verde",
+          "available": "54,191.36"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 6.03,
+          "light": "verde",
+          "available": "14,094.05"
+        }
+      ]
+    },
+    {
+      "at": "09:00:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 1.21,
+          "light": "verde",
+          "available": "4,741,768.01"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 0.57,
+          "light": "verde",
+          "available": "1,908,968.29"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 13.93,
+          "light": "verde",
+          "available": "51,638.15"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 10.33,
+          "light": "verde",
+          "available": "13,449.37"
+        }
+      ]
+    },
+    {
+      "at": "09:15:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 1.73,
+          "light": "verde",
+          "available": "4,716,807.56"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 0.93,
+          "light": "verde",
+          "available": "1,902,038.04"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 62.37,
+          "light": "verde",
+          "available": "22,574.33"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 16.31,
+          "light": "verde",
+          "available": "12,552.10"
+        }
+      ]
+    },
+    {
+      "at": "09:30:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 2.12,
+          "light": "verde",
+          "available": "4,697,869.54"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 1.14,
+          "light": "verde",
+          "available": "1,897,967.30"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 99.97,
+          "light": "naranja",
+          "available": "17.75"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 18.99,
+          "light": "verde",
+          "available": "12,151.19"
+        }
+      ]
+    },
+    {
+      "at": "09:45:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 2.5,
+          "light": "verde",
+          "available": "4,679,550.57"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 1.44,
+          "light": "verde",
+          "available": "1,892,175.94"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 99.99,
+          "light": "naranja",
+          "available": "0.17"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 24.44,
+          "light": "verde",
+          "available": "11,333.03"
+        }
+      ]
+    },
+    {
+      "at": "10:00:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 3.03,
+          "light": "verde",
+          "available": "4,654,346.45"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 1.71,
+          "light": "verde",
+          "available": "1,887,057.85"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 99.99,
+          "light": "naranja",
+          "available": "0.17"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 29.7,
+          "light": "verde",
+          "available": "10,544.46"
+        }
+      ]
+    },
+    {
+      "at": "10:15:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 3.43,
+          "light": "verde",
+          "available": "4,634,950.45"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 2.1,
+          "light": "verde",
+          "available": "1,879,571.24"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 99.99,
+          "light": "naranja",
+          "available": "0.17"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 35.74,
+          "light": "verde",
+          "available": "9,638.92"
+        }
+      ]
+    },
+    {
+      "at": "10:30:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 3.77,
+          "light": "verde",
+          "available": "4,618,879.76"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 2.38,
+          "light": "verde",
+          "available": "1,874,143.05"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 99.99,
+          "light": "naranja",
+          "available": "0.17"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 40.95,
+          "light": "verde",
+          "available": "8,857.15"
+        }
+      ]
+    },
+    {
+      "at": "10:45:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 4.35,
+          "light": "verde",
+          "available": "4,590,874.89"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 2.74,
+          "light": "verde",
+          "available": "1,867,344.70"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 99.99,
+          "light": "naranja",
+          "available": "0.17"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 47.25,
+          "light": "verde",
+          "available": "7,911.91"
+        }
+      ]
+    },
+    {
+      "at": "11:00:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 0.0,
+          "light": "verde",
+          "available": "4,800,000.00"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 0.0,
+          "light": "verde",
+          "available": "1,920,000.00"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 0.0,
+          "light": "verde",
+          "available": "60,000.00"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 0.0,
+          "light": "verde",
+          "available": "15,000.00"
+        }
+      ]
+    },
+    {
+      "at": "11:15:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 0.45,
+          "light": "verde",
+          "available": "4,778,180.48"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 0.34,
+          "light": "verde",
+          "available": "1,913,323.84"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 99.99,
+          "light": "naranja",
+          "available": "0.22"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 5.0,
+          "light": "verde",
+          "available": "14,248.73"
+        }
+      ]
+    },
+    {
+      "at": "11:30:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 0.79,
+          "light": "verde",
+          "available": "4,761,749.35"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 0.59,
+          "light": "verde",
+          "available": "1,908,492.48"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 99.99,
+          "light": "naranja",
+          "available": "0.22"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 9.3,
+          "light": "verde",
+          "available": "13,603.64"
+        }
+      ]
+    },
+    {
+      "at": "11:45:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 1.19,
+          "light": "verde",
+          "available": "4,742,797.45"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 0.9,
+          "light": "verde",
+          "available": "1,902,618.96"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 99.99,
+          "light": "naranja",
+          "available": "0.22"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 13.09,
+          "light": "verde",
+          "available": "13,035.60"
+        }
+      ]
+    },
+    {
+      "at": "12:00:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 1.41,
+          "light": "verde",
+          "available": "4,732,036.73"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 1.33,
+          "light": "verde",
+          "available": "1,894,275.96"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 99.99,
+          "light": "naranja",
+          "available": "0.22"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 19.83,
+          "light": "verde",
+          "available": "12,024.13"
+        }
+      ]
+    },
+    {
+      "at": "12:15:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 1.8,
+          "light": "verde",
+          "available": "4,713,207.24"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 1.61,
+          "light": "verde",
+          "available": "1,888,955.71"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 99.99,
+          "light": "naranja",
+          "available": "0.22"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 24.82,
+          "light": "verde",
+          "available": "11,276.54"
+        }
+      ]
+    },
+    {
+      "at": "12:30:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 2.18,
+          "light": "verde",
+          "available": "4,695,007.93"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 1.77,
+          "light": "verde",
+          "available": "1,885,903.99"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 99.99,
+          "light": "naranja",
+          "available": "0.22"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 29.92,
+          "light": "verde",
+          "available": "10,511.87"
+        }
+      ]
+    },
+    {
+      "at": "12:45:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 2.45,
+          "light": "verde",
+          "available": "4,681,928.37"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 2.15,
+          "light": "verde",
+          "available": "1,878,547.25"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 99.99,
+          "light": "naranja",
+          "available": "0.22"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 32.78,
+          "light": "verde",
+          "available": "10,082.44"
+        }
+      ]
+    },
+    {
+      "at": "13:00:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 2.7,
+          "light": "verde",
+          "available": "4,670,231.68"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 2.43,
+          "light": "verde",
+          "available": "1,873,152.12"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 99.99,
+          "light": "naranja",
+          "available": "0.22"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 37.5,
+          "light": "verde",
+          "available": "9,373.80"
+        }
+      ]
+    },
+    {
+      "at": "13:15:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 2.99,
+          "light": "verde",
+          "available": "4,656,249.14"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 2.61,
+          "light": "verde",
+          "available": "1,869,791.79"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 99.99,
+          "light": "naranja",
+          "available": "0.22"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 42.22,
+          "light": "verde",
+          "available": "8,665.82"
+        }
+      ]
+    },
+    {
+      "at": "13:30:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 3.38,
+          "light": "verde",
+          "available": "4,637,641.31"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 2.87,
+          "light": "verde",
+          "available": "1,864,829.16"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 99.99,
+          "light": "naranja",
+          "available": "0.22"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 47.18,
+          "light": "verde",
+          "available": "7,922.93"
+        }
+      ]
+    },
+    {
+      "at": "13:45:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 3.78,
+          "light": "verde",
+          "available": "4,618,263.57"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 3.16,
+          "light": "verde",
+          "available": "1,859,148.47"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 99.99,
+          "light": "naranja",
+          "available": "0.22"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 53.21,
+          "light": "verde",
+          "available": "7,017.09"
+        }
+      ]
+    },
+    {
+      "at": "14:00:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 4.17,
+          "light": "verde",
+          "available": "4,599,624.58"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 3.54,
+          "light": "verde",
+          "available": "1,851,844.52"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 99.99,
+          "light": "naranja",
+          "available": "0.22"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 58.09,
+          "light": "verde",
+          "available": "6,286.10"
+        }
+      ]
+    },
+    {
+      "at": "14:15:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 4.63,
+          "light": "verde",
+          "available": "4,577,613.76"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 3.78,
+          "light": "verde",
+          "available": "1,847,245.33"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 99.99,
+          "light": "naranja",
+          "available": "0.22"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 60.6,
+          "light": "verde",
+          "available": "5,909.07"
+        }
+      ]
+    },
+    {
+      "at": "14:30:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 4.98,
+          "light": "verde",
+          "available": "4,560,878.37"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 3.99,
+          "light": "verde",
+          "available": "1,843,316.20"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 99.99,
+          "light": "naranja",
+          "available": "0.22"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 66.73,
+          "light": "verde",
+          "available": "4,989.69"
+        }
+      ]
+    },
+    {
+      "at": "14:45:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 5.28,
+          "light": "verde",
+          "available": "4,546,183.93"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 4.1,
+          "light": "verde",
+          "available": "1,841,266.12"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 99.99,
+          "light": "naranja",
+          "available": "0.22"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 71.78,
+          "light": "verde",
+          "available": "4,232.29"
+        }
+      ]
+    },
+    {
+      "at": "15:00:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 0.0,
+          "light": "verde",
+          "available": "4,800,000.00"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 0.0,
+          "light": "verde",
+          "available": "1,920,000.00"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 0.0,
+          "light": "verde",
+          "available": "60,000.00"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 0.0,
+          "light": "verde",
+          "available": "15,000.00"
+        }
+      ]
+    },
+    {
+      "at": "15:15:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 0.42,
+          "light": "verde",
+          "available": "4,779,375.07"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 0.36,
+          "light": "verde",
+          "available": "1,913,065.68"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 4.45,
+          "light": "verde",
+          "available": "57,326.30"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 6.33,
+          "light": "verde",
+          "available": "14,049.55"
+        }
+      ]
+    },
+    {
+      "at": "15:30:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 0.77,
+          "light": "verde",
+          "available": "4,762,651.38"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 0.64,
+          "light": "verde",
+          "available": "1,907,632.63"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 8.23,
+          "light": "verde",
+          "available": "55,060.34"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 13.33,
+          "light": "verde",
+          "available": "12,999.09"
+        }
+      ]
+    },
+    {
+      "at": "15:45:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 1.08,
+          "light": "verde",
+          "available": "4,748,036.90"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 0.93,
+          "light": "verde",
+          "available": "1,901,955.86"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 14.29,
+          "light": "verde",
+          "available": "51,420.61"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 18.01,
+          "light": "verde",
+          "available": "12,297.10"
+        }
+      ]
+    },
+    {
+      "at": "16:00:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 1.55,
+          "light": "verde",
+          "available": "4,725,432.13"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 1.17,
+          "light": "verde",
+          "available": "1,897,366.14"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 18.45,
+          "light": "verde",
+          "available": "48,928.70"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 23.51,
+          "light": "verde",
+          "available": "11,472.32"
+        }
+      ]
+    },
+    {
+      "at": "16:15:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 1.93,
+          "light": "verde",
+          "available": "4,707,272.93"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 1.39,
+          "light": "verde",
+          "available": "1,893,311.76"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 21.75,
+          "light": "verde",
+          "available": "46,944.02"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 27.36,
+          "light": "verde",
+          "available": "10,895.94"
+        }
+      ]
+    },
+    {
+      "at": "16:30:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 2.31,
+          "light": "verde",
+          "available": "4,688,896.84"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 1.49,
+          "light": "verde",
+          "available": "1,891,212.07"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 26.38,
+          "light": "verde",
+          "available": "44,169.34"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 31.67,
+          "light": "verde",
+          "available": "10,248.49"
+        }
+      ]
+    },
+    {
+      "at": "16:45:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 2.74,
+          "light": "verde",
+          "available": "4,668,144.71"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 1.7,
+          "light": "verde",
+          "available": "1,887,307.18"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 30.2,
+          "light": "verde",
+          "available": "41,875.39"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 37.16,
+          "light": "verde",
+          "available": "9,425.27"
+        }
+      ]
+    },
+    {
+      "at": "17:00:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 3.13,
+          "light": "verde",
+          "available": "4,649,695.94"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 2.03,
+          "light": "verde",
+          "available": "1,880,919.80"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 34.03,
+          "light": "verde",
+          "available": "39,579.28"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 41.78,
+          "light": "verde",
+          "available": "8,731.60"
+        }
+      ]
+    },
+    {
+      "at": "17:15:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 3.13,
+          "light": "verde",
+          "available": "4,649,695.94"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 2.03,
+          "light": "verde",
+          "available": "1,880,919.80"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 34.03,
+          "light": "verde",
+          "available": "39,579.28"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 41.78,
+          "light": "verde",
+          "available": "8,731.60"
+        }
+      ]
+    },
+    {
+      "at": "17:30:00.000",
+      "institutions": [
+        {
+          "id": "banco-alfa",
+          "used_percent": 0.0,
+          "light": "verde",
+          "available": "4,800,000.00"
+        },
+        {
+          "id": "mutual-delta",
+          "used_percent": 0.0,
+          "light": "verde",
+          "available": "1,920,000.00"
+        },
+        {
+          "id": "coop-beta",
+          "used_percent": 0.0,
+          "light": "verde",
+          "available": "60,000.00"
+        },
+        {
+          "id": "fintech-gamma",
+          "used_percent": 0.0,
+          "light": "verde",
+          "available": "15,000.00"
+        }
+      ]
+    }
+  ],
+  "payroll": {
+    "items": 300,
+    "paid_first_try": 132,
+    "blocked_am04": 168,
+    "paid_after_settlement": 168,
+    "last_paid_at": "15:00:25.008"
+  },
+  "stats": [
+    {
+      "op": "codec",
+      "count": 313088,
+      "p50_us": 4.96,
+      "p95_us": 12.08,
+      "p99_us": 16.58,
+      "per_second": 218221.0
+    },
+    {
+      "op": "signature",
+      "count": 313088,
+      "p50_us": 32.58,
+      "p95_us": 36.21,
+      "p99_us": 41.71,
+      "per_second": 40072.0
+    },
+    {
+      "op": "rules",
+      "count": 240097,
+      "p50_us": 0.17,
+      "p95_us": 0.79,
+      "p99_us": 2.96,
+      "per_second": 2506402.0
+    },
+    {
+      "op": "ledger",
+      "count": 9495,
+      "p50_us": 0.79,
+      "p95_us": 3.63,
+      "p99_us": 7.54,
+      "per_second": 735499.0
+    }
+  ],
+  "reserve_to_post_ms": [
+    16.0,
+    16.0,
+    16.0
+  ],
+  "compute_ms": 9356.56519,
+  "wall_ms": 9725.397917
+}

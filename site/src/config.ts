@@ -13,4 +13,7 @@ export const SITE = {
   url: import.meta.env.SITE,
   github: 'https://github.com/sebalvarado/caudal-sip',
   locale: 'es',
+  // The live demo network (infra/azure). Empty until it is deployed; the demo
+  // page then explains how to run the same network locally.
+  demoApi: (import.meta.env.PUBLIC_DEMO_API ?? '').replace(/\/$/, ''),
 } as const;

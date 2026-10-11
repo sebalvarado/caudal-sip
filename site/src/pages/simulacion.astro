@@ -1,0 +1,242 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../config';
+import data from '../data/simulacion-nacional.json';
+
+const title = 'Un día de pagos de todo un país';
+const description =
+  'Simulamos un día completo de pagos instantáneos entre dos redes y cuatro instituciones ficticias: posiciones netas, tres liquidaciones y lo que el techo de riesgo le hace a una cooperativa del segmento 3 en un día de pago de sueldos.';
+
+// The report prints amounts as 1,234.56; the site writes them as 1.234,56.
+const usd = (s: string) => s.replace(/,/g, '_').replace('.', ',').replace(/_/g, '.');
+const int = (n: number) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+const pct = (n: number) => `${(Math.floor(n * 10) / 10).toFixed(1).replace('.', ',')} %`;
+const hhmm = (s: string) => s.slice(0, 5);
+const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+const [y, m, d] = data.date.split('-').map(Number);
+const day = `${d} de ${months[m - 1]} de ${y}`;
+
+const order = ['banco-alfa', 'mutual-delta', 'coop-beta', 'fintech-gamma'];
+const rejected = Object.entries(data.rejected).map(([code, by]) => ({
+  code,
+  total: Object.values(by as Record<string, number>).reduce((a, b) => a + b, 0),
+  by: Object.entries(by as Record<string, number>),
+}));
+const am04 = rejected.find((r) => r.code === 'AM04');
+const timeline = data.timeline.filter((s) => s.at.slice(3, 5) === '00' || s.at.slice(3, 5) === '30');
+const payroll = data.payroll!;
+const peak = (id: string) =>
+  Math.max(...data.timeline.flatMap((s) => s.institutions.filter((i) => i.id === id).map((i) => i.used_percent)));
+const bankPeak = Math.ceil(Math.max(peak('banco-alfa'), peak('mutual-delta')));
+const am04Only = am04 && am04.by.length === 1 ? am04.by[0][0] : undefined;
+const hop = Object.fromEntries(data.stats.map((s) => [s.op, s]));
+---
+
+<Base title={title} description={description}>
+  <article class="container container--narrow prose sim">
+    <p class="sim__kicker">Simulación</p>
+    <h1>{title}</h1>
+    <p class="sim__disclaimer" role="note">{data.disclaimer}</p>
+
+    <p>
+      Imagina el {day}, el día en que vence el plazo del estándar. Entre las 08:00 y las 17:30,
+      cuatro instituciones ficticias se envían {int(data.payments)} pagos instantáneos a través de dos redes
+      y del Sistema Integrador de Pagos (SIP). Entre ellas está coop-beta, una cooperativa del
+      segmento 3 con un techo de riesgo de USD 60.000, que ese día paga 300 sueldos.
+    </p>
+    <p>
+      Cada pago recorre la red completa: se firma, se codifica en ISO 20022, se reserva en el libro
+      del SIP, se vuelve irrevocable al llegar a la red beneficiaria y se liquida cuando cierra la
+      malla. Es el mismo código de la <a href="/demo/">demo en vivo</a>, corrido sobre un reloj
+      simulado.
+    </p>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat__value">{int(data.accepted)}</div>
+        <div class="stat__label">pagos aceptados, por USD {usd(data.value_accepted)}</div>
+      </div>
+      <div class="stat">
+        <div class="stat__value">{int(data.settled)}</div>
+        <div class="stat__label">pagos entre redes, liquidados en {data.settlements.length} mallas</div>
+      </div>
+      <div class="stat">
+        <div class="stat__value">{int(data.intra_red)}</div>
+        <div class="stat__label">pagos dentro de una misma red, que no pasan por el SIP</div>
+      </div>
+      <div class="stat">
+        <div class="stat__value">{int(am04?.total ?? 0)}</div>
+        <div class="stat__label">rechazos por cupo agotado (<code>AM04</code>){am04Only && `, todos de ${am04Only}`}</div>
+      </div>
+    </div>
+
+    <h2>El día de pago de sueldos de una cooperativa</h2>
+    <p>
+      A las 09:00 coop-beta empieza a pagar {payroll.items} sueldos. El techo que le corresponde por
+      su encaje alcanza para {payroll.paid_first_try}. Los otros {payroll.blocked_am04} se
+      rechazan con <code>AM04</code>: el SIP no deja que una institución comprometa más de lo que su
+      techo permite, y el cupo usado solo vuelve cuando se liquida la malla. La cooperativa los
+      reintenta después de cada liquidación, y el último sueldo se acredita a las
+      {hhmm(payroll.last_paid_at!)}, cuando la nómina debía terminar antes de las 10:00.
+    </p>
+    <p>
+      Mientras tanto, los demás pagos de sus socios también se rechazan. El resto de la red ni se
+      entera: banco-alfa y mutual-delta nunca comprometen más del {bankPeak} % de su techo.
+    </p>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Hora</th>
+            {order.map((id) => <th>{id}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {
+            timeline.map((s) => (
+              <tr>
+                <td>{hhmm(s.at)}</td>
+                {order.map((id) => {
+                  const i = s.institutions.find((x) => x.id === id)!;
+                  return (
+                    <td class={`light light--${i.light}`}>
+                      {pct(i.used_percent)} · {i.light}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <p class="sim__caption">
+      Porcentaje del techo de riesgo comprometido por cada institución, y su semáforo según el
+      catálogo: verde bajo 75 %, amarillo hasta 89 %, naranja hasta 99 %, rojo al 100 %. Las
+      columnas vuelven a cero en cada liquidación (11:00, 15:00 y 17:30).
+    </p>
+
+    <h2>Las tres liquidaciones</h2>
+    <p>
+      El SIP acumula las obligaciones entre redes y, en cada malla, solo se mueve el neto de cada
+      institución. Unos pocos movimientos en el banco central, por bastante menos que el valor de
+      los pagos, cierran miles de ellos.
+    </p>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Malla</th>
+            <th>Pagos</th>
+            <th>Valor de los pagos</th>
+            <th>Se mueve en el BCE</th>
+            {order.map((id) => <th>{id}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {
+            data.settlements.map((s) => (
+              <tr>
+                <td>{hhmm(s.at)}</td>
+                <td>{int(s.payments)}</td>
+                <td>{usd(s.gross)}</td>
+                <td>{usd(s.net)}</td>
+                {order.map((id) => (
+                  <td>{usd((s.nets as Record<string, string>)[id] ?? '0.00')}</td>
+                ))}
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <p class="sim__caption">Posición neta de cada institución en USD: negativa paga, positiva recibe.</p>
+
+    <h2>Cuánto cuesta procesar un pago</h2>
+    <p>
+      Medimos el cómputo de cada salto: codificar o leer el mensaje ISO 20022, firmarlo o verificar
+      la firma, aplicar las reglas y escribir en el libro. Es un piso, no una promesa: no incluye
+      red, TLS ni el core bancario de cada institución.
+    </p>
+    <ul>
+      <li>Codificar o leer un mensaje: {hop.codec.p50_us.toFixed(1).replace('.', ',')} µs (mediana).</li>
+      <li>Firmar o verificar: {hop.signature.p50_us.toFixed(1).replace('.', ',')} µs.</li>
+      <li>Escribir en el libro del SIP: {hop.ledger.p50_us.toFixed(1).replace('.', ',')} µs.</li>
+    </ul>
+    <p>
+      Un día entero de pagos de esta red se procesa en segundos en una laptop. La dificultad de un
+      sistema nacional de pagos no está en la velocidad, sino en que ningún dólar aparezca o
+      desaparezca y en saber qué hacer cuando algo falla a mitad de camino.
+    </p>
+
+    <h2>Supuestos</h2>
+    <ul>
+      <li>
+        Las instituciones, sus captaciones y el tráfico son ficticios. Los techos salen de la Tabla
+        19 y del método de la Tabla 20 del Catálogo Operacional, aplicados a captaciones inventadas. Para fintech-gamma usamos solo el 0,5 % base de
+        encaje: el catálogo no publica el porcentaje adicional de una SEDPES.
+      </li>
+      <li>
+        Los mensajes siguen nuestro perfil ISO 20022 <strong>[supuesto]</strong>: el catálogo
+        técnico del BCE todavía no se publica.
+      </li>
+      <li>
+        Los pagos dentro de una misma red no pasan por el libro del SIP <strong>[supuesto]</strong>.
+      </li>
+      <li>
+        No modelamos el bloqueo en rojo con rehabilitación manual por parte del administrador: el
+        pago que excede el cupo simplemente se rechaza.
+      </li>
+      <li>Las liquidaciones a las 11:00, 15:00 y 17:30 son un horario de ejemplo; el catálogo lo deja parametrizable.</li>
+    </ul>
+
+    <h2>Repítela</h2>
+    <p>La simulación es determinista: con la misma semilla da el mismo resultado.</p>
+    <pre><code>just terminal scenario national --seed {data.seed}</code></pre>
+    <p>
+      El código está en <a href={SITE.github} rel="noopener">GitHub</a>, bajo licencia Apache-2.0.
+    </p>
+  </article>
+</Base>
+
+<style>
+  .sim__kicker {
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .sim__disclaimer {
+    border-left: 2px solid var(--accent);
+    padding-left: 1rem;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+  .sim .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .sim__caption {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .sim td {
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .light--verde {
+    color: #166534;
+  }
+  .light--amarillo {
+    color: #a16207;
+  }
+  .light--naranja {
+    color: #c2410c;
+  }
+  .light--rojo {
+    color: #9f1239;
+    font-weight: 600;
+  }
+</style>
