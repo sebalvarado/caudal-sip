@@ -1,12 +1,13 @@
 # Caudal task runner. `just` lists the recipes.
-# Recipes that need the Cargo workspace say so until it lands (#5).
 
 set dotenv-load
 
 # One Postgres container serves every worktree; each worktree gets its own database.
+# Not 5432, so it never collides with another project's Postgres. Override with CAUDAL_PG_PORT.
 pg_container := "caudal-postgres"
+pg_port := env("CAUDAL_PG_PORT", "55432")
 db_name := "caudal_" + replace_regex(file_name(justfile_directory()), "[^A-Za-z0-9]+", "_")
-export DATABASE_URL := env("DATABASE_URL", "postgres://postgres@localhost:5432/" + db_name)
+export DATABASE_URL := env("DATABASE_URL", "postgres://postgres@localhost:" + pg_port + "/" + db_name)
 
 default:
     @just --list
@@ -23,9 +24,14 @@ db:
     #!/usr/bin/env bash
     set -euo pipefail
     if ! docker ps --format '{{{{.Names}}' | grep -qx {{pg_container}}; then
-      docker start {{pg_container}} 2>/dev/null || docker run -d --name {{pg_container}} -p 5432:5432 \
+      docker start {{pg_container}} 2>/dev/null || docker run -d --name {{pg_container}} -p {{pg_port}}:5432 \
         -e POSTGRES_HOST_AUTH_METHOD=trust postgres:16 >/dev/null
-      until docker exec {{pg_container}} pg_isready -U postgres >/dev/null 2>&1; do sleep 0.5; done
+      until docker exec {{pg_container}} pg_isready -h localhost -U postgres >/dev/null 2>&1; do sleep 0.5; done
+    fi
+    if ! docker port {{pg_container}} 5432 | grep -q ":{{pg_port}}$"; then
+      echo "{{pg_container}} is not published on port {{pg_port}}: free the port or set CAUDAL_PG_PORT," >&2
+      echo "then recreate it with: docker rm -f {{pg_container}} && just db" >&2
+      exit 1
     fi
     docker exec {{pg_container}} psql -U postgres -tc "SELECT 1 FROM pg_database WHERE datname='{{db_name}}'" | grep -q 1 \
       || docker exec {{pg_container}} createdb -U postgres {{db_name}}
@@ -39,8 +45,8 @@ db-drop:
 check crate="":
     cargo check {{ if crate == "" { "--workspace" } else { "-p " + crate } }} --all-targets
 
-# Tests for one crate, or the whole workspace
-test crate="":
+# Tests for one crate, or the whole workspace. Starts Postgres for the adapter tests
+test crate="": db
     cargo test {{ if crate == "" { "--workspace" } else { "-p " + crate } }}
 
 # Format the workspace
@@ -52,6 +58,7 @@ ci: db
     cargo fmt --all --check
     cargo clippy --workspace --all-targets -- -D warnings
     cargo test --workspace
+    cargo xtask arch
     cargo deny check
     just site-build
 

@@ -85,7 +85,7 @@ pub enum LedgerError {
     Refused(Refusal),
     /// The call ended without saying whether it committed. Repeat the command;
     /// never treat this as a refusal.
-    Unknown,
+    Unknown(Box<dyn Error + Send + Sync>),
 }
 ```
 

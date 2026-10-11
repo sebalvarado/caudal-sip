@@ -1,0 +1,26 @@
+[package]
+name = "caudal-ledger"
+description = "The scheme's two-ledger book: rule core, Ledger port and in-memory backend."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[dependencies]
+caudal-types.workspace = true
+jiff.workspace = true
+uuid.workspace = true
+proptest = { workspace = true, optional = true }
+
+[features]
+testing = ["dep:proptest"]
+
+[dev-dependencies]
+caudal-ledger = { path = ".", features = ["testing"] }
+pollster.workspace = true
+proptest.workspace = true
+
+[lints]
+workspace = true
