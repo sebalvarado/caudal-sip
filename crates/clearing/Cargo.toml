@@ -1,0 +1,21 @@
+[package]
+name = "caudal-clearing"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[dependencies]
+caudal-types.workspace = true
+caudal-ledger.workspace = true
+
+[dev-dependencies]
+caudal-ledger = { workspace = true, features = ["testing"] }
+pollster.workspace = true
+proptest.workspace = true
+uuid.workspace = true
+
+[lints]
+workspace = true

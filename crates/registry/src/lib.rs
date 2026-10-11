@@ -30,6 +30,20 @@ impl Sector {
             Self::Sedpe => "0009",
         }
     }
+
+    /// Encaje in basis points and risk factor in percent. `None` where the catálogo leaves the cells
+    /// empty; for a SEDPE only the published base encaje, without its unpublished risk surcharge.
+    pub const fn liquidity(self) -> Option<(u32, u32)> {
+        match self {
+            Self::LargeFinancial => Some((500, 25)),
+            Self::Financial => Some((400, 30)),
+            Self::CooperativeSegment1 | Self::Mutualista => Some((400, 40)),
+            Self::CooperativeSegment2 => Some((250, 100)),
+            Self::CooperativeSegment3 => Some((100, 100)),
+            Self::CooperativeSegment4 | Self::CooperativeSegment5 => None,
+            Self::Sedpe => Some((50, 100)),
+        }
+    }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
