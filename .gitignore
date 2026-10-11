@@ -9,11 +9,6 @@ dist/
 # Rust
 /target/
 
-# Terraform: state and the provider cache stay local; .terraform.lock.hcl is committed
-.terraform/
-*.tfstate
-*.tfstate.*
-
 # Local tooling noise
 logs/
 .DS_Store
