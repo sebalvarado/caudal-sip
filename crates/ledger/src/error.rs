@@ -5,6 +5,7 @@ pub enum Refusal {
     InsufficientHeadroom,
     Conflict,
     NotReserved,
+    NotTransferred,
     Irrevocable,
     Voided,
 }
@@ -15,6 +16,7 @@ impl fmt::Display for Refusal {
             Self::InsufficientHeadroom => "insufficient headroom",
             Self::Conflict => "conflicts with what is recorded under the same id",
             Self::NotReserved => "no reservation for this payment",
+            Self::NotTransferred => "no transfer to reverse",
             Self::Irrevocable => "the payment is posted and irrevocable",
             Self::Voided => "the payment is voided",
         })

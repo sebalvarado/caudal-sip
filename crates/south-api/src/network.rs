@@ -185,7 +185,12 @@ impl<L: Ledger> Network<L> {
             return Ok(());
         }
         let event = self.next_id();
-        let transfer = Transfer { id: TransferId(event), legs, cause: Cause { event, digest: [0; 32] } };
+        let transfer = Transfer {
+            id: TransferId(event),
+            purpose: caudal_ledger::Purpose::Headroom,
+            legs,
+            cause: Cause { event, digest: [0; 32] },
+        };
         block_on(self.ledger.transfer(transfer)).map(drop)
     }
 
@@ -274,18 +279,18 @@ impl<L: Ledger> Network<L> {
         }
     }
 
-    fn execute(&mut self, command: Command) -> Result<(), Refusal> {
+    fn execute(&mut self, command: Command) -> Result<caudal_ledger::Effect, Refusal> {
         for _ in 0..5 {
             let started = Instant::now();
             let result = match command.clone() {
-                Command::Reserve(r) => block_on(self.ledger.reserve(r)).map(drop),
-                Command::Post(p) => block_on(self.ledger.post(p)).map(drop),
-                Command::Void(p, reason) => block_on(self.ledger.void(p, reason)).map(drop),
-                Command::Transfer(t) => block_on(self.ledger.transfer(t)).map(drop),
+                Command::Reserve(r) => block_on(self.ledger.reserve(r)).map(|a| a.effect),
+                Command::Post(p) => block_on(self.ledger.post(p)).map(|a| a.effect),
+                Command::Void(p, reason) => block_on(self.ledger.void(p, reason)).map(|a| a.effect),
+                Command::Transfer(t) => block_on(self.ledger.transfer(t)).map(|a| a.effect),
             };
             self.stats.record(Op::Ledger, started.elapsed());
             match result {
-                Ok(()) => return Ok(()),
+                Ok(effect) => return Ok(effect),
                 Err(LedgerError::Refused(r)) => return Err(r),
                 Err(LedgerError::Unknown(_)) => continue,
             }
@@ -386,7 +391,7 @@ impl<L: Ledger> Network<L> {
         let malla = caudal_clearing::malla(&entries);
         let ctx = self.ctx([0; 32]);
         if let Some(transfer) = caudal_clearing::settlement(&malla, TransferId(ctx.event), ctx.cause()) {
-            block_on(self.ledger.transfer(transfer))?;
+            let _ = block_on(self.ledger.transfer(transfer))?;
         }
         self.run(self.sip, ctx, Input::Settled(malla.payments.clone()));
         let settlement = Settlement { at: ctx.now, malla };

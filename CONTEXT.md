@@ -32,6 +32,14 @@ _Avoid_: error, failure, timeout
 A call that ended without saying whether it committed. It is answered by asking again, never by assuming a refusal.
 _Avoid_: timeout as rejection, failed, rolled back
 
+**Replay**:
+A repeated ledger command that finds the books already holding it. The books do not change. It does not mean the caller has already sent its message.
+_Avoid_: a second posting, a cached response, already sent
+
+**Reversal**:
+A new ledger entry that mirrors every leg of a transfer and leaves the original in place. A posted payment is not reversed: it is irrevocable, and only a void ends a reservation that has not been posted.
+_Avoid_: void, delete, an update, a hand-built mirror that drops a leg
+
 **Unlisted reason**:
 A reason code a counterparty sent that the catálogo does not list. It is kept as evidence and never sent by us.
 _Avoid_: unknown code, other, a code of our own

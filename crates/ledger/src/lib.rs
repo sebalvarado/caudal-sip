@@ -9,8 +9,8 @@ pub mod testing;
 
 pub use account::{AccountId, Balance, Book, Headroom, HeadroomAccount, ObligationAccount, Position};
 pub use entry::{
-    AsOf, Cause, Draft, Entry, EntryId, EntryKind, EntryQuery, Leg, Reservation, ReservationState, Reserve, Transfer,
-    TransferId,
+    Applied, AsOf, Cause, Draft, Effect, Entry, EntryId, EntryKind, EntryQuery, Leg, Purpose, RecordedTransfer,
+    Reservation, ReservationState, Reserve, Transfer, TransferId,
 };
 pub use error::{LedgerError, Refusal};
 pub use mem::MemLedger;

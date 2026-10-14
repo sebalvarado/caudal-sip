@@ -1,8 +1,8 @@
-use std::collections::{BTreeMap, HashMap};
+use std::collections::{BTreeMap, HashMap, HashSet};
 
 use caudal_ledger::core::{Replay, View};
 use caudal_ledger::{
-    Cause, Entry, EntryKind, Headroom, HeadroomAccount, Leg, ObligationAccount, Reserve, Transfer, TransferId,
+    Cause, Entry, EntryKind, Headroom, HeadroomAccount, Leg, ObligationAccount, Purpose, Reserve, Transfer, TransferId,
 };
 use caudal_types::{Bic, PaymentId, Usd};
 
@@ -31,18 +31,25 @@ impl Malla {
     }
 }
 
-fn is_settlement(entry: &Entry) -> bool {
-    matches!(entry.kind, EntryKind::Transferred(..))
-        && entry.legs.iter().any(|l| {
-            matches!(l, Leg::Obligations { debit: ObligationAccount::Settled, .. })
-                || matches!(l, Leg::Obligations { credit: ObligationAccount::Settled, .. })
+fn reversed(entries: &[Entry]) -> HashSet<TransferId> {
+    entries
+        .iter()
+        .filter_map(|e| match e.kind {
+            EntryKind::Reversed { of, .. } => Some(of),
+            _ => None,
         })
+        .collect()
+}
+
+fn is_settlement(entry: &Entry, reversed: &HashSet<TransferId>) -> bool {
+    matches!(entry.kind, EntryKind::Transferred { id, purpose: Purpose::Settlement, .. } if !reversed.contains(&id))
 }
 
 /// The multilateral malla of every payment posted since the last settlement. Bilateral totals are for
 /// reporting only.
 pub fn malla(entries: &[Entry]) -> Malla {
-    let start = entries.iter().rposition(is_settlement).map_or(0, |i| i + 1);
+    let reversed = reversed(entries);
+    let start = entries.iter().rposition(|e| is_settlement(e, &reversed)).map_or(0, |i| i + 1);
     let reserves: HashMap<&PaymentId, &Reserve> = entries
         .iter()
         .filter_map(|e| match &e.kind {
@@ -94,7 +101,7 @@ pub fn settlement(malla: &Malla, id: TransferId, cause: Cause) -> Option<Transfe
             amount,
         });
     }
-    (!legs.is_empty()).then_some(Transfer { id, legs, cause })
+    (!legs.is_empty()).then_some(Transfer { id, purpose: Purpose::Settlement, legs, cause })
 }
 
 #[cfg(test)]
@@ -118,7 +125,13 @@ mod tests {
                 amount: Headroom::of(Usd::from_cents(FUNDED)),
             })
             .collect();
-        block_on(ledger.transfer(Transfer { id: TransferId(Uuid::from_u128(1)), legs, cause: cause(1) })).unwrap();
+        block_on(ledger.transfer(Transfer {
+            id: TransferId(Uuid::from_u128(1)),
+            purpose: Purpose::Headroom,
+            legs,
+            cause: cause(1),
+        }))
+        .unwrap();
         ledger
     }
 
@@ -172,6 +185,18 @@ mod tests {
         for i in 0..3 {
             assert_eq!(available(&ledger, i), i128::from(FUNDED), "headroom returns on settlement");
         }
+    }
+
+    #[test]
+    fn reversing_a_settlement_reopens_the_malla() {
+        let ledger = funded();
+        let p = pay(&ledger, 0, 1, 1, 2_000);
+        block_on(ledger.post(p.clone())).unwrap();
+        settle(&ledger, 1);
+        assert!(malla(&block_on(ledger.entries(EntryQuery::All)).unwrap()).payments.is_empty());
+        block_on(ledger.reverse(TransferId(Uuid::from_u128(1_001)), cause(9))).unwrap();
+        let reopened = malla(&block_on(ledger.entries(EntryQuery::All)).unwrap());
+        assert_eq!(reopened.payments, vec![p]);
     }
 
     #[test]

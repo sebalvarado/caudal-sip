@@ -5,6 +5,7 @@
 - **Deciders**: Founding maintainer
 - **Issue**: [#20](https://github.com/sebalvarado/caudal-sip/issues/20), part of [#17](https://github.com/sebalvarado/caudal-sip/issues/17)
 - **Refines**: [0011](0011-rust-monorepo.md) and [0012](0012-crate-boundaries.md), on what "synchronous" means for a domain crate
+- **Refined by**: [0023](0023-replay-purpose-and-reversal.md), on what a repeated command returns and how a transfer is undone
 
 ## Context
 

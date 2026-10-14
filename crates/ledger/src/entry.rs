@@ -31,6 +31,63 @@ impl Leg {
             Self::Headroom { amount, .. } => amount.units(),
         }
     }
+
+    /// Swaps the sides. The amount stays. A reversal is this applied to every leg, so a caller cannot drop one.
+    pub fn mirror(self) -> Self {
+        match self {
+            Self::Obligations { debit, credit, amount } => Self::Obligations { debit: credit, credit: debit, amount },
+            Self::Headroom { debit, credit, amount } => Self::Headroom { debit: credit, credit: debit, amount },
+        }
+    }
+}
+
+/// What a transfer is for. The legs still say how it posts; this says which scheme event it is.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Purpose {
+    Headroom,
+    Settlement,
+    Suspense,
+    Correction,
+}
+
+impl Purpose {
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            Self::Headroom => "headroom",
+            Self::Settlement => "settlement",
+            Self::Suspense => "suspense",
+            Self::Correction => "correction",
+        }
+    }
+
+    pub fn parse(s: &str) -> Option<Self> {
+        Some(match s {
+            "headroom" => Self::Headroom,
+            "settlement" => Self::Settlement,
+            "suspense" => Self::Suspense,
+            "correction" => Self::Correction,
+            _ => return None,
+        })
+    }
+}
+
+/// Whether this call appended an entry. A replay found the books already holding the command.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Effect {
+    Appended,
+    Replay,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct Applied<T> {
+    pub value: T,
+    pub effect: Effect,
+}
+
+impl<T> Applied<T> {
+    pub fn replayed(&self) -> bool {
+        self.effect == Effect::Replay
+    }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -78,8 +135,16 @@ pub struct TransferId(pub Uuid);
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Transfer {
     pub id: TransferId,
+    pub purpose: Purpose,
     pub legs: Vec<Leg>,
     pub cause: Cause,
+}
+
+/// What the books already hold for a transfer id: the purpose and every leg.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct RecordedTransfer {
+    pub purpose: Purpose,
+    pub legs: Vec<Leg>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -88,6 +153,7 @@ pub enum EntryId {
     Posted(PaymentId),
     Voided(PaymentId),
     Transfer(TransferId),
+    Reversal(TransferId),
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -95,7 +161,8 @@ pub enum EntryKind {
     Reserved(Reserve),
     Posted(PaymentId),
     Voided(PaymentId, ReasonCode),
-    Transferred(TransferId, Cause),
+    Transferred { id: TransferId, purpose: Purpose, cause: Cause },
+    Reversed { of: TransferId, cause: Cause },
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -117,7 +184,8 @@ impl Entry {
             EntryKind::Reserved(r) => EntryId::Reserved(r.payment.clone()),
             EntryKind::Posted(p) => EntryId::Posted(p.clone()),
             EntryKind::Voided(p, _) => EntryId::Voided(p.clone()),
-            EntryKind::Transferred(id, _) => EntryId::Transfer(*id),
+            EntryKind::Transferred { id, .. } => EntryId::Transfer(*id),
+            EntryKind::Reversed { of, .. } => EntryId::Reversal(*of),
         }
     }
 
@@ -125,7 +193,7 @@ impl Entry {
         match &self.kind {
             EntryKind::Reserved(r) => Some(&r.payment),
             EntryKind::Posted(p) | EntryKind::Voided(p, _) => Some(p),
-            EntryKind::Transferred(..) => None,
+            EntryKind::Transferred { .. } | EntryKind::Reversed { .. } => None,
         }
     }
 }

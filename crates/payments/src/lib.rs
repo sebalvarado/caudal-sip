@@ -2,7 +2,7 @@ mod integrante;
 mod red;
 mod sip;
 
-use caudal_ledger::{Cause, Refusal, Reserve, Transfer};
+use caudal_ledger::{Cause, Effect, Refusal, Reserve, Transfer};
 use caudal_types::{Bic, InvalidValue, PaymentId, PaymentState, ReasonCode, Usd};
 use jiff::{SignedDuration, Timestamp};
 use uuid::Uuid;
@@ -94,7 +94,9 @@ pub enum Command {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Outcome {
     pub command: Command,
-    pub result: Result<(), Refusal>,
+    /// `Ok(Replay)` means the books already held the command. The process still performs the side effects
+    /// it has not recorded: a replay is not evidence that a message was sent.
+    pub result: Result<Effect, Refusal>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]

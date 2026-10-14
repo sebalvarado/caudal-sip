@@ -74,7 +74,13 @@ impl Harness {
             amount: Headroom::of(Usd::from_cents(headroom_cents)),
         }];
         let cause = caudal_ledger::Cause { event: Uuid::nil(), digest: [0; 32] };
-        block_on(ledger.transfer(Transfer { id: TransferId(Uuid::from_u128(1)), legs, cause })).unwrap();
+        block_on(ledger.transfer(Transfer {
+            id: TransferId(Uuid::from_u128(1)),
+            purpose: caudal_ledger::Purpose::Headroom,
+            legs,
+            cause,
+        }))
+        .unwrap();
         let sip = Sip::new(bic("SIPCECEQ"), registry(), Deadlines::default());
         Self { sip, ledger, now: start(), n: 100, sent: vec![], events: vec![], timers: vec![] }
     }
@@ -89,10 +95,10 @@ impl Harness {
                 Output::Arm { at, timer } => self.timers.push((at, timer)),
                 Output::Ledger(command) => {
                     let result = match command.clone() {
-                        Command::Reserve(r) => block_on(self.ledger.reserve(r)).map(drop),
-                        Command::Post(p) => block_on(self.ledger.post(p)).map(drop),
-                        Command::Void(p, reason) => block_on(self.ledger.void(p, reason)).map(drop),
-                        Command::Transfer(t) => block_on(self.ledger.transfer(t)).map(drop),
+                        Command::Reserve(r) => block_on(self.ledger.reserve(r)).map(|a| a.effect),
+                        Command::Post(p) => block_on(self.ledger.post(p)).map(|a| a.effect),
+                        Command::Void(p, reason) => block_on(self.ledger.void(p, reason)).map(|a| a.effect),
+                        Command::Transfer(t) => block_on(self.ledger.transfer(t)).map(|a| a.effect),
                     };
                     let result = result.map_err(|e| match e {
                         LedgerError::Refused(r) => r,

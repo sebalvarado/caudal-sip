@@ -14,3 +14,4 @@
 - The feature `testing` exports the property suite. Every backend runs it, and a new backend is differential-tested against `MemLedger` (`caudal-ledger-postgres/tests`).
 - A refusal is final; `LedgerError::Unknown` is never treated as one.
 - No reservation timeout, ever. Only a post or a void ends a reservation.
+- A repeated command returns `Effect::Replay` and appends nothing. Undo a transfer with `reverse`, which mirrors every leg. Do not void a posted payment.

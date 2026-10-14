@@ -1,16 +1,17 @@
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 use caudal_types::{PaymentId, ReasonCode};
 use jiff::{SignedDuration, Timestamp};
 
 use crate::{
-    AccountId, Balance, Draft, Entry, EntryId, EntryKind, Headroom, HeadroomAccount, Leg, ObligationAccount, Refusal,
-    Reservation, ReservationState, Reserve, Transfer, TransferId,
+    AccountId, Balance, Cause, Draft, Entry, EntryId, EntryKind, Headroom, HeadroomAccount, Leg, ObligationAccount,
+    RecordedTransfer, Refusal, Reservation, ReservationState, Reserve, Transfer, TransferId,
 };
 
 pub trait View {
     fn reservation(&self, payment: &PaymentId) -> Option<Reservation>;
-    fn transfer(&self, id: TransferId) -> Option<Vec<Leg>>;
+    fn transfer(&self, id: TransferId) -> Option<RecordedTransfer>;
+    fn reversal(&self, of: TransferId) -> bool;
     fn balance(&self, account: AccountId) -> Balance;
 }
 
@@ -73,10 +74,28 @@ pub fn void(view: &impl View, payment: &PaymentId, reason: ReasonCode) -> Result
 pub fn transfer(view: &impl View, t: Transfer) -> Result<Decision<EntryId>, Refusal> {
     let id = EntryId::Transfer(t.id);
     match view.transfer(t.id) {
-        Some(legs) if legs == t.legs => Decision::repeat(id),
+        Some(existing) if existing.purpose == t.purpose && existing.legs == t.legs => Decision::repeat(id),
         Some(_) => Err(Refusal::Conflict),
-        None => Decision::commit(view, id, Draft { kind: EntryKind::Transferred(t.id, t.cause), legs: t.legs }),
+        None => Decision::commit(
+            view,
+            id,
+            Draft { kind: EntryKind::Transferred { id: t.id, purpose: t.purpose, cause: t.cause }, legs: t.legs },
+        ),
     }
+}
+
+pub fn mirror(legs: &[Leg]) -> Vec<Leg> {
+    legs.iter().copied().map(Leg::mirror).collect()
+}
+
+/// Mirrors every leg of an existing transfer. A missing id is not a payment void: reservations are not transfers.
+pub fn reverse(view: &impl View, of: TransferId, cause: Cause) -> Result<Decision<EntryId>, Refusal> {
+    let id = EntryId::Reversal(of);
+    if view.reversal(of) {
+        return Decision::repeat(id);
+    }
+    let recorded = view.transfer(of).ok_or(Refusal::NotTransferred)?;
+    Decision::commit(view, id, Draft { kind: EntryKind::Reversed { of, cause }, legs: mirror(&recorded.legs) })
 }
 
 pub fn reservation_legs(r: &Reservation) -> Vec<Leg> {
@@ -133,7 +152,7 @@ impl Balance {
                     *posted += units;
                 }
                 EntryKind::Voided(..) => *pending -= units,
-                EntryKind::Transferred(..) => *posted += units,
+                EntryKind::Transferred { .. } | EntryKind::Reversed { .. } => *posted += units,
             }
         }
     }
@@ -164,7 +183,8 @@ impl Reservation {
 #[derive(Debug, Clone, Default)]
 pub struct Replay {
     reservations: HashMap<PaymentId, Reservation>,
-    transfers: HashMap<TransferId, Vec<Leg>>,
+    transfers: HashMap<TransferId, RecordedTransfer>,
+    reversals: HashSet<TransferId>,
     balances: HashMap<AccountId, Balance>,
 }
 
@@ -186,8 +206,11 @@ impl Replay {
             EntryKind::Reserved(r) => {
                 self.reservations.insert(r.payment.clone(), Reservation::pending(r));
             }
-            EntryKind::Transferred(id, _) => {
-                self.transfers.insert(*id, entry.legs.clone());
+            EntryKind::Transferred { id, purpose, .. } => {
+                self.transfers.insert(*id, RecordedTransfer { purpose: *purpose, legs: entry.legs.clone() });
+            }
+            EntryKind::Reversed { of, .. } => {
+                self.reversals.insert(*of);
             }
             EntryKind::Posted(p) => self.settle(p, ReservationState::Posted),
             EntryKind::Voided(p, reason) => self.settle(p, ReservationState::Voided(*reason)),
@@ -213,8 +236,12 @@ impl View for Replay {
         self.reservations.get(payment).cloned()
     }
 
-    fn transfer(&self, id: TransferId) -> Option<Vec<Leg>> {
+    fn transfer(&self, id: TransferId) -> Option<RecordedTransfer> {
         self.transfers.get(&id).cloned()
+    }
+
+    fn reversal(&self, of: TransferId) -> bool {
+        self.reversals.contains(&of)
     }
 
     fn balance(&self, account: AccountId) -> Balance {

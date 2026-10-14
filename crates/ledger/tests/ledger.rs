@@ -1,7 +1,8 @@
 use caudal_ledger::testing::{bic, cause, clock, payment};
 use caudal_ledger::{
-    AccountId, AsOf, Balance, EntryId, EntryKind, EntryQuery, Headroom, HeadroomAccount as H, Ledger, LedgerError, Leg,
-    MemLedger, ObligationAccount as O, Refusal, ReservationState, Reserve, Transfer, TransferId,
+    AccountId, AsOf, Balance, Effect, EntryId, EntryKind, EntryQuery, Headroom, HeadroomAccount as H, Ledger,
+    LedgerError, Leg, MemLedger, ObligationAccount as O, Purpose, Refusal, ReservationState, Reserve, Transfer,
+    TransferId,
 };
 use caudal_types::{ReasonCode, Usd};
 use pollster::block_on;
@@ -15,7 +16,7 @@ fn grant(ledger: &MemLedger, i: usize, amount: &str) {
     let amount = usd(amount);
     let id = TransferId(Uuid::from_u128(((i as u128) << 64) | u128::from(amount.cents())));
     let legs = vec![Leg::Headroom { debit: H::Granted, credit: H::Integrante(bic(i)), amount: Headroom::of(amount) }];
-    block_on(ledger.transfer(Transfer { id, legs, cause: cause(0) })).unwrap();
+    block_on(ledger.transfer(Transfer { id, purpose: Purpose::Headroom, legs, cause: cause(0) })).unwrap();
 }
 
 fn reserve(n: u8, amount: &str) -> Reserve {
@@ -45,7 +46,8 @@ fn a_reservation_holds_headroom_and_creates_pending_obligations() {
     let ledger = MemLedger::new(clock());
     grant(&ledger, 0, "1000.00");
     let r = block_on(ledger.reserve(reserve(1, "100.00"))).unwrap();
-    assert_eq!(r.state, ReservationState::Pending);
+    assert_eq!(r.effect, Effect::Appended);
+    assert_eq!(r.value.state, ReservationState::Pending);
 
     let pending = |debit, credit| Balance { debits_pending: debit, credits_pending: credit, ..Balance::default() };
     assert_eq!(
@@ -69,7 +71,7 @@ fn a_void_releases_everything() {
     grant(&ledger, 0, "1000.00");
     block_on(ledger.reserve(reserve(1, "100.00"))).unwrap();
     let r = block_on(ledger.void(payment(0, 1), ReasonCode::Ac04)).unwrap();
-    assert_eq!(r.state, ReservationState::Voided(ReasonCode::Ac04));
+    assert_eq!(r.value.state, ReservationState::Voided(ReasonCode::Ac04));
     assert_eq!(balance(&ledger, H::Integrante(bic(0))).available(), 100_000);
     assert_eq!(balance(&ledger, O::Position(bic(1))), Balance::default());
 }
@@ -90,7 +92,9 @@ fn a_repeat_returns_the_original_and_a_conflict_is_refused() {
     grant(&ledger, 0, "1000.00");
     let first = block_on(ledger.reserve(reserve(1, "100.00"))).unwrap();
     let requoted = Reserve { fee: usd("0.30"), ..reserve(1, "100.00") };
-    assert_eq!(block_on(ledger.reserve(requoted)).unwrap(), first);
+    let again = block_on(ledger.reserve(requoted)).unwrap();
+    assert_eq!(again.effect, Effect::Replay);
+    assert_eq!(again.value, first.value);
     assert_eq!(refusal(block_on(ledger.reserve(reserve(1, "100.01")))), Refusal::Conflict);
     let elsewhere = Reserve { beneficiary: bic(2), ..reserve(1, "100.00") };
     assert_eq!(refusal(block_on(ledger.reserve(elsewhere))), Refusal::Conflict);
@@ -108,7 +112,8 @@ fn post_and_void_follow_the_reservation() {
     assert_eq!(refusal(block_on(ledger.void(payment(0, 1), ReasonCode::Dt01))), Refusal::Irrevocable);
     assert_eq!(refusal(block_on(ledger.post(payment(0, 2)))), Refusal::Voided);
     let again = block_on(ledger.void(payment(0, 2), ReasonCode::Ac01)).unwrap();
-    assert_eq!(again.state, ReservationState::Voided(ReasonCode::Dt01), "a repeat keeps the original reason");
+    assert_eq!(again.effect, Effect::Replay);
+    assert_eq!(again.value.state, ReservationState::Voided(ReasonCode::Dt01), "a repeat keeps the original reason");
 }
 
 #[test]
@@ -116,11 +121,14 @@ fn a_transfer_id_with_different_legs_is_a_conflict() {
     let ledger = MemLedger::new(clock());
     grant(&ledger, 0, "10.00");
     let first = block_on(ledger.entries(EntryQuery::All)).unwrap().remove(0);
-    let EntryKind::Transferred(id, cause) = first.kind else { unreachable!() };
+    let EntryKind::Transferred { id, purpose, cause } = first.kind else { unreachable!() };
     let legs =
         vec![Leg::Headroom { debit: H::Granted, credit: H::Integrante(bic(0)), amount: Headroom::of(usd("5.00")) }];
-    assert_eq!(refusal(block_on(ledger.transfer(Transfer { id, legs, cause }))), Refusal::Conflict);
-    assert_eq!(block_on(ledger.transfer(Transfer { id, legs: first.legs, cause })).unwrap(), EntryId::Transfer(id));
+    assert_eq!(refusal(block_on(ledger.transfer(Transfer { id, purpose, legs, cause }))), Refusal::Conflict);
+    let same = Transfer { id, purpose, legs: first.legs.clone(), cause };
+    assert_eq!(block_on(ledger.transfer(same)).unwrap().value, EntryId::Transfer(id));
+    let other = Transfer { id, purpose: Purpose::Correction, legs: first.legs, cause };
+    assert_eq!(refusal(block_on(ledger.transfer(other))), Refusal::Conflict);
 }
 
 #[test]
@@ -134,6 +142,7 @@ fn a_transfer_cannot_overdraw_headroom() {
             credit: H::Granted,
             amount: Headroom::of(usd(amount)),
         }],
+        purpose: Purpose::Headroom,
         cause: cause(0),
     };
     assert_eq!(refusal(block_on(ledger.transfer(withdraw(10, "10.01")))), Refusal::InsufficientHeadroom);
