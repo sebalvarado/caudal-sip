@@ -1,0 +1,59 @@
+[workspace]
+resolver = "3"
+members = ["crates/*", "apps/*", "xtask"]
+
+[workspace.package]
+version = "0.0.0"
+edition = "2024"
+rust-version = "1.99"
+license = "Apache-2.0"
+repository = "https://github.com/sebalvarado/caudal-sip"
+publish = false
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }
+
+[profile.dev.package."*"]
+opt-level = 2
+
+[profile.wasm]
+inherits = "release"
+opt-level = "s"
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"
+
+[workspace.dependencies]
+caudal-types = { path = "crates/types" }
+caudal-ledger = { path = "crates/ledger" }
+caudal-registry = { path = "crates/registry" }
+caudal-directory = { path = "crates/directory" }
+caudal-risk = { path = "crates/risk" }
+caudal-clearing = { path = "crates/clearing" }
+caudal-payments = { path = "crates/payments" }
+caudal-iso20022 = { path = "crates/iso20022" }
+caudal-msgplane = { path = "crates/msgplane" }
+caudal-south-api = { path = "crates/south-api" }
+
+cargo_metadata = "0.23"
+jiff = { version = "0.2", default-features = false, features = ["std"] }
+pollster = "1"
+proptest = "1"
+quick-xml = "0.42"
+ed25519-dalek = "3"
+sha2 = "0.11"
+ratatui = "0.30"
+crossterm = "0.29"
+clap = { version = "4", features = ["derive", "env"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sqlx = { version = "0.9", default-features = false, features = ["postgres", "runtime-tokio", "migrate", "macros", "uuid"] }
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
+uuid = "1"
+wasm-bindgen = "=0.2.129"
+js-sys = "0.3"
+web-time = "1"

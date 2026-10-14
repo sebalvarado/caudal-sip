@@ -1,0 +1,5497 @@
+{
+  "log": [
+    {
+      "at": "11:00:00.000",
+      "text": "settle  1427 payments  gross USD 319,914.25  net USD 184,614.53",
+      "tone": "good"
+    },
+    {
+      "at": "11:01:00.000",
+      "text": "retry  170 payments rejected with AM04 sent again",
+      "tone": "warn"
+    },
+    {
+      "at": "15:00:00.000",
+      "text": "settle  1566 payments  gross USD 393,601.28  net USD 251,775.86",
+      "tone": "good"
+    },
+    {
+      "at": "15:01:00.000",
+      "text": "retry  0 payments rejected with AM04 sent again",
+      "tone": "dim"
+    },
+    {
+      "at": "17:30:00.000",
+      "text": "settle  1275 payments  gross USD 252,031.62  net USD 185,531.06",
+      "tone": "good"
+    }
+  ],
+  "payments": [
+    {
+      "amount": "348.96",
+      "at": "09:00:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090000002067",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "432.81",
+      "at": "09:00:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090012002073",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "425.57",
+      "at": "09:00:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090024002085",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "422.78",
+      "at": "09:00:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090036002095",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "253.92",
+      "at": "09:00:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090048002103",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "209.21",
+      "at": "09:01:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090100002109",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "228.83",
+      "at": "09:01:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090112002120",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "265.10",
+      "at": "09:01:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090124002130",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "378.62",
+      "at": "09:01:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090136002138",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "290.62",
+      "at": "09:01:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090148002142",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "256.29",
+      "at": "09:02:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090200002149",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "476.34",
+      "at": "09:02:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090212002155",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "201.24",
+      "at": "09:02:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090224002163",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "297.88",
+      "at": "09:02:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090236002172",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "387.21",
+      "at": "09:02:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090248002179",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "298.11",
+      "at": "09:03:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090300002187",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "232.93",
+      "at": "09:03:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090312002194",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "424.41",
+      "at": "09:03:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090324002200",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "490.98",
+      "at": "09:03:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090336002207",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "305.01",
+      "at": "09:03:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090348002219",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "383.79",
+      "at": "09:04:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090400002233",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "312.92",
+      "at": "09:04:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090412002242",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "268.98",
+      "at": "09:04:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090424002250",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "449.02",
+      "at": "09:04:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090436002254",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "200.44",
+      "at": "09:04:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090448002262",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "369.26",
+      "at": "09:05:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090500002275",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "234.59",
+      "at": "09:05:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090512002285",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "194.83",
+      "at": "09:05:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090524002294",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "519.43",
+      "at": "09:05:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090536002301",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "362.45",
+      "at": "09:05:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090548002306",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "418.57",
+      "at": "09:06:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090600002321",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "197.00",
+      "at": "09:06:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090612002328",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "388.11",
+      "at": "09:06:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090624002335",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "332.06",
+      "at": "09:06:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090636002346",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "463.15",
+      "at": "09:06:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090648002354",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "224.23",
+      "at": "09:07:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090700002363",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "484.48",
+      "at": "09:07:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090712002374",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "493.43",
+      "at": "09:07:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090724002378",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "395.21",
+      "at": "09:07:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090736002387",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "320.85",
+      "at": "09:07:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090748002394",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "232.38",
+      "at": "09:08:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090800002403",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "270.39",
+      "at": "09:08:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090812002410",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "507.55",
+      "at": "09:08:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090824002424",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "295.98",
+      "at": "09:08:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090836002429",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "263.97",
+      "at": "09:08:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090848002435",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "388.71",
+      "at": "09:09:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090900002440",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "259.11",
+      "at": "09:09:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090912002449",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "465.19",
+      "at": "09:09:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090924002453",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "197.72",
+      "at": "09:09:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090936002458",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "419.05",
+      "at": "09:09:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026090948002465",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "208.79",
+      "at": "09:10:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091000002473",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "318.88",
+      "at": "09:10:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091012002485",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "519.65",
+      "at": "09:10:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091024002491",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "208.47",
+      "at": "09:10:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091036002498",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "187.07",
+      "at": "09:10:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091048002506",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "395.94",
+      "at": "09:11:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091100002511",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "268.70",
+      "at": "09:11:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091112002518",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "447.37",
+      "at": "09:11:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091124002529",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "515.70",
+      "at": "09:11:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091136002538",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "491.08",
+      "at": "09:11:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091148002543",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "183.92",
+      "at": "09:12:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091200002551",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "190.66",
+      "at": "09:12:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091212002559",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "257.93",
+      "at": "09:12:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091224002567",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "515.50",
+      "at": "09:12:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091236002578",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "461.79",
+      "at": "09:12:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091248002586",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "209.70",
+      "at": "09:13:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091300002596",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "433.51",
+      "at": "09:13:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091312002603",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "328.28",
+      "at": "09:13:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091324002613",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "364.15",
+      "at": "09:13:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091336002619",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "489.94",
+      "at": "09:13:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091348002625",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "351.44",
+      "at": "09:14:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091400002634",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "218.15",
+      "at": "09:14:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091412002644",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "369.53",
+      "at": "09:14:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091424002656",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "180.52",
+      "at": "09:14:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091436002664",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "311.54",
+      "at": "09:14:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091448002670",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "512.95",
+      "at": "09:15:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091500002678",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "399.40",
+      "at": "09:15:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091512002684",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "429.87",
+      "at": "09:15:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091524002691",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "216.89",
+      "at": "09:15:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091536002699",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "237.14",
+      "at": "09:15:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091548002702",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "286.26",
+      "at": "09:16:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091600002707",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "213.37",
+      "at": "09:16:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091612002712",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "385.25",
+      "at": "09:16:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091624002719",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "282.31",
+      "at": "09:16:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091636002727",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "189.04",
+      "at": "09:16:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091648002733",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "209.82",
+      "at": "09:17:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091700002744",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "434.32",
+      "at": "09:17:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091712002751",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "229.73",
+      "at": "09:17:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091724002758",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "235.84",
+      "at": "09:17:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091736002764",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "263.25",
+      "at": "09:17:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091748002768",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "247.74",
+      "at": "09:18:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091800002773",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "467.35",
+      "at": "09:18:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091812002780",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "324.47",
+      "at": "09:18:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091824002788",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "320.14",
+      "at": "09:18:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091836002795",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "217.95",
+      "at": "09:18:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091848002802",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "484.37",
+      "at": "09:19:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091900002807",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "306.13",
+      "at": "09:19:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091912002812",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "330.58",
+      "at": "09:19:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091924002820",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "362.89",
+      "at": "09:19:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091936002825",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "413.86",
+      "at": "09:19:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026091948002832",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "200.89",
+      "at": "09:20:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092000002838",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "292.16",
+      "at": "09:20:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092012002848",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "317.55",
+      "at": "09:20:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092024002852",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "295.47",
+      "at": "09:20:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092036002857",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "332.31",
+      "at": "09:20:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092048002866",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "229.61",
+      "at": "09:21:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092100002871",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "487.63",
+      "at": "09:21:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092112002876",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "371.52",
+      "at": "09:21:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092124002884",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "491.06",
+      "at": "09:21:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092136002890",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "263.49",
+      "at": "09:21:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092148002896",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "332.31",
+      "at": "09:22:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092200002901",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "317.08",
+      "at": "09:22:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092212002912",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "496.08",
+      "at": "09:22:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092224002922",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "403.25",
+      "at": "09:22:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092236002930",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "404.99",
+      "at": "09:22:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092248002939",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "270.55",
+      "at": "09:23:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092300002944",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "404.39",
+      "at": "09:23:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092312002951",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "457.21",
+      "at": "09:23:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092324002962",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "224.95",
+      "at": "09:23:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092336002970",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "282.28",
+      "at": "09:23:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092348002978",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "341.21",
+      "at": "09:24:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092400002983",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "248.22",
+      "at": "09:24:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092412002991",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "276.56",
+      "at": "09:24:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092424002996",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "205.69",
+      "at": "09:24:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092436003000",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "420.36",
+      "at": "09:24:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092448003013",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "201.37",
+      "at": "09:25:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092500003020",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "413.23",
+      "at": "09:25:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092512003030",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "483.35",
+      "at": "09:25:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092524003038",
+      "retry": false,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "217.71",
+      "at": "09:25:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092536003045",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "415.60",
+      "at": "09:25:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092548003050",
+      "retry": false,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "275.01",
+      "at": "09:26:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092600003054",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "449.36",
+      "at": "09:26:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092612003061",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "308.34",
+      "at": "09:26:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092624003068",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "254.18",
+      "at": "09:26:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092636003077",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "385.17",
+      "at": "09:26:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092648003088",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "428.69",
+      "at": "09:27:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092700003097",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "249.65",
+      "at": "09:27:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092712003107",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "482.40",
+      "at": "09:27:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092724003111",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "255.29",
+      "at": "09:27:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092736003119",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "216.03",
+      "at": "09:27:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092748003131",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "391.73",
+      "at": "09:28:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092800003139",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "476.27",
+      "at": "09:28:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092812003148",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "310.05",
+      "at": "09:28:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092824003156",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "490.27",
+      "at": "09:28:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092836003167",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "396.96",
+      "at": "09:28:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092848003176",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "329.25",
+      "at": "09:29:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092900003183",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "421.44",
+      "at": "09:29:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092912003189",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "180.47",
+      "at": "09:29:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092924003197",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "248.31",
+      "at": "09:29:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092936003204",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "189.06",
+      "at": "09:29:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026092948003209",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "224.80",
+      "at": "09:30:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093000003216",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "473.52",
+      "at": "09:30:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093012003222",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "237.44",
+      "at": "09:30:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093024003234",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "331.79",
+      "at": "09:30:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093036003241",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "208.93",
+      "at": "09:30:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093048003245",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "487.06",
+      "at": "09:31:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093100003256",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "398.57",
+      "at": "09:31:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093112003268",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "482.60",
+      "at": "09:31:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093124003274",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "237.16",
+      "at": "09:31:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093136003282",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "478.96",
+      "at": "09:31:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093148003287",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "445.83",
+      "at": "09:32:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093200003295",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "201.93",
+      "at": "09:32:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093212003302",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "321.02",
+      "at": "09:32:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093224003307",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "456.91",
+      "at": "09:32:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093236003317",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "316.91",
+      "at": "09:32:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093248003327",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "423.18",
+      "at": "09:33:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093300003337",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "339.80",
+      "at": "09:33:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093312003344",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "410.64",
+      "at": "09:33:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093324003348",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "497.57",
+      "at": "09:33:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093336003358",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "507.02",
+      "at": "09:33:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093348003366",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "423.11",
+      "at": "09:34:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093400003373",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "454.76",
+      "at": "09:34:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093412003379",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "273.29",
+      "at": "09:34:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093424003390",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "513.29",
+      "at": "09:34:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093436003398",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "463.44",
+      "at": "09:34:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093448003405",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "317.42",
+      "at": "09:35:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093500003416",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "306.42",
+      "at": "09:35:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093512003426",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "376.48",
+      "at": "09:35:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093524003436",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "382.89",
+      "at": "09:35:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093536003444",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "357.00",
+      "at": "09:35:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093548003449",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "304.59",
+      "at": "09:36:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093600003461",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "281.54",
+      "at": "09:36:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093612003468",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "212.34",
+      "at": "09:36:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093624003478",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "359.66",
+      "at": "09:36:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093636003486",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "460.03",
+      "at": "09:36:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093648003492",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "315.31",
+      "at": "09:37:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093700003506",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "430.10",
+      "at": "09:37:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093712003514",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "254.22",
+      "at": "09:37:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093724003521",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "511.84",
+      "at": "09:37:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093736003531",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "229.83",
+      "at": "09:37:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093748003542",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "493.67",
+      "at": "09:38:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093800003548",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "250.77",
+      "at": "09:38:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093812003552",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "474.74",
+      "at": "09:38:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093824003562",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "322.57",
+      "at": "09:38:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093836003568",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "407.41",
+      "at": "09:38:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093848003575",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "325.51",
+      "at": "09:39:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093900003582",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "223.30",
+      "at": "09:39:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093912003587",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "252.10",
+      "at": "09:39:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093924003593",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "293.13",
+      "at": "09:39:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093936003603",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "407.18",
+      "at": "09:39:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026093948003614",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "341.03",
+      "at": "09:40:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094000003622",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "208.31",
+      "at": "09:40:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094012003632",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "415.18",
+      "at": "09:40:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094024003639",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "211.30",
+      "at": "09:40:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094036003649",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "515.18",
+      "at": "09:40:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094048003659",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "287.24",
+      "at": "09:41:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094100003667",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "256.32",
+      "at": "09:41:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094112003679",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "343.95",
+      "at": "09:41:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094124003689",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "292.64",
+      "at": "09:41:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094136003698",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "206.65",
+      "at": "09:41:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094148003704",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "497.38",
+      "at": "09:42:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094200003711",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "262.81",
+      "at": "09:42:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094212003718",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "414.06",
+      "at": "09:42:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094224003724",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "194.16",
+      "at": "09:42:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094236003732",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "479.30",
+      "at": "09:42:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094248003740",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "425.86",
+      "at": "09:43:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094300003748",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "243.02",
+      "at": "09:43:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094312003758",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "187.42",
+      "at": "09:43:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094324003766",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "330.05",
+      "at": "09:43:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094336003776",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "450.47",
+      "at": "09:43:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094348003784",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "400.64",
+      "at": "09:44:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094400003795",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "269.32",
+      "at": "09:44:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094412003801",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "311.29",
+      "at": "09:44:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094424003806",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "370.71",
+      "at": "09:44:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094436003821",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "417.56",
+      "at": "09:44:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094448003830",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "358.54",
+      "at": "09:45:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094500003841",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "352.14",
+      "at": "09:45:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094512003846",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "301.97",
+      "at": "09:45:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094524003856",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "393.19",
+      "at": "09:45:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094536003863",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "288.87",
+      "at": "09:45:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094548003872",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "269.40",
+      "at": "09:46:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094600003882",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "181.23",
+      "at": "09:46:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094612003887",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "369.28",
+      "at": "09:46:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094624003897",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "517.60",
+      "at": "09:46:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094636003905",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "193.14",
+      "at": "09:46:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094648003917",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "249.37",
+      "at": "09:47:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094700003922",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "377.63",
+      "at": "09:47:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094712003930",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "423.65",
+      "at": "09:47:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094724003939",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "492.33",
+      "at": "09:47:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094736003946",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "235.61",
+      "at": "09:47:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094748003958",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "190.89",
+      "at": "09:48:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094800003966",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "376.50",
+      "at": "09:48:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094812003976",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "430.95",
+      "at": "09:48:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094824003983",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "256.47",
+      "at": "09:48:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094836003993",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "256.78",
+      "at": "09:48:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094848004000",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "429.28",
+      "at": "09:49:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094900004010",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "361.32",
+      "at": "09:49:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094912004019",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "434.31",
+      "at": "09:49:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094924004029",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "298.31",
+      "at": "09:49:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094936004037",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "302.05",
+      "at": "09:49:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026094948004043",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "269.34",
+      "at": "09:50:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095000004049",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "248.81",
+      "at": "09:50:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095012004057",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "393.62",
+      "at": "09:50:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095024004062",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "412.59",
+      "at": "09:50:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095036004069",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "332.91",
+      "at": "09:50:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095048004080",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "424.73",
+      "at": "09:51:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095100004094",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "204.72",
+      "at": "09:51:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095112004101",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "367.76",
+      "at": "09:51:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095124004108",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "239.29",
+      "at": "09:51:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095136004119",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "347.08",
+      "at": "09:51:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095148004128",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "324.22",
+      "at": "09:52:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095200004136",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "197.93",
+      "at": "09:52:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095212004141",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "251.98",
+      "at": "09:52:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095224004151",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "466.05",
+      "at": "09:52:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095236004160",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "335.73",
+      "at": "09:52:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095248004170",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "429.93",
+      "at": "09:53:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095300004178",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "341.41",
+      "at": "09:53:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095312004187",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "394.64",
+      "at": "09:53:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095324004196",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "211.82",
+      "at": "09:53:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095336004209",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "292.28",
+      "at": "09:53:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095348004214",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "442.45",
+      "at": "09:54:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095400004219",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "248.96",
+      "at": "09:54:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095412004227",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "488.09",
+      "at": "09:54:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095424004235",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "318.08",
+      "at": "09:54:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095436004248",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "434.55",
+      "at": "09:54:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095448004257",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "367.07",
+      "at": "09:55:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095500004264",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "192.74",
+      "at": "09:55:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095512004267",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "431.65",
+      "at": "09:55:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095524004272",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "311.68",
+      "at": "09:55:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095536004282",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "486.76",
+      "at": "09:55:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095548004288",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "518.50",
+      "at": "09:56:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095600004293",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "214.55",
+      "at": "09:56:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095612004298",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "194.29",
+      "at": "09:56:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095624004304",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "383.46",
+      "at": "09:56:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095636004313",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "462.64",
+      "at": "09:56:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095648004324",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "180.64",
+      "at": "09:57:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095700004331",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "510.19",
+      "at": "09:57:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095712004337",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "273.51",
+      "at": "09:57:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095724004343",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "441.22",
+      "at": "09:57:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095736004349",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "326.15",
+      "at": "09:57:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095748004357",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "484.46",
+      "at": "09:58:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095800004364",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "505.71",
+      "at": "09:58:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095812004376",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "365.24",
+      "at": "09:58:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095824004386",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "502.70",
+      "at": "09:58:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095836004394",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "382.11",
+      "at": "09:58:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095848004405",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "190.60",
+      "at": "09:59:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095900004416",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "191.48",
+      "at": "09:59:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095912004424",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "202.80",
+      "at": "09:59:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095924004433",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "246.27",
+      "at": "09:59:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095936004439",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "376.82",
+      "at": "09:59:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026095948004447",
+      "retry": false,
+      "state": "RJCT AM04",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "275.01",
+      "at": "11:01:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110100006669",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "449.36",
+      "at": "11:01:00.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110100006670",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "308.34",
+      "at": "11:01:00.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110100006672",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "254.18",
+      "at": "11:01:01.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110101006673",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "385.17",
+      "at": "11:01:01.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110101006674",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "428.69",
+      "at": "11:01:02.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110102006675",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "249.65",
+      "at": "11:01:02.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110102006677",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "482.40",
+      "at": "11:01:02.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110102006678",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "255.29",
+      "at": "11:01:03.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110103006679",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "216.03",
+      "at": "11:01:03.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110103006680",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "391.73",
+      "at": "11:01:04.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110104006681",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "476.27",
+      "at": "11:01:04.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110104006682",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "310.05",
+      "at": "11:01:04.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110104006683",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "490.27",
+      "at": "11:01:05.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110105006684",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "396.96",
+      "at": "11:01:05.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110105006685",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "329.25",
+      "at": "11:01:06.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110106006687",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "421.44",
+      "at": "11:01:06.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110106006688",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "180.47",
+      "at": "11:01:06.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110106006689",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "248.31",
+      "at": "11:01:07.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110107006690",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "189.06",
+      "at": "11:01:07.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110107006692",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "224.80",
+      "at": "11:01:08.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110108006693",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "473.52",
+      "at": "11:01:08.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110108006694",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "237.44",
+      "at": "11:01:08.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110108006695",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "331.79",
+      "at": "11:01:09.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110109006697",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "208.93",
+      "at": "11:01:09.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110109006698",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "487.06",
+      "at": "11:01:10.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110110006699",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "398.57",
+      "at": "11:01:10.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110110006700",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "482.60",
+      "at": "11:01:10.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110110006702",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "237.16",
+      "at": "11:01:11.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110111006704",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "478.96",
+      "at": "11:01:11.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110111006705",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "445.83",
+      "at": "11:01:12.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110112006707",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "201.93",
+      "at": "11:01:12.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110112006708",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "321.02",
+      "at": "11:01:12.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110112006710",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "456.91",
+      "at": "11:01:13.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110113006711",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "316.91",
+      "at": "11:01:13.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110113006713",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "423.18",
+      "at": "11:01:14.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110114006714",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "339.80",
+      "at": "11:01:14.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110114006715",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "410.64",
+      "at": "11:01:14.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110114006717",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "497.57",
+      "at": "11:01:15.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110115006719",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "507.02",
+      "at": "11:01:15.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110115006721",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "423.11",
+      "at": "11:01:16.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110116006722",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "454.76",
+      "at": "11:01:16.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110116006723",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "273.29",
+      "at": "11:01:16.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110116006724",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "513.29",
+      "at": "11:01:17.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110117006726",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "463.44",
+      "at": "11:01:17.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110117006727",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "317.42",
+      "at": "11:01:18.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110118006728",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "306.42",
+      "at": "11:01:18.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110118006730",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "376.48",
+      "at": "11:01:18.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110118006731",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "382.89",
+      "at": "11:01:19.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110119006732",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "357.00",
+      "at": "11:01:19.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110119006733",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "304.59",
+      "at": "11:01:20.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110120006735",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "281.54",
+      "at": "11:01:20.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110120006736",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "212.34",
+      "at": "11:01:20.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110120006737",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "359.66",
+      "at": "11:01:21.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110121006740",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "460.03",
+      "at": "11:01:21.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110121006742",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "315.31",
+      "at": "11:01:22.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110122006744",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "430.10",
+      "at": "11:01:22.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110122006745",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "254.22",
+      "at": "11:01:22.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110122006746",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "511.84",
+      "at": "11:01:23.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110123006747",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "229.83",
+      "at": "11:01:23.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110123006748",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "493.67",
+      "at": "11:01:24.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110124006749",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "250.77",
+      "at": "11:01:24.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110124006750",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "474.74",
+      "at": "11:01:24.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110124006751",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "322.57",
+      "at": "11:01:25.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110125006752",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "407.41",
+      "at": "11:01:25.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110125006753",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "325.51",
+      "at": "11:01:26.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110126006754",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "223.30",
+      "at": "11:01:26.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110126006756",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "252.10",
+      "at": "11:01:26.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110126006757",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "293.13",
+      "at": "11:01:27.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110127006758",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "407.18",
+      "at": "11:01:27.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110127006759",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "341.03",
+      "at": "11:01:28.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110128006760",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "208.31",
+      "at": "11:01:28.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110128006761",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "415.18",
+      "at": "11:01:28.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110128006762",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "211.30",
+      "at": "11:01:29.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110129006763",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "515.18",
+      "at": "11:01:29.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110129006764",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "287.24",
+      "at": "11:01:30.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110130006765",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "256.32",
+      "at": "11:01:30.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110130006766",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "343.95",
+      "at": "11:01:30.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110130006767",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "292.64",
+      "at": "11:01:31.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110131006768",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "206.65",
+      "at": "11:01:31.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110131006769",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "497.38",
+      "at": "11:01:32.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110132006771",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "262.81",
+      "at": "11:01:32.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110132006772",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "414.06",
+      "at": "11:01:32.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110132006773",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "194.16",
+      "at": "11:01:33.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110133006774",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "479.30",
+      "at": "11:01:33.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110133006775",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "425.86",
+      "at": "11:01:34.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110134006776",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "243.02",
+      "at": "11:01:34.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110134006777",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "187.42",
+      "at": "11:01:34.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110134006779",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "330.05",
+      "at": "11:01:35.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110135006780",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "450.47",
+      "at": "11:01:35.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110135006781",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "400.64",
+      "at": "11:01:36.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110136006782",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "269.32",
+      "at": "11:01:36.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110136006783",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "311.29",
+      "at": "11:01:36.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110136006784",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "370.71",
+      "at": "11:01:37.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110137006785",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "417.56",
+      "at": "11:01:37.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110137006788",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "358.54",
+      "at": "11:01:38.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110138006789",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "352.14",
+      "at": "11:01:38.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110138006790",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "301.97",
+      "at": "11:01:38.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110138006791",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "393.19",
+      "at": "11:01:39.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110139006792",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "288.87",
+      "at": "11:01:39.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110139006794",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "269.40",
+      "at": "11:01:40.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110140006796",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "181.23",
+      "at": "11:01:40.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110140006797",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "369.28",
+      "at": "11:01:40.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110140006798",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "517.60",
+      "at": "11:01:41.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110141006799",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "193.14",
+      "at": "11:01:41.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110141006800",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "249.37",
+      "at": "11:01:42.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110142006801",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "377.63",
+      "at": "11:01:42.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110142006802",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "423.65",
+      "at": "11:01:42.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110142006803",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "492.33",
+      "at": "11:01:43.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110143006804",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "235.61",
+      "at": "11:01:43.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110143006805",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "190.89",
+      "at": "11:01:44.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110144006806",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "376.50",
+      "at": "11:01:44.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110144006807",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "430.95",
+      "at": "11:01:44.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110144006808",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "256.47",
+      "at": "11:01:45.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110145006809",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "256.78",
+      "at": "11:01:45.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110145006810",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "429.28",
+      "at": "11:01:46.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110146006811",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "361.32",
+      "at": "11:01:46.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110146006812",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "434.31",
+      "at": "11:01:46.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110146006813",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "298.31",
+      "at": "11:01:47.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110147006815",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "302.05",
+      "at": "11:01:47.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110147006816",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "269.34",
+      "at": "11:01:48.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110148006818",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "248.81",
+      "at": "11:01:48.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110148006819",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "393.62",
+      "at": "11:01:48.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110148006820",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "412.59",
+      "at": "11:01:49.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110149006821",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "332.91",
+      "at": "11:01:49.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110149006822",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "424.73",
+      "at": "11:01:50.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110150006823",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "204.72",
+      "at": "11:01:50.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110150006824",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "367.76",
+      "at": "11:01:50.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110150006826",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "239.29",
+      "at": "11:01:51.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110151006827",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "347.08",
+      "at": "11:01:51.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110151006828",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "324.22",
+      "at": "11:01:52.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110152006829",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "197.93",
+      "at": "11:01:52.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110152006830",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "251.98",
+      "at": "11:01:52.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110152006831",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "466.05",
+      "at": "11:01:53.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110153006832",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "335.73",
+      "at": "11:01:53.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110153006833",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "429.93",
+      "at": "11:01:54.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110154006834",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "341.41",
+      "at": "11:01:54.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110154006835",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "394.64",
+      "at": "11:01:54.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110154006836",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "211.82",
+      "at": "11:01:55.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110155006838",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "292.28",
+      "at": "11:01:55.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110155006839",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "442.45",
+      "at": "11:01:56.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110156006840",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "248.96",
+      "at": "11:01:56.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110156006841",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "488.09",
+      "at": "11:01:56.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110156006843",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "318.08",
+      "at": "11:01:57.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110157006845",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "434.55",
+      "at": "11:01:57.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110157006846",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "367.07",
+      "at": "11:01:58.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110158006847",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "192.74",
+      "at": "11:01:58.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110158006849",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "431.65",
+      "at": "11:01:58.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110158006850",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "311.68",
+      "at": "11:01:59.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110159006851",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "486.76",
+      "at": "11:01:59.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110159006852",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "518.50",
+      "at": "11:02:00.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110200006854",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "214.55",
+      "at": "11:02:00.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110200006855",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "194.29",
+      "at": "11:02:00.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110200006856",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "383.46",
+      "at": "11:02:01.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110201006857",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "462.64",
+      "at": "11:02:01.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110201006858",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "180.64",
+      "at": "11:02:02.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110202006860",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "510.19",
+      "at": "11:02:02.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110202006861",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "273.51",
+      "at": "11:02:02.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110202006863",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "441.22",
+      "at": "11:02:03.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110203006864",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "326.15",
+      "at": "11:02:03.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110203006865",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "484.46",
+      "at": "11:02:04.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110204006866",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "505.71",
+      "at": "11:02:04.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110204006867",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "365.24",
+      "at": "11:02:04.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110204006868",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "502.70",
+      "at": "11:02:05.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110205006869",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "382.11",
+      "at": "11:02:05.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110205006871",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "190.60",
+      "at": "11:02:06.000",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110206006872",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "191.48",
+      "at": "11:02:06.400",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110206006873",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "202.80",
+      "at": "11:02:06.800",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110206006875",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    },
+    {
+      "amount": "246.27",
+      "at": "11:02:07.200",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110207006876",
+      "retry": true,
+      "state": "ACSC",
+      "to": "mutual-delta"
+    },
+    {
+      "amount": "376.82",
+      "at": "11:02:07.600",
+      "from": "coop-beta",
+      "id": "CBETECEQ30112026110207006878",
+      "retry": true,
+      "state": "ACSC",
+      "to": "banco-alfa"
+    }
+  ],
+  "report": {
+    "accepted": 19385,
+    "compute_ms": 8874.141889,
+    "date": "2026-11-30",
+    "disclaimer": "Demostración con datos ficticios. Proyecto Caudal es independiente y no está afiliado al Banco Central del Ecuador.",
+    "intra_red": 15117,
+    "payments": 20470,
+    "por_conciliar": 0,
+    "rejected": {
+      "AM04": {
+        "coop-beta": 1085
+      }
+    },
+    "reserve_to_post_ms": [
+      16.0,
+      16.0,
+      16.0
+    ],
+    "seed": 7,
+    "settled": 4268,
+    "settlements": [
+      {
+        "at": "11:00:00.000",
+        "gross": "319,914.25",
+        "net": "184,614.53",
+        "nets": {
+          "banco-alfa": "-146,529.70",
+          "coop-beta": "105,136.51",
+          "fintech-gamma": "79,478.02",
+          "mutual-delta": "-38,084.83"
+        },
+        "payments": 1427
+      },
+      {
+        "at": "15:00:00.000",
+        "gross": "393,601.28",
+        "net": "251,775.86",
+        "nets": {
+          "banco-alfa": "-208,615.62",
+          "coop-beta": "159,963.60",
+          "fintech-gamma": "91,812.26",
+          "mutual-delta": "-43,160.24"
+        },
+        "payments": 1566
+      },
+      {
+        "at": "17:30:00.000",
+        "gross": "252,031.62",
+        "net": "185,531.06",
+        "nets": {
+          "banco-alfa": "-145,653.24",
+          "coop-beta": "115,489.74",
+          "fintech-gamma": "70,041.32",
+          "mutual-delta": "-39,877.82"
+        },
+        "payments": 1275
+      }
+    ],
+    "stats": [
+      {
+        "count": 313928,
+        "op": "codec",
+        "p50_us": 4.79,
+        "p95_us": 11.25,
+        "p99_us": 13.92,
+        "per_second": 238660.0
+      },
+      {
+        "count": 313928,
+        "op": "signature",
+        "p50_us": 31.75,
+        "p95_us": 34.17,
+        "p99_us": 35.79,
+        "per_second": 42194.0
+      },
+      {
+        "count": 240802,
+        "op": "rules",
+        "p50_us": 0.13,
+        "p95_us": 1.71,
+        "p99_us": 3.33,
+        "per_second": 2291612.0
+      },
+      {
+        "count": 9621,
+        "op": "ledger",
+        "p50_us": 0.67,
+        "p95_us": 3.88,
+        "p99_us": 6.21,
+        "per_second": 711512.0
+      }
+    ],
+    "timeline": [
+      {
+        "at": "08:00:00.000",
+        "institutions": [
+          {
+            "available": "4,800,000.00",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 0.0
+          },
+          {
+            "available": "1,920,000.00",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 0.0
+          },
+          {
+            "available": "60,000.00",
+            "id": "coop-beta",
+            "light": "verde",
+            "used_percent": 0.0
+          },
+          {
+            "available": "15,000.00",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 0.0
+          }
+        ]
+      },
+      {
+        "at": "08:15:00.000",
+        "institutions": [
+          {
+            "available": "4,789,706.14",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 0.21
+          },
+          {
+            "available": "1,915,460.80",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 0.23
+          },
+          {
+            "available": "57,068.94",
+            "id": "coop-beta",
+            "light": "verde",
+            "used_percent": 4.88
+          },
+          {
+            "available": "14,488.70",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 3.4
+          }
+        ]
+      },
+      {
+        "at": "08:30:00.000",
+        "institutions": [
+          {
+            "available": "4,776,250.84",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 0.49
+          },
+          {
+            "available": "1,911,068.16",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 0.46
+          },
+          {
+            "available": "54,526.05",
+            "id": "coop-beta",
+            "light": "verde",
+            "used_percent": 9.12
+          },
+          {
+            "available": "13,912.01",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 7.25
+          }
+        ]
+      },
+      {
+        "at": "08:45:00.000",
+        "institutions": [
+          {
+            "available": "4,762,810.63",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 0.77
+          },
+          {
+            "available": "1,906,782.89",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 0.68
+          },
+          {
+            "available": "51,029.51",
+            "id": "coop-beta",
+            "light": "verde",
+            "used_percent": 14.95
+          },
+          {
+            "available": "13,461.90",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 10.25
+          }
+        ]
+      },
+      {
+        "at": "09:00:00.000",
+        "institutions": [
+          {
+            "available": "4,743,831.16",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 1.17
+          },
+          {
+            "available": "1,905,988.69",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 0.72
+          },
+          {
+            "available": "48,718.95",
+            "id": "coop-beta",
+            "light": "verde",
+            "used_percent": 18.8
+          },
+          {
+            "available": "12,900.62",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 13.99
+          }
+        ]
+      },
+      {
+        "at": "09:15:00.000",
+        "institutions": [
+          {
+            "available": "4,722,637.78",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 1.61
+          },
+          {
+            "available": "1,901,091.19",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 0.98
+          },
+          {
+            "available": "19,878.08",
+            "id": "coop-beta",
+            "light": "verde",
+            "used_percent": 66.86
+          },
+          {
+            "available": "12,348.34",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 17.67
+          }
+        ]
+      },
+      {
+        "at": "09:30:00.000",
+        "institutions": [
+          {
+            "available": "4,712,393.13",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 1.82
+          },
+          {
+            "available": "1,894,824.47",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 1.31
+          },
+          {
+            "available": "19.85",
+            "id": "coop-beta",
+            "light": "naranja",
+            "used_percent": 99.96
+          },
+          {
+            "available": "11,595.05",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 22.69
+          }
+        ]
+      },
+      {
+        "at": "09:45:00.000",
+        "institutions": [
+          {
+            "available": "4,698,093.89",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 2.12
+          },
+          {
+            "available": "1,886,595.84",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 1.73
+          },
+          {
+            "available": "0.82",
+            "id": "coop-beta",
+            "light": "naranja",
+            "used_percent": 99.99
+          },
+          {
+            "available": "10,885.99",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 27.42
+          }
+        ]
+      },
+      {
+        "at": "10:00:00.000",
+        "institutions": [
+          {
+            "available": "4,680,162.92",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 2.49
+          },
+          {
+            "available": "1,883,359.76",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 1.9
+          },
+          {
+            "available": "0.82",
+            "id": "coop-beta",
+            "light": "naranja",
+            "used_percent": 99.99
+          },
+          {
+            "available": "10,514.39",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 29.9
+          }
+        ]
+      },
+      {
+        "at": "10:15:00.000",
+        "institutions": [
+          {
+            "available": "4,662,593.35",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 2.86
+          },
+          {
+            "available": "1,875,735.46",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 2.3
+          },
+          {
+            "available": "0.82",
+            "id": "coop-beta",
+            "light": "naranja",
+            "used_percent": 99.99
+          },
+          {
+            "available": "9,888.70",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 34.07
+          }
+        ]
+      },
+      {
+        "at": "10:30:00.000",
+        "institutions": [
+          {
+            "available": "4,641,794.55",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 3.29
+          },
+          {
+            "available": "1,870,413.08",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 2.58
+          },
+          {
+            "available": "0.82",
+            "id": "coop-beta",
+            "light": "naranja",
+            "used_percent": 99.99
+          },
+          {
+            "available": "8,452.06",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 43.65
+          }
+        ]
+      },
+      {
+        "at": "10:45:00.000",
+        "institutions": [
+          {
+            "available": "4,627,459.47",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 3.59
+          },
+          {
+            "available": "1,865,016.00",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 2.86
+          },
+          {
+            "available": "0.82",
+            "id": "coop-beta",
+            "light": "naranja",
+            "used_percent": 99.99
+          },
+          {
+            "available": "8,090.92",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 46.06
+          }
+        ]
+      },
+      {
+        "at": "11:00:00.000",
+        "institutions": [
+          {
+            "available": "4,800,000.00",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 0.0
+          },
+          {
+            "available": "1,920,000.00",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 0.0
+          },
+          {
+            "available": "60,000.00",
+            "id": "coop-beta",
+            "light": "verde",
+            "used_percent": 0.0
+          },
+          {
+            "available": "15,000.00",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 0.0
+          }
+        ]
+      },
+      {
+        "at": "11:15:00.000",
+        "institutions": [
+          {
+            "available": "4,788,267.54",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 0.24
+          },
+          {
+            "available": "1,916,009.01",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 0.2
+          },
+          {
+            "available": "0.77",
+            "id": "coop-beta",
+            "light": "naranja",
+            "used_percent": 99.99
+          },
+          {
+            "available": "14,172.77",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 5.51
+          }
+        ]
+      },
+      {
+        "at": "11:30:00.000",
+        "institutions": [
+          {
+            "available": "4,773,135.49",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 0.55
+          },
+          {
+            "available": "1,911,286.31",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 0.45
+          },
+          {
+            "available": "0.77",
+            "id": "coop-beta",
+            "light": "naranja",
+            "used_percent": 99.99
+          },
+          {
+            "available": "13,698.58",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 8.67
+          }
+        ]
+      },
+      {
+        "at": "11:45:00.000",
+        "institutions": [
+          {
+            "available": "4,756,829.84",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 0.89
+          },
+          {
+            "available": "1,906,705.56",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 0.69
+          },
+          {
+            "available": "0.77",
+            "id": "coop-beta",
+            "light": "naranja",
+            "used_percent": 99.99
+          },
+          {
+            "available": "13,066.10",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 12.89
+          }
+        ]
+      },
+      {
+        "at": "12:00:00.000",
+        "institutions": [
+          {
+            "available": "4,737,730.73",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 1.29
+          },
+          {
+            "available": "1,903,840.55",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 0.84
+          },
+          {
+            "available": "0.77",
+            "id": "coop-beta",
+            "light": "naranja",
+            "used_percent": 99.99
+          },
+          {
+            "available": "12,361.88",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 17.58
+          }
+        ]
+      },
+      {
+        "at": "12:15:00.000",
+        "institutions": [
+          {
+            "available": "4,723,916.82",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 1.58
+          },
+          {
+            "available": "1,900,155.89",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 1.03
+          },
+          {
+            "available": "0.77",
+            "id": "coop-beta",
+            "light": "naranja",
+            "used_percent": 99.99
+          },
+          {
+            "available": "11,384.93",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 24.1
+          }
+        ]
+      },
+      {
+        "at": "12:30:00.000",
+        "institutions": [
+          {
+            "available": "4,707,982.48",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 1.91
+          },
+          {
+            "available": "1,897,665.26",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 1.16
+          },
+          {
+            "available": "0.77",
+            "id": "coop-beta",
+            "light": "naranja",
+            "used_percent": 99.99
+          },
+          {
+            "available": "10,780.02",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 28.13
+          }
+        ]
+      },
+      {
+        "at": "12:45:00.000",
+        "institutions": [
+          {
+            "available": "4,688,857.62",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 2.31
+          },
+          {
+            "available": "1,894,996.47",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 1.3
+          },
+          {
+            "available": "0.77",
+            "id": "coop-beta",
+            "light": "naranja",
+            "used_percent": 99.99
+          },
+          {
+            "available": "10,368.51",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 30.87
+          }
+        ]
+      },
+      {
+        "at": "13:00:00.000",
+        "institutions": [
+          {
+            "available": "4,675,438.03",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 2.59
+          },
+          {
+            "available": "1,890,544.98",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 1.53
+          },
+          {
+            "available": "0.77",
+            "id": "coop-beta",
+            "light": "naranja",
+            "used_percent": 99.99
+          },
+          {
+            "available": "9,723.66",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 35.17
+          }
+        ]
+      },
+      {
+        "at": "13:15:00.000",
+        "institutions": [
+          {
+            "available": "4,657,344.11",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 2.97
+          },
+          {
+            "available": "1,885,309.24",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 1.8
+          },
+          {
+            "available": "0.77",
+            "id": "coop-beta",
+            "light": "naranja",
+            "used_percent": 99.99
+          },
+          {
+            "available": "8,981.63",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 40.12
+          }
+        ]
+      },
+      {
+        "at": "13:30:00.000",
+        "institutions": [
+          {
+            "available": "4,642,391.50",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 3.28
+          },
+          {
+            "available": "1,882,348.78",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 1.96
+          },
+          {
+            "available": "0.77",
+            "id": "coop-beta",
+            "light": "naranja",
+            "used_percent": 99.99
+          },
+          {
+            "available": "8,031.98",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 46.45
+          }
+        ]
+      },
+      {
+        "at": "13:45:00.000",
+        "institutions": [
+          {
+            "available": "4,622,927.39",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 3.68
+          },
+          {
+            "available": "1,877,816.66",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 2.19
+          },
+          {
+            "available": "0.77",
+            "id": "coop-beta",
+            "light": "naranja",
+            "used_percent": 99.99
+          },
+          {
+            "available": "7,506.26",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 49.95
+          }
+        ]
+      },
+      {
+        "at": "14:00:00.000",
+        "institutions": [
+          {
+            "available": "4,609,946.71",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 3.95
+          },
+          {
+            "available": "1,872,815.78",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 2.45
+          },
+          {
+            "available": "0.77",
+            "id": "coop-beta",
+            "light": "naranja",
+            "used_percent": 99.99
+          },
+          {
+            "available": "6,816.89",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 54.55
+          }
+        ]
+      },
+      {
+        "at": "14:15:00.000",
+        "institutions": [
+          {
+            "available": "4,594,333.84",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 4.28
+          },
+          {
+            "available": "1,868,412.91",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 2.68
+          },
+          {
+            "available": "0.77",
+            "id": "coop-beta",
+            "light": "naranja",
+            "used_percent": 99.99
+          },
+          {
+            "available": "6,269.15",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 58.2
+          }
+        ]
+      },
+      {
+        "at": "14:30:00.000",
+        "institutions": [
+          {
+            "available": "4,577,456.36",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 4.63
+          },
+          {
+            "available": "1,864,965.97",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 2.86
+          },
+          {
+            "available": "0.77",
+            "id": "coop-beta",
+            "light": "naranja",
+            "used_percent": 99.99
+          },
+          {
+            "available": "5,646.84",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 62.35
+          }
+        ]
+      },
+      {
+        "at": "14:45:00.000",
+        "institutions": [
+          {
+            "available": "4,560,927.88",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 4.98
+          },
+          {
+            "available": "1,860,453.67",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 3.1
+          },
+          {
+            "available": "0.77",
+            "id": "coop-beta",
+            "light": "naranja",
+            "used_percent": 99.99
+          },
+          {
+            "available": "4,896.98",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 67.35
+          }
+        ]
+      },
+      {
+        "at": "15:00:00.000",
+        "institutions": [
+          {
+            "available": "4,800,000.00",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 0.0
+          },
+          {
+            "available": "1,920,000.00",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 0.0
+          },
+          {
+            "available": "60,000.00",
+            "id": "coop-beta",
+            "light": "verde",
+            "used_percent": 0.0
+          },
+          {
+            "available": "15,000.00",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 0.0
+          }
+        ]
+      },
+      {
+        "at": "15:15:00.000",
+        "institutions": [
+          {
+            "available": "4,778,228.94",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 0.45
+          },
+          {
+            "available": "1,916,789.50",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 0.16
+          },
+          {
+            "available": "57,127.22",
+            "id": "coop-beta",
+            "light": "verde",
+            "used_percent": 4.78
+          },
+          {
+            "available": "14,647.10",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 2.35
+          }
+        ]
+      },
+      {
+        "at": "15:30:00.000",
+        "institutions": [
+          {
+            "available": "4,765,580.64",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 0.71
+          },
+          {
+            "available": "1,913,793.66",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 0.32
+          },
+          {
+            "available": "53,683.45",
+            "id": "coop-beta",
+            "light": "verde",
+            "used_percent": 10.52
+          },
+          {
+            "available": "14,268.02",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 4.87
+          }
+        ]
+      },
+      {
+        "at": "15:45:00.000",
+        "institutions": [
+          {
+            "available": "4,750,681.55",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 1.02
+          },
+          {
+            "available": "1,905,171.59",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 0.77
+          },
+          {
+            "available": "50,078.31",
+            "id": "coop-beta",
+            "light": "verde",
+            "used_percent": 16.53
+          },
+          {
+            "available": "13,823.16",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 7.84
+          }
+        ]
+      },
+      {
+        "at": "16:00:00.000",
+        "institutions": [
+          {
+            "available": "4,738,978.36",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 1.27
+          },
+          {
+            "available": "1,901,115.37",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 0.98
+          },
+          {
+            "available": "47,450.89",
+            "id": "coop-beta",
+            "light": "verde",
+            "used_percent": 20.91
+          },
+          {
+            "available": "13,309.04",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 11.27
+          }
+        ]
+      },
+      {
+        "at": "16:15:00.000",
+        "institutions": [
+          {
+            "available": "4,721,656.43",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 1.63
+          },
+          {
+            "available": "1,895,713.20",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 1.26
+          },
+          {
+            "available": "44,844.85",
+            "id": "coop-beta",
+            "light": "verde",
+            "used_percent": 25.25
+          },
+          {
+            "available": "12,599.03",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 16.0
+          }
+        ]
+      },
+      {
+        "at": "16:30:00.000",
+        "institutions": [
+          {
+            "available": "4,706,438.33",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 1.94
+          },
+          {
+            "available": "1,891,354.45",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 1.49
+          },
+          {
+            "available": "42,404.07",
+            "id": "coop-beta",
+            "light": "verde",
+            "used_percent": 29.32
+          },
+          {
+            "available": "12,021.82",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 19.85
+          }
+        ]
+      },
+      {
+        "at": "16:45:00.000",
+        "institutions": [
+          {
+            "available": "4,688,239.20",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 2.32
+          },
+          {
+            "available": "1,886,782.82",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 1.73
+          },
+          {
+            "available": "40,348.53",
+            "id": "coop-beta",
+            "light": "verde",
+            "used_percent": 32.75
+          },
+          {
+            "available": "11,223.65",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 25.17
+          }
+        ]
+      },
+      {
+        "at": "17:00:00.000",
+        "institutions": [
+          {
+            "available": "4,673,329.93",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 2.63
+          },
+          {
+            "available": "1,881,780.54",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 1.99
+          },
+          {
+            "available": "37,892.44",
+            "id": "coop-beta",
+            "light": "verde",
+            "used_percent": 36.84
+          },
+          {
+            "available": "10,681.01",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 28.79
+          }
+        ]
+      },
+      {
+        "at": "17:15:00.000",
+        "institutions": [
+          {
+            "available": "4,651,111.96",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 3.1
+          },
+          {
+            "available": "1,875,438.24",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 2.32
+          },
+          {
+            "available": "35,000.47",
+            "id": "coop-beta",
+            "light": "verde",
+            "used_percent": 41.66
+          },
+          {
+            "available": "10,170.18",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 32.19
+          }
+        ]
+      },
+      {
+        "at": "17:30:00.000",
+        "institutions": [
+          {
+            "available": "4,800,000.00",
+            "id": "banco-alfa",
+            "light": "verde",
+            "used_percent": 0.0
+          },
+          {
+            "available": "1,920,000.00",
+            "id": "mutual-delta",
+            "light": "verde",
+            "used_percent": 0.0
+          },
+          {
+            "available": "60,000.00",
+            "id": "coop-beta",
+            "light": "verde",
+            "used_percent": 0.0
+          },
+          {
+            "available": "15,000.00",
+            "id": "fintech-gamma",
+            "light": "verde",
+            "used_percent": 0.0
+          }
+        ]
+      }
+    ],
+    "title": "Un día de pagos de todo un país",
+    "tracked": {
+      "blocked_am04": 170,
+      "items": 300,
+      "last_paid_at": "11:02:07.600",
+      "paid_after_retry": 170,
+      "paid_first_try": 130
+    },
+    "value_accepted": "6,011,603.49",
+    "wall_ms": 9235.969083
+  }
+}

@@ -1,0 +1,24 @@
+[package]
+name = "caudal-south-api"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[dependencies]
+caudal-types.workspace = true
+caudal-ledger.workspace = true
+caudal-registry.workspace = true
+caudal-payments.workspace = true
+caudal-clearing.workspace = true
+caudal-iso20022.workspace = true
+caudal-msgplane.workspace = true
+jiff.workspace = true
+pollster.workspace = true
+uuid.workspace = true
+web-time.workspace = true
+
+[lints]
+workspace = true

@@ -1,0 +1,69 @@
+name: rust
+
+on:
+  push:
+    branches: [main]
+    paths: ['apps/**', 'crates/**', 'xtask/**', 'Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml', 'deny.toml', '.cargo/**', 'site/public/simulador/**', 'site/scripts/**', '.github/workflows/rust.yml']
+  # No path filter: these are required checks, so they report on every pull request.
+  pull_request:
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  fmt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup show
+      - run: cargo fmt --all --check
+
+  clippy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup show
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo clippy --workspace --all-targets --all-features -- -D warnings
+      - run: cargo xtask arch
+
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 2s
+          --health-timeout 5s
+          --health-retries 15
+    env:
+      DATABASE_URL: postgres://postgres@localhost:5432/postgres
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup show
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo test --workspace
+
+  playground:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup show
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo xtask playground --check
+      - run: cargo clippy -p caudal --lib --target wasm32-unknown-unknown -- -D warnings
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node site/scripts/playground-smoke.mjs
+
+  deny:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: EmbarkStudios/cargo-deny-action@v2

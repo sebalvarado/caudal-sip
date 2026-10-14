@@ -1,0 +1,38 @@
+[package]
+name = "caudal"
+description = "The whole network in one process: subcommands, a full-screen terminal, scenario scripts, and the browser playground."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[dependencies]
+caudal-types.workspace = true
+caudal-ledger.workspace = true
+caudal-registry.workspace = true
+caudal-directory.workspace = true
+caudal-risk.workspace = true
+caudal-clearing.workspace = true
+caudal-payments.workspace = true
+caudal-iso20022.workspace = true
+caudal-msgplane.workspace = true
+caudal-south-api.workspace = true
+jiff.workspace = true
+pollster.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+web-time.workspace = true
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+clap.workspace = true
+crossterm.workspace = true
+ratatui.workspace = true
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+wasm-bindgen.workspace = true
+js-sys.workspace = true
+
+[lints]
+workspace = true
