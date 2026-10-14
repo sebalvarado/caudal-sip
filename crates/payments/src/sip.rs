@@ -157,7 +157,7 @@ impl Sip {
         let Some(p) = self.payments.get_mut(&id) else { return vec![] };
         let ordering_red = p.order.ordering_red;
         match (p.stage, outcome.result) {
-            (Stage::Reserving, Ok(())) => {
+            (Stage::Reserving, Ok(_)) => {
                 p.stage = Stage::Delivering;
                 vec![
                     Output::Event(Event::Reserved(id.clone())),
@@ -177,7 +177,7 @@ impl Sip {
                     report(ordering_red, &id, PaymentState::Rjct, Some(reason)),
                 ]
             }
-            (Stage::Posting { por_conciliar }, Ok(())) => {
+            (Stage::Posting { por_conciliar }, Ok(_)) => {
                 p.stage = Stage::Done(PaymentState::Acsp, None);
                 let mut out = vec![Output::Event(Event::Posted(id.clone()))];
                 if por_conciliar {
@@ -188,6 +188,7 @@ impl Sip {
                     };
                     out.push(Output::Ledger(Command::Transfer(Transfer {
                         id: TransferId(ctx.event),
+                        purpose: caudal_ledger::Purpose::Suspense,
                         legs: vec![memo],
                         cause: ctx.cause(),
                     })));
@@ -196,7 +197,7 @@ impl Sip {
                 out.push(report(ordering_red, &id, PaymentState::Acsp, None));
                 out
             }
-            (Stage::Voiding(reason), Ok(())) => {
+            (Stage::Voiding(reason), Ok(_)) => {
                 p.stage = Stage::Done(PaymentState::Rjct, Some(reason));
                 vec![
                     Output::Event(Event::Voided(id.clone(), reason)),

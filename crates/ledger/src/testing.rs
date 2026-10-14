@@ -7,8 +7,8 @@ use uuid::Uuid;
 
 use crate::core::Replay;
 use crate::{
-    AccountId, AsOf, Book, Cause, Entry, EntryId, EntryQuery, Headroom, HeadroomAccount, Ledger, LedgerError, Leg,
-    ObligationAccount, Position, Refusal, Reservation, Reserve, Transfer, TransferId,
+    AccountId, AsOf, Book, Cause, Effect, Entry, EntryId, EntryQuery, Headroom, HeadroomAccount, Ledger, LedgerError,
+    Leg, ObligationAccount, Position, Purpose, Refusal, Reservation, Reserve, Transfer, TransferId,
 };
 
 // Fictional: no real institution appears in fixtures.
@@ -39,6 +39,7 @@ pub enum Op {
     Post(PaymentId),
     Void(PaymentId, ReasonCode),
     Transfer(Transfer),
+    Reverse(TransferId, Cause),
 }
 
 fn obligation_account() -> impl Strategy<Value = ObligationAccount> {
@@ -85,17 +86,32 @@ pub fn op() -> impl Strategy<Value = Op> {
             credit: HeadroomAccount::Integrante(bic(i)),
             amount: Headroom::of(Usd::from_cents(u)),
         }];
-        Op::Transfer(Transfer { id: TransferId(Uuid::from_u128(u128::from(id))), legs, cause: cause(id) })
+        Op::Transfer(Transfer {
+            id: TransferId(Uuid::from_u128(u128::from(id))),
+            purpose: Purpose::Headroom,
+            legs,
+            cause: cause(id),
+        })
     });
     let transfer = (0..8u8, prop::collection::vec(leg(), 1..4)).prop_map(|(id, legs)| {
-        Op::Transfer(Transfer { id: TransferId(Uuid::from_u128(1000 + u128::from(id))), legs, cause: cause(id) })
+        Op::Transfer(Transfer {
+            id: TransferId(Uuid::from_u128(1000 + u128::from(id))),
+            purpose: Purpose::Correction,
+            legs,
+            cause: cause(id),
+        })
     });
+    let reverse = prop_oneof![
+        any::<u8>().prop_map(|id| Op::Reverse(TransferId(Uuid::from_u128(u128::from(id))), cause(id))),
+        (0..8u8).prop_map(|id| Op::Reverse(TransferId(Uuid::from_u128(1000 + u128::from(id))), cause(id))),
+    ];
     prop_oneof![
         4 => reserve,
         3 => (0..BICS.len(), 0..4u8).prop_map(|(i, n)| Op::Post(payment(i, n))),
         2 => (0..BICS.len(), 0..4u8, 0..ReasonCode::ALL.len()).prop_map(|(i, n, r)| Op::Void(payment(i, n), ReasonCode::ALL[r])),
         2 => fund,
         2 => transfer,
+        2 => reverse,
     ]
 }
 
@@ -113,16 +129,17 @@ pub struct Trace {
     pub positions: Vec<Position>,
 }
 
-async fn execute(ledger: &impl Ledger, op: &Op) -> Answer {
+async fn execute(ledger: &impl Ledger, op: &Op) -> (Answer, Option<Effect>) {
     let answer = match op.clone() {
-        Op::Reserve(r) => ledger.reserve(r).await.map(Answer::Reservation),
-        Op::Post(p) => ledger.post(p).await.map(Answer::Reservation),
-        Op::Void(p, reason) => ledger.void(p, reason).await.map(Answer::Reservation),
-        Op::Transfer(t) => ledger.transfer(t).await.map(Answer::Entry),
+        Op::Reserve(r) => ledger.reserve(r).await.map(|a| (Answer::Reservation(a.value), a.effect)),
+        Op::Post(p) => ledger.post(p).await.map(|a| (Answer::Reservation(a.value), a.effect)),
+        Op::Void(p, reason) => ledger.void(p, reason).await.map(|a| (Answer::Reservation(a.value), a.effect)),
+        Op::Transfer(t) => ledger.transfer(t).await.map(|a| (Answer::Entry(a.value), a.effect)),
+        Op::Reverse(id, cause) => ledger.reverse(id, cause).await.map(|a| (Answer::Entry(a.value), a.effect)),
     };
     match answer {
-        Ok(a) => a,
-        Err(LedgerError::Refused(r)) => Answer::Refused(r),
+        Ok((answer, effect)) => (answer, Some(effect)),
+        Err(LedgerError::Refused(r)) => (Answer::Refused(r), None),
         Err(LedgerError::Unknown(e)) => panic!("outcome unknown: {e}"),
     }
 }
@@ -138,9 +155,16 @@ pub async fn run(ledger: &impl Ledger, ops: &[Op]) -> Trace {
     let mut log: Vec<Entry> = Vec::new();
     let mut snapshots = Vec::new();
     for op in ops {
-        let answer = execute(ledger, op).await;
+        let (answer, effect) = execute(ledger, op).await;
         let entries = ledger.entries(EntryQuery::All).await.expect("readable");
-        assert_eq!(execute(ledger, op).await, answer, "a repeat answers the same: {op:?}");
+        let (again, again_effect) = execute(ledger, op).await;
+        assert_eq!(again, answer, "a repeat answers the same: {op:?}");
+        if effect.is_some() {
+            assert_eq!(again_effect, Some(Effect::Replay), "a repeat of a committed command is a replay: {op:?}");
+        }
+        if entries.len() > log.len() {
+            assert_eq!(effect, Some(Effect::Appended), "a new entry was appended, not replayed: {op:?}");
+        }
         assert_eq!(ledger.entries(EntryQuery::All).await.expect("readable"), entries, "a repeat appends nothing");
         assert!(entries.starts_with(&log), "postings are immutable");
         assert!(entries.len() <= log.len() + 1, "one command appends at most one entry");

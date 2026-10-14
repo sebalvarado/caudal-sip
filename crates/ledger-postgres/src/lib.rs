@@ -2,8 +2,8 @@ use std::collections::HashMap;
 
 use caudal_ledger::core::{self, Decision, Replay, View};
 use caudal_ledger::{
-    AccountId, AsOf, Balance, Book, Cause, Entry, EntryId, EntryKind, EntryQuery, HeadroomAccount, Ledger, LedgerError,
-    Leg, Position, Refusal, Reservation, Reserve, Transfer, TransferId,
+    AccountId, Applied, AsOf, Balance, Book, Cause, Effect, Entry, EntryId, EntryKind, EntryQuery, HeadroomAccount,
+    Ledger, LedgerError, Leg, Position, Purpose, RecordedTransfer, Refusal, Reservation, Reserve, Transfer, TransferId,
 };
 use caudal_types::{Bic, PaymentId, ReasonCode, Usd};
 use jiff::Timestamp;
@@ -42,24 +42,44 @@ impl PgLedger {
         &self,
         load: Load<'_>,
         decide: impl FnOnce(&Loaded) -> Result<Decision<T>, Refusal>,
-    ) -> Result<T, LedgerError> {
+    ) -> Result<Applied<T>, LedgerError> {
         let mut tx = self.pool.begin().await.map_err(unknown)?;
         sqlx::query("SELECT pg_advisory_xact_lock($1)").bind(WRITE_LOCK).execute(&mut *tx).await.map_err(unknown)?;
         let loaded = load.run(&mut tx).await?;
         let decision = decide(&loaded)?;
-        if let Some(draft) = decision.draft {
-            let previous: Option<i64> =
-                sqlx::query_scalar("SELECT (extract(epoch FROM max(at)) * 1000000)::bigint FROM ledger.entry")
-                    .fetch_one(&mut *tx)
-                    .await
-                    .map_err(unknown)?;
-            let previous = previous.map(from_micros).transpose()?;
-            let at = core::next_commit_time(previous, (self.clock)());
-            insert(&mut tx, &Entry { at, kind: draft.kind, legs: draft.legs }).await?;
-            tx.commit().await.map_err(unknown)?;
-        }
-        Ok(decision.answer)
+        conclude(self, tx, decision).await
     }
+
+    async fn append(
+        &self,
+        tx: &mut sqlx::Transaction<'_, sqlx::Postgres>,
+        draft: caudal_ledger::Draft,
+    ) -> Result<(), LedgerError> {
+        let previous: Option<i64> =
+            sqlx::query_scalar("SELECT (extract(epoch FROM max(at)) * 1000000)::bigint FROM ledger.entry")
+                .fetch_one(&mut **tx)
+                .await
+                .map_err(unknown)?;
+        let previous = previous.map(from_micros).transpose()?;
+        let at = core::next_commit_time(previous, (self.clock)());
+        insert(tx, &Entry { at, kind: draft.kind, legs: draft.legs }).await
+    }
+}
+
+async fn conclude<T>(
+    ledger: &PgLedger,
+    mut tx: sqlx::Transaction<'_, sqlx::Postgres>,
+    decision: Decision<T>,
+) -> Result<Applied<T>, LedgerError> {
+    let effect = match decision.draft {
+        None => Effect::Replay,
+        Some(_) => Effect::Appended,
+    };
+    if let Some(draft) = decision.draft {
+        ledger.append(&mut tx, draft).await?;
+        tx.commit().await.map_err(unknown)?;
+    }
+    Ok(Applied { value: decision.answer, effect })
 }
 
 struct Load<'a> {
@@ -95,8 +115,12 @@ impl View for Loaded {
         self.replay.reservation(payment)
     }
 
-    fn transfer(&self, id: TransferId) -> Option<Vec<Leg>> {
+    fn transfer(&self, id: TransferId) -> Option<RecordedTransfer> {
         self.replay.transfer(id)
+    }
+
+    fn reversal(&self, of: TransferId) -> bool {
+        self.replay.reversal(of)
     }
 
     fn balance(&self, account: AccountId) -> Balance {
@@ -109,24 +133,39 @@ fn headroom_of(payment: &PaymentId) -> Vec<AccountId> {
 }
 
 impl Ledger for PgLedger {
-    async fn reserve(&self, r: Reserve) -> Result<Reservation, LedgerError> {
+    async fn reserve(&self, r: Reserve) -> Result<Applied<Reservation>, LedgerError> {
         let load = Load { payment: Some(&r.payment), transfer: None, accounts: headroom_of(&r.payment) };
         self.commit(load, |v| core::reserve(v, r.clone())).await
     }
 
-    async fn post(&self, payment: PaymentId) -> Result<Reservation, LedgerError> {
+    async fn post(&self, payment: PaymentId) -> Result<Applied<Reservation>, LedgerError> {
         let load = Load { payment: Some(&payment), transfer: None, accounts: headroom_of(&payment) };
         self.commit(load, |v| core::post(v, &payment)).await
     }
 
-    async fn void(&self, payment: PaymentId, reason: ReasonCode) -> Result<Reservation, LedgerError> {
+    async fn void(&self, payment: PaymentId, reason: ReasonCode) -> Result<Applied<Reservation>, LedgerError> {
         let load = Load { payment: Some(&payment), transfer: None, accounts: headroom_of(&payment) };
         self.commit(load, |v| core::void(v, &payment, reason)).await
     }
 
-    async fn transfer(&self, t: Transfer) -> Result<EntryId, LedgerError> {
+    async fn transfer(&self, t: Transfer) -> Result<Applied<EntryId>, LedgerError> {
         let load = Load { payment: None, transfer: Some(t.id), accounts: core::constrained(&t.legs) };
         self.commit(load, |v| core::transfer(v, t.clone())).await
+    }
+
+    async fn reverse(&self, of: TransferId, cause: Cause) -> Result<Applied<EntryId>, LedgerError> {
+        let mut tx = self.pool.begin().await.map_err(unknown)?;
+        sqlx::query("SELECT pg_advisory_xact_lock($1)").bind(WRITE_LOCK).execute(&mut *tx).await.map_err(unknown)?;
+        let entries = select_entries(&mut tx, Filter::Transfer(of)).await?;
+        let replay = Replay::of(&entries);
+        let accounts =
+            replay.transfer(of).map(|recorded| core::constrained(&core::mirror(&recorded.legs))).unwrap_or_default();
+        let mut balances = HashMap::new();
+        for account in accounts {
+            balances.insert(account, select_balance(&mut tx, account, AsOf::Latest).await?);
+        }
+        let decision = core::reverse(&Loaded { replay, balances }, of, cause)?;
+        conclude(self, tx, decision).await
     }
 
     async fn balance(&self, account: AccountId, at: AsOf) -> Result<Balance, LedgerError> {
@@ -205,8 +244,9 @@ async fn select_entries(conn: &mut PgConnection, filter: Filter<'_>) -> Result<V
     };
     let rows = sqlx::query(
         "SELECT seq, (extract(epoch FROM at) * 1000000)::bigint AS at_us, kind, ordering, payment, beneficiary, \
-         amount, fee, tax, reason, transfer_id, cause_event, cause_digest FROM ledger.entry \
-         WHERE ($1::text IS NULL OR (ordering = $1 AND payment = $2)) AND ($3::uuid IS NULL OR transfer_id = $3) \
+         amount, fee, tax, reason, transfer_id, purpose, reverses, cause_event, cause_digest FROM ledger.entry \
+         WHERE ($1::text IS NULL OR (ordering = $1 AND payment = $2)) \
+         AND ($3::uuid IS NULL OR transfer_id = $3 OR reverses = $3) \
          ORDER BY seq",
     )
     .bind(ordering)
@@ -251,7 +291,16 @@ fn entry_from(row: &PgRow, legs: Vec<Leg>) -> Result<Entry, LedgerError> {
         "voided" => EntryKind::Voided(payment()?, text("reason")?.parse().map_err(corrupt)?),
         "transferred" => {
             let id: Option<Uuid> = row.get("transfer_id");
-            EntryKind::Transferred(TransferId(id.ok_or_else(|| corrupt("transfer_id"))?), cause()?)
+            let purpose = Purpose::parse(&text("purpose")?).ok_or_else(|| corrupt("purpose"))?;
+            EntryKind::Transferred {
+                id: TransferId(id.ok_or_else(|| corrupt("transfer_id"))?),
+                purpose,
+                cause: cause()?,
+            }
+        }
+        "reversed" => {
+            let of: Option<Uuid> = row.get("reverses");
+            EntryKind::Reversed { of: TransferId(of.ok_or_else(|| corrupt("reverses"))?), cause: cause()? }
         }
         other => return Err(corrupt(format!("entry kind {other}"))),
     };
@@ -273,16 +322,20 @@ fn leg_from(row: &PgRow) -> Result<Leg, LedgerError> {
 }
 
 async fn insert(conn: &mut PgConnection, entry: &Entry) -> Result<(), LedgerError> {
-    let (kind, reserve, payment, reason, transfer, cause) = match &entry.kind {
-        EntryKind::Reserved(r) => ("reserved", Some(r), Some(&r.payment), None, None, Some(r.cause)),
-        EntryKind::Posted(p) => ("posted", None, Some(p), None, None, None),
-        EntryKind::Voided(p, reason) => ("voided", None, Some(p), Some(reason.code()), None, None),
-        EntryKind::Transferred(id, cause) => ("transferred", None, None, None, Some(id.0), Some(*cause)),
+    let (kind, reserve, payment, reason, transfer, purpose, reverses, cause) = match &entry.kind {
+        EntryKind::Reserved(r) => ("reserved", Some(r), Some(&r.payment), None, None, None, None, Some(r.cause)),
+        EntryKind::Posted(p) => ("posted", None, Some(p), None, None, None, None, None),
+        EntryKind::Voided(p, reason) => ("voided", None, Some(p), Some(reason.code()), None, None, None, None),
+        EntryKind::Transferred { id, purpose, cause } => {
+            ("transferred", None, None, None, Some(id.0), Some(purpose.as_str()), None, Some(*cause))
+        }
+        EntryKind::Reversed { of, cause } => ("reversed", None, None, None, None, None, Some(of.0), Some(*cause)),
     };
     let term = |usd: fn(&Reserve) -> Usd| reserve.map(|r| stored(usd(r).cents())).transpose();
     let seq: i64 = sqlx::query_scalar(
         "INSERT INTO ledger.entry (at, kind, ordering, payment, beneficiary, amount, fee, tax, reason, transfer_id, \
-         cause_event, cause_digest) VALUES ($1::timestamptz, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING seq",
+         purpose, reverses, cause_event, cause_digest) VALUES ($1::timestamptz, $2, $3, $4, $5, $6, $7, $8, $9, $10, \
+         $11, $12, $13, $14) RETURNING seq",
     )
     .bind(entry.at.to_string())
     .bind(kind)
@@ -294,6 +347,8 @@ async fn insert(conn: &mut PgConnection, entry: &Entry) -> Result<(), LedgerErro
     .bind(term(|r| r.tax)?)
     .bind(reason)
     .bind(transfer)
+    .bind(purpose)
+    .bind(reverses)
     .bind(cause.map(|c| c.event))
     .bind(cause.map(|c| c.digest.to_vec()))
     .fetch_one(&mut *conn)

@@ -49,7 +49,7 @@ Enforced by the storage engine wherever possible, verified by property-based tes
 
 1. **Every entry sums to zero** across its legs, on each ledger independently.
 2. **No account with `debits_must_not_exceed_credits` may go negative.** This is the risk ceiling and, under the gross model, the prefunding rule.
-3. **Postings are immutable.** No update, no delete. A correction is a new, opposing entry referencing the original.
+3. **Postings are immutable.** No update, no delete. Undoing a transfer is a reversal: a new entry that mirrors every leg and names the original. A posted payment is not reversed this way. It is irrevocable; only a void ends a reservation that is still pending.
 4. **Balances are derived** from postings. A materialized balance may exist as a cache with a job that proves it matches.
 5. **Reservation is atomic across both ledgers.** The obligation reservation and the headroom debit succeed together or neither happens.
 6. **Every entry references the event and the signed wire message that caused it**, so any figure on any screen is traceable to evidence years later.
@@ -57,22 +57,24 @@ Enforced by the storage engine wherever possible, verified by property-based tes
 
 ## The interface
 
-Narrow on purpose — this is the entire surface other components may use. The rules live in a synchronous core; this trait is the async port over it, with no runtime dependency ([ADR-0015](adr/0015-ledger-interface.md)).
+Narrow on purpose — this is the entire surface other components may use. The rules live in a synchronous core; this trait is the async port over it, with no runtime dependency ([ADR-0015](adr/0015-ledger-interface.md), [ADR-0023](adr/0023-replay-purpose-and-reversal.md)).
 
 ```rust
 pub trait Ledger {
     /// Consumes headroom and creates the pending obligations, atomically
     /// across both ledgers. A repeat with the same payment id returns the
     /// original reservation.
-    fn reserve(&self, r: Reserve) -> impl Future<Output = Result<Reservation, LedgerError>> + Send;
+    fn reserve(&self, r: Reserve) -> impl Future<Output = Result<Applied<Reservation>, LedgerError>> + Send;
     /// ACSP. Idempotent.
-    fn post(&self, id: PaymentId) -> impl Future<Output = Result<Reservation, LedgerError>> + Send;
+    fn post(&self, id: PaymentId) -> impl Future<Output = Result<Applied<Reservation>, LedgerError>> + Send;
     /// RJCT. Idempotent. Refused once posted.
-    fn void(&self, id: PaymentId, reason: ReasonCode) -> impl Future<Output = Result<Reservation, LedgerError>> + Send;
+    fn void(&self, id: PaymentId, reason: ReasonCode) -> impl Future<Output = Result<Applied<Reservation>, LedgerError>> + Send;
 
-    /// Immediate balanced entry: funding, settlement, corrections.
-    /// Idempotent on `Transfer::id`.
-    fn transfer(&self, t: Transfer) -> impl Future<Output = Result<EntryId, LedgerError>> + Send;
+    /// Immediate balanced entry. `Transfer::purpose` names the scheme event.
+    /// Idempotent on `Transfer::id`, purpose, and legs.
+    fn transfer(&self, t: Transfer) -> impl Future<Output = Result<Applied<EntryId>, LedgerError>> + Send;
+    /// Mirror of every leg of a transfer. Not a way to undo a payment.
+    fn reverse(&self, of: TransferId, cause: Cause) -> impl Future<Output = Result<Applied<EntryId>, LedgerError>> + Send;
 
     /// Reads at the latest state or at a past commit time.
     fn balance(&self, account: AccountId, at: AsOf) -> impl Future<Output = Result<Balance, LedgerError>> + Send;
@@ -89,7 +91,9 @@ pub enum LedgerError {
 }
 ```
 
-`Reserve` carries the payment id, the beneficiary's BIC, the amount, the quoted fee and tax ([ADR-0010](adr/0010-commissions-as-postings.md)), and the causing event and message hash (invariant 6). It carries no timeout: only `Post` or `Void` ends a reservation. `Refusal::InsufficientHeadroom` is the red semáforo and maps to the catálogo's `AM04`, the SIP's code for malla-level insufficiency, not the customer's balance. The other refusals are listed in [ADR-0015](adr/0015-ledger-interface.md). `ReasonCode` is the catálogo's own code — `AC04`, `AM04`, `DT01` — never an internal enum ([ADR-0014](adr/0014-kernel-types.md)). `Book` names one of the two ledgers. `Usd` is the kernel's amount, and the headroom unit is `ledger`'s own type.
+`Reserve` carries the payment id, the beneficiary's BIC, the amount, the quoted fee and tax ([ADR-0010](adr/0010-commissions-as-postings.md)), and the causing event and message hash (invariant 6). It carries no timeout: only `Post` or `Void` ends a reservation. Every idempotent command returns `Applied`: `Effect::Appended` when this call wrote an entry, `Effect::Replay` when the books already held it. A replay is not evidence that the caller already sent a message. `Refusal::InsufficientHeadroom` is the red semáforo and maps to the catálogo's `AM04`, the SIP's code for malla-level insufficiency, not the customer's balance. The other refusals are listed in [ADR-0015](adr/0015-ledger-interface.md). `ReasonCode` is the catálogo's own code — `AC04`, `AM04`, `DT01` — never an internal enum ([ADR-0014](adr/0014-kernel-types.md)). `Book` names one of the two ledgers. `Usd` is the kernel's amount, and the headroom unit is `ledger`'s own type.
+
+A transfer's purpose is one of `headroom`, `settlement`, `suspense`, or `correction`. The same id with a different purpose or different legs is a conflict. `reverse` builds the mirror itself, including headroom, and refuses an id that is not a transfer. A second reverse of the same transfer is a replay. A reversal that would take a constrained account below zero is `InsufficientHeadroom`, and the original entry stays.
 
 ## Backend mapping
 
@@ -97,6 +101,7 @@ pub enum LedgerError {
 |---|---|---|
 | Reservation | `pending` transfer, timeout `0` | Appended reservation event plus pending postings; no expiry job |
 | Post / Void | `post_pending_transfer` / `void_pending_transfer` | Appended post or void event plus its postings |
+| Reversal | a new transfer that mirrors the original, not a void of a pending one | Appended `reversed` entry; the original stays |
 | Multi-leg atomicity | `linked` chain | One transaction |
 | No overdraft | `debits_must_not_exceed_credits` flag | `CHECK` on a derived balance with serialized writes per account |
 | Reason code | `code` field | Column |

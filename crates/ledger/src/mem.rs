@@ -6,8 +6,8 @@ use jiff::Timestamp;
 
 use crate::core::{self, Decision, Replay};
 use crate::{
-    AccountId, AsOf, Balance, Book, Entry, EntryId, EntryQuery, Ledger, LedgerError, Position, Refusal, Reservation,
-    Reserve, Transfer,
+    AccountId, Applied, AsOf, Balance, Book, Cause, Effect, Entry, EntryId, EntryQuery, Ledger, LedgerError, Position,
+    Refusal, Reservation, Reserve, Transfer, TransferId,
 };
 
 pub struct MemLedger {
@@ -26,16 +26,23 @@ impl MemLedger {
         Self { clock: Box::new(clock), state: Mutex::default() }
     }
 
-    fn commit<T>(&self, decide: impl FnOnce(&Replay) -> Result<Decision<T>, Refusal>) -> Result<T, LedgerError> {
+    fn commit<T>(
+        &self,
+        decide: impl FnOnce(&Replay) -> Result<Decision<T>, Refusal>,
+    ) -> Result<Applied<T>, LedgerError> {
         let mut state = self.state.lock().expect("a panic while committing leaves nothing half-applied");
         let decision = decide(&state.latest)?;
+        let effect = match decision.draft {
+            None => Effect::Replay,
+            Some(_) => Effect::Appended,
+        };
         if let Some(draft) = decision.draft {
             let at = core::next_commit_time(state.log.last().map(|e| e.at), (self.clock)());
             let entry = Entry { at, kind: draft.kind, legs: draft.legs };
             state.latest.apply(&entry);
             state.log.push(entry);
         }
-        Ok(decision.answer)
+        Ok(Applied { value: decision.answer, effect })
     }
 
     fn read<T>(&self, at: AsOf, f: impl FnOnce(&Replay) -> T) -> Ready<Result<T, LedgerError>> {
@@ -48,11 +55,11 @@ impl MemLedger {
 }
 
 impl Ledger for MemLedger {
-    fn reserve(&self, r: Reserve) -> impl Future<Output = Result<Reservation, LedgerError>> + Send {
+    fn reserve(&self, r: Reserve) -> impl Future<Output = Result<Applied<Reservation>, LedgerError>> + Send {
         ready(self.commit(|v| core::reserve(v, r)))
     }
 
-    fn post(&self, payment: PaymentId) -> impl Future<Output = Result<Reservation, LedgerError>> + Send {
+    fn post(&self, payment: PaymentId) -> impl Future<Output = Result<Applied<Reservation>, LedgerError>> + Send {
         ready(self.commit(|v| core::post(v, &payment)))
     }
 
@@ -60,12 +67,20 @@ impl Ledger for MemLedger {
         &self,
         payment: PaymentId,
         reason: ReasonCode,
-    ) -> impl Future<Output = Result<Reservation, LedgerError>> + Send {
+    ) -> impl Future<Output = Result<Applied<Reservation>, LedgerError>> + Send {
         ready(self.commit(|v| core::void(v, &payment, reason)))
     }
 
-    fn transfer(&self, t: Transfer) -> impl Future<Output = Result<EntryId, LedgerError>> + Send {
+    fn transfer(&self, t: Transfer) -> impl Future<Output = Result<Applied<EntryId>, LedgerError>> + Send {
         ready(self.commit(|v| core::transfer(v, t)))
+    }
+
+    fn reverse(
+        &self,
+        of: TransferId,
+        cause: Cause,
+    ) -> impl Future<Output = Result<Applied<EntryId>, LedgerError>> + Send {
+        ready(self.commit(|v| core::reverse(v, of, cause)))
     }
 
     fn balance(&self, account: AccountId, at: AsOf) -> impl Future<Output = Result<Balance, LedgerError>> + Send {

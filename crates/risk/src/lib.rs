@@ -133,8 +133,13 @@ mod tests {
 
     fn apply(ledger: &MemLedger, n: u128, legs: Vec<Leg>) {
         if !legs.is_empty() {
-            block_on(ledger.transfer(Transfer { id: TransferId(Uuid::from_u128(n)), legs, cause: cause(n as u8) }))
-                .unwrap();
+            block_on(ledger.transfer(Transfer {
+                id: TransferId(Uuid::from_u128(n)),
+                purpose: caudal_ledger::Purpose::Headroom,
+                legs,
+                cause: cause(n as u8),
+            }))
+            .unwrap();
         }
     }
 

@@ -276,7 +276,13 @@ fn describe(sandbox: &Sandbox, id: &str, xml: bool, out: &mut Output) {
             caudal_ledger::EntryKind::Reserved(_) => "reserve (pending)",
             caudal_ledger::EntryKind::Posted(_) => "post (irrevocable)",
             caudal_ledger::EntryKind::Voided(..) => "void",
-            caudal_ledger::EntryKind::Transferred(..) => "transfer",
+            caudal_ledger::EntryKind::Transferred { purpose, .. } => match purpose {
+                caudal_ledger::Purpose::Headroom => "transfer (headroom)",
+                caudal_ledger::Purpose::Settlement => "transfer (settlement)",
+                caudal_ledger::Purpose::Suspense => "transfer (suspense)",
+                caudal_ledger::Purpose::Correction => "transfer (correction)",
+            },
+            caudal_ledger::EntryKind::Reversed { .. } => "reversal",
         };
         out.push(Tone::Plain, format!("  {}  {kind}", clock(e.at)));
         for leg in &e.legs {
